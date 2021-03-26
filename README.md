@@ -1,7 +1,7 @@
-# Desafio programação - para vaga desenvolvedor Ruby on Rails
+# Desafio programação - para vaga desenvolvedor JAVA0
 
 Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos, para ser mais específico em Ruby on Rails.
+O intuito deste teste é avaliar seus conhecimentos técnicos em Java.
 O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
 Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
 
@@ -9,7 +9,7 @@ Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quise
 
 1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
 2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_.
+3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
 
 # Descrição do projeto
 
@@ -23,16 +23,14 @@ Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https:
 1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
 2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
 3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita obrigatoriamente em Ruby 2.0+ e Rails 5+
+4. Ser escrita obrigatoriamente em Java em versões recentes
 5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits bem descritos
-7. PostgreSQL
-8. RUBOCOP
-9. RSPEC
-10. Simplecov para disponibilizar o code coverage
-11. Docker compose (Pontos extras se utilizar)
-12. Readme file descrevendo bem o projeto e seu setup
-13. Incluir informação descrevendo como consumir o endpoint da API
+6. Git com commits atomicos e bem descritos
+7. PostgreSQL, MySQL ou SQL Server
+8. Ter testes automatizados
+9. Docker compose (Pontos extras se utilizar)
+10. Readme file descrevendo bem o projeto e seu setup
+11. Incluir informação descrevendo como consumir o endpoint da API
 
 **Sua aplicação web não precisa:**
 
