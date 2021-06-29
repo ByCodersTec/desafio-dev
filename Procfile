@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath cnab_project cnab_project.wsgi
