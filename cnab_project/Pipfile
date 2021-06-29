@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+
+[dev-packages]
+
+[scripts]
+app = "python manage.py runserver"
+manage = "python manage.py"
+
+[requires]
+python_version = "3.9"
