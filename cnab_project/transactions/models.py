@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.timezone import utc
 from django.utils.translation import gettext_lazy as _
@@ -18,9 +19,9 @@ class Transaction(models.Model):
         choices=TransactionType.choices,
     )
     datetime = models.DateTimeField()
-    amount = models.DecimalField(decimal_places=2, max_digits=8)
-    nin = models.CharField(max_length=11)
-    card = models.CharField(max_length=12)
+    amount = models.DecimalField(decimal_places=2, max_digits=10)
+    nin = models.CharField(max_length=11, validators=[RegexValidator('^([0-9]{11})*$', message=_('Invalid NIN'))])
+    card = models.CharField(max_length=12, validators=[RegexValidator('^([0-9]{4}[\*|0-9]{4}[0-9]{4})*$', message=_('Invalid Card'))])
     store_owner = models.CharField(max_length=14)
     store = models.CharField(max_length=19)
     created_at = models.DateTimeField(auto_now=True, blank=True)
@@ -36,6 +37,7 @@ class Transaction(models.Model):
 
     def save(self):
         super().save(self)
+
 
 def negative_types():
         return [Transaction.TransactionType.BOLETO, Transaction.TransactionType.FINANCIAMENTO, Transaction.TransactionType.ALUGUEL]
