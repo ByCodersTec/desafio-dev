@@ -17,6 +17,7 @@
                 <b>Cartão</b><br /> {{ transaction.card }}<br />
                 <b>Loja</b><br /> {{ transaction.store }}<br /> 
                 <b>Proprietário</b><br /> {{ transaction.store_owner }}<br />
+                <b>Adicionado em</b><br /> {{ transaction.created_at }}
             {% else %}
                 <p>Transaction not found.</p>
             {% endif %}
