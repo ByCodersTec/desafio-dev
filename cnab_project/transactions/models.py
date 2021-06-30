@@ -43,4 +43,8 @@ def negative_types():
 
 class TransactionError(models.Model):
     description = models.TextField(null=False)
+    detail = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now=True, blank=True)
+
+    def __str__(self) -> str:
+        return f'Description:{self.description}|{self.detail}'
