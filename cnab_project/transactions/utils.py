@@ -13,9 +13,9 @@ def verify_cnab_file(request_file: InMemoryUploadedFile):
             transaction.clean_fields()
             transaction_list.append(transaction)
         except ValidationError as ex:
-            print(ex)
-            print(cnab_line)
-            error_list.append(TransactionError(description=cnab_line))
+            error_list.append(TransactionError(description=cnab_line, detail=str(ex.message_dict)))
+        except ValueError as ex:
+            error_list.append(TransactionError(description=cnab_line, detail=str(ex)))
     Transaction.objects.bulk_create(transaction_list)
     TransactionError.objects.bulk_create(error_list)
 
@@ -23,7 +23,7 @@ def verify_cnab_file(request_file: InMemoryUploadedFile):
 def cnab_line_to_object(cnab_line:str) -> Transaction:
     try:
         datetime_cnab = timezone.datetime.strptime(cnab_line[1:9] + cnab_line[42:48] + "-0300", '%Y%m%d%H%M%S%z')
-        return Transaction(
+        transaction_obj = Transaction(
             type = cnab_line[0],
             datetime = datetime_cnab,
             amount = "{:.2f}".format(float(int(cnab_line[9:19])/100)),
@@ -32,5 +32,9 @@ def cnab_line_to_object(cnab_line:str) -> Transaction:
             store_owner = cnab_line[48:62].strip(),
             store = str(cnab_line[62:80]).strip(),
         )
-    except Exception as e:
+        transaction_obj.clean_fields()
+        return transaction_obj
+    except ValidationError as e:
+        raise e
+    except ValueError as e:
         raise e
