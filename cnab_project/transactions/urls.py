@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('upload', views.importer, name='upload'),
     path('<int:id>', views.details, name='details'),
+    path('errors', views.errors, name='errors'),
 ]

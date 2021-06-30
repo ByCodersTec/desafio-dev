@@ -1,0 +1,55 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Erros de importação{% endblock %}
+{% block content_title %}Erros de importação{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Últimos erros</h6>
+            </div>
+
+            <div class="card-body p-0">
+                {% if errors %}
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr><th>Line</th></tr>
+                        </thead>
+                        <tbody>
+                    {% for error in errors %}
+                        <tr>
+                            <td class="d-none d-xl-block">{{ error.description }}<br /><small>{{ error.created_at }}</small></td>
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center p-2">
+                        
+                        {% if errors.has_previous %}
+                            <a href="?page=1">&laquo; primeira</a>
+                            <a href="?page={{ errors.previous_page_number }}">anterior</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Página {{ errors.number }} of {{ errors.paginator.num_pages }}.
+                        </span>
+                
+                        {% if errors.has_next %}
+                            <a href="?page={{ errors.next_page_number }}">próxima</a>
+                            <a href="?page={{ errors.paginator.num_pages }}">última &raquo;</a>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p>No errors are available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts_after %}
+<script src="{% static 'jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'upload.js' %}"></script>
+{% endblock %}

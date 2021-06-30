@@ -74,6 +74,8 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Enviar arquivo</h6>
+                <a class="text-danger" href="{% url 'transactions:errors' %}"><small><span class="fa fa-times text-danger"></span> Log de erros</small>
+                </a>
             </div>
             <div class="card-body">
                 <div class="file-upload">
