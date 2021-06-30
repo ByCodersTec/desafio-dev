@@ -4,12 +4,17 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.exceptions import ValidationError
 
 def verify_cnab_file(request_file: InMemoryUploadedFile):
+    file_lines = request_file.readlines()
+    save_lines(file_lines)
+
+def save_lines(file_lines: list):
     error_list = []
     transaction_list = []
-    for cnab_line in request_file.readlines():
-        cnab_line = cnab_line.decode("utf-8")
-        transaction = cnab_line_to_object(cnab_line)
+    for cnab_line in file_lines:
+        if type(cnab_line) == bytes:
+            cnab_line = cnab_line.decode("utf-8")
         try:
+            transaction = cnab_line_to_object(cnab_line)
             transaction.clean_fields()
             transaction_list.append(transaction)
         except ValidationError as ex:
@@ -18,7 +23,7 @@ def verify_cnab_file(request_file: InMemoryUploadedFile):
             error_list.append(TransactionError(description=cnab_line, detail=str(ex)))
     Transaction.objects.bulk_create(transaction_list)
     TransactionError.objects.bulk_create(error_list)
-
+    return {"successes": transaction_list, "errors":error_list}
 
 def cnab_line_to_object(cnab_line:str) -> Transaction:
     try:
