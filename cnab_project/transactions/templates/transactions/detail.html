@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Detalhamento{% endblock %}
+{% block content_title %}Detalhamento{% endblock %}
+{% block content %}
+<div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Detalhes da transação</h6>
+        </div>
+
+        <div class="card-body">
+            {% if transaction %}
+                <b>Tipo</b><br />{{ transaction.get_type_display }} {% if transaction.amount_with_operation < 0 %}<span class="text-danger fas fa-long-arrow-alt-down"></span>{% else %}<span class="text-success fas fa-long-arrow-alt-up"></span>{% endif %}<br />
+                <b>CPF</b><br /> {{ transaction.nin }}<br />
+                <b>Valor pago</b><br /> {{ transaction.amount }}<br />
+                <b>Cartão</b><br /> {{ transaction.card }}<br />
+                <b>Loja</b><br /> {{ transaction.store }}<br /> 
+                <b>Proprietário</b><br /> {{ transaction.store_owner }}<br />
+            {% else %}
+                <p>Transaction not found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

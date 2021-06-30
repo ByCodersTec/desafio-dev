@@ -1,0 +1,148 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Recebimentos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">R${{ incomes.amount__sum|floatformat:2 }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-long-arrow-alt-up fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            Despesas</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">R${{ expenses.amount__sum|floatformat:2 }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-long-arrow-alt-down fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Transações</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Clientes</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ customers.nin__count }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Enviar arquivo</h6>
+            </div>
+            <div class="card-body">
+                <div class="file-upload">
+                    <form id="upload_form" enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        <input type="file" name="cnab_file" id="cnab_file" onchange="uploadFile('upload')"><br>
+                        <span id="status"></span><br />
+                        <small id="loaded_n_total"></small>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Últimas transações</h6>
+            </div>
+
+            <div class="card-body p-0">
+                {% if transactions %}
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr><th>Loja</th><th class="d-none d-xl-block">Proprietário</th><th>Valor</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                    {% for transaction in transactions %}
+                            <td><a class="link" href="{% url 'transactions:details' transaction.id %}">{{ transaction.store }}</a></td>
+                            <td class="d-none d-xl-block">{{ transaction.store_owner }}</td>
+                            <td>R${{ transaction.amount }}</td>
+                            <td>
+                                {% if transaction.amount_with_operation < 0 %}
+                                <span class="text-danger fas fa-long-arrow-alt-down"></span>
+                                {% else %}
+                                <span class="text-success fas fa-long-arrow-alt-up"></span>
+                                {% endif %}
+                                <span class="d-none d-lg-inline">{{ transaction.get_type_display }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center p-2">
+                        
+                        {% if transactions.has_previous %}
+                            <a href="?page=1">&laquo; primeira</a>
+                            <a href="?page={{ transactions.previous_page_number }}">anterior</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Página {{ transactions.number }} of {{ transactions.paginator.num_pages }}.
+                        </span>
+                
+                        {% if transactions.has_next %}
+                            <a href="?page={{ transactions.next_page_number }}">próxima</a>
+                            <a href="?page={{ transactions.paginator.num_pages }}">última &raquo;</a>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p>No transactions are available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts_after %}
+<script src="{% static 'jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'upload.js' %}"></script>
+{% endblock %}
