@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from .forms import UploadCNABFileForm
 from django.shortcuts import get_object_or_404, render
-from django.db.models import Sum, Count
+from django.db.models import Sum
 from django.core.paginator import Paginator
 from .models import Transaction, TransactionError
 from .utils import verify_cnab_file
@@ -9,12 +9,14 @@ from .models import negative_types
 
 def index(request):
     paginator = Paginator(Transaction.objects.order_by('-id'), 10)
+    incomes = Transaction.objects.exclude(type__in=negative_types()).aggregate(Sum('amount'))
+    expenses = Transaction.objects.filter(type__in=negative_types()).aggregate(Sum('amount'))
     transactions = {
                     'transactions': paginator.get_page(request.GET.get('page', 1)),
                     'total': Transaction.objects.count(),
-                    'incomes': Transaction.objects.exclude(type__in=negative_types()).aggregate(Sum('amount')),
-                    'expenses': Transaction.objects.filter(type__in=negative_types()).aggregate(Sum('amount')),
-                    'customers': Transaction.objects.all().aggregate(Count('nin', distinct=True))
+                    'incomes': incomes,
+                    'expenses': expenses,
+                    'account_balance': float(incomes.get("amount__sum", 0) - expenses.get("amount__sum", 0))
                    }
     return render(request, 'transactions/index.html', transactions)
 
