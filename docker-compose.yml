@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+    postgres_db:
+        image: postgres:13.3
+        restart: always
+        env_file: envs/dev.env
+        ports:
+            - 5432:5432
+        volumes:
+            - cnab_db:/var/lib/postgresql/data
+
+    web:
+        build: .
+        image: cnab_web:latest
+        env_file: envs/dev.env
+
+        stdin_open: true
+        tty: true
+
+        volumes:
+            - .:/code
+        ports:
+            - 8000:8000
+        depends_on:
+            - postgres_db
+
+        command: bash -c 'while !</dev/tcp/postgres_db/5432; do sleep 1; done; python manage.py migrate; python manage.py runserver 0.0.0.0:8000'
+
+volumes:
+    cnab_db: {}
