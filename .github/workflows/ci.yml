@@ -43,6 +43,8 @@ jobs:
           TEST: "True"
           DEBUG: "True"
           SECRET_KEY: "django-test-insecure-jd1o)!&mgq#xi=$w1&xw5-11r1c0aj=wgud*c3g-^@lx3zic4c"
+          DATABASE_URL: "postgresql://cnab_user:cnab_password@postgres_db:5432/cnab_db"
+
         run: |
           coverage run -m manage test -v 2
           coverage report
@@ -52,5 +54,6 @@ jobs:
           TEST: "True"
           DEBUG: "True"
           SECRET_KEY: "django-test-insecure-jd1o)!&mgq#xi=$w1&xw5-11r1c0aj=wgud*c3g-^@lx3zic4c"
+          DATABASE_URL: "postgresql://cnab_user:cnab_password@postgres_db:5432/cnab_db"
 
         run: python -m manage test -v 2
