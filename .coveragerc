@@ -1,0 +1,6 @@
+[run]
+source = ./accounts/, ./cnab_handler/
+
+[report]
+fail_under = 80
+show_missing = true

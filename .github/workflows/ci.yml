@@ -1,0 +1,54 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python 3.9.6
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.6
+
+      - name: Install dependencies
+        run: |
+          python -V
+          python -m pip install --upgrade pip
+          python -m pip install flake8 black
+          python -m pip install -r requirements.txt
+
+      - name: Test Code Style with Black
+        run: python -m black --check .
+
+      - name: Lint Test with flake8
+        run: python -m flake8 . --count --show-source --statistics --max-line-length=99
+
+      - name: Check Test Coverage
+        env:
+          TEST: "True"
+          DEBUG: "True"
+          SECRET_KEY: "django-test-insecure-jd1o)!&mgq#xi=$w1&xw5-11r1c0aj=wgud*c3g-^@lx3zic4c"
+        run: |
+          coverage run -m manage test -v 2
+          coverage report
+
+      - name: Django Tests
+        env:
+          TEST: "True"
+          DEBUG: "True"
+          SECRET_KEY: "django-test-insecure-jd1o)!&mgq#xi=$w1&xw5-11r1c0aj=wgud*c3g-^@lx3zic4c"
+
+        run: python -m manage test -v 2
