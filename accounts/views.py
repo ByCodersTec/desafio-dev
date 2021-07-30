@@ -11,14 +11,14 @@ from .serializers import RegisterUserSerializer
 
 class RegisterUserView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'registration/register.html'
+    template_name = "registration/register.html"
 
     parser_classes = [FormParser, MultiPartParser]
 
     def get(self, request, *args, **kwargs):
         register_user_form = RegisterUserSerializer()
 
-        return Response({'user_serializer': register_user_form})
+        return Response({"user_serializer": register_user_form})
 
     def post(self, request, *args, **kwargs):
         user_serializer = RegisterUserSerializer(data=request.data)
@@ -26,4 +26,4 @@ class RegisterUserView(APIView):
 
         user_serializer.save()
 
-        return HttpResponseRedirect(redirect_to='login')
+        return HttpResponseRedirect(redirect_to="login")
