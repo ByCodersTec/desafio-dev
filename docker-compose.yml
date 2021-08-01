@@ -12,7 +12,7 @@ services:
 
     web:
         build: .
-        image: cnab_web:latest
+        image: cnab_web:1.0
         env_file: envs/dev.env
 
         stdin_open: true
@@ -25,7 +25,12 @@ services:
         depends_on:
             - postgres_db
 
-        command: bash -c 'while !</dev/tcp/postgres_db/5432; do sleep 1; done; python manage.py migrate; python manage.py runserver 0.0.0.0:8000'
+        command: >
+            bash -c "while !</dev/tcp/postgres_db/5432; \
+                   do sleep 1; \
+                   done; \
+                   python manage.py migrate; \
+                   python manage.py runserver 0.0.0.0:8000"
 
 volumes:
     cnab_db: {}
