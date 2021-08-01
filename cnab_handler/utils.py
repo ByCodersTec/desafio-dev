@@ -55,3 +55,23 @@ def get_transaction_data(log_line: str) -> dict:
         "store_owner": log_line[idx_store_owner].strip().title(),
         "store_name": log_line[idx_store_name].strip().title(),
     }
+
+
+def get_cnab_field_data(transaction_data: dict) -> list:
+    type_ref = str(transaction_data["type"]["type_ref"])
+    type_signal = TRANSACTION_TYPES[type_ref]["nature"]
+
+    transaction_type = "Entrada" if type_signal == "+" else "Saída"
+
+    return [
+        transaction_type,
+        transaction_data["type"]["description"],
+        "R$ " + str(transaction_data["value"]),
+        transaction_data["date"],
+        transaction_data["time"],
+        transaction_data["recipient_cpf"],
+        transaction_data["card"],
+        transaction_data["store_owner"],
+        transaction_data["store_name"],
+        transaction_data["balance"],
+    ]

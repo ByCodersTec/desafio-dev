@@ -54,9 +54,10 @@ class CnabListView(LoginRequiredMixin, APIView):
             .all()
         )
         transactions_serializer = TransactionSerializer(transactions, many=True)
-
         balance = CnabServices.get_user_balance(transactions_serializer.data)
 
-        return Response(
-            {"transactions": transactions_serializer.data, "balance": balance}
+        cnab_html_table = CnabServices.get_cnab_html_table(
+            transactions_serializer.data, balance
         )
+
+        return Response({"transactions": cnab_html_table})
