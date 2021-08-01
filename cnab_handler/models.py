@@ -1,12 +1,22 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class TransactionNature(models.TextChoices):
-    SUM = ("+", _("Entrada"))
+    ADD = ("+", _("Entrada"))
     SUB = ("-", _("Saída"))
+
+
+class TransactionType(models.Model):
+
+    type_ref = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(9)]
+    )
+    description = models.CharField(max_length=120)
+    nature = models.CharField(choices=TransactionNature.choices, max_length=120)
 
 
 class Transaction(models.Model):
@@ -17,22 +27,18 @@ class Transaction(models.Model):
     )
 
     recipient_cpf = models.IntegerField(help_text=_("CPF do beneficiário"))
-    card = models.IntegerField(help_text=_("Cartão utilizado na transação"))
+    card = models.CharField(
+        max_length=120, help_text=_("Cartão utilizado na transação")
+    )
 
     store_owner = models.CharField(
         max_length=120, help_text=_("Nome do representante da loja")
     )
     store_name = models.CharField(max_length=120, help_text=_("Nome da loja"))
 
-
-class TransactionType(models.Model):
-
-    type_id = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(9)]
+    type = models.ForeignKey(
+        TransactionType, on_delete=models.PROTECT, related_name="transactions"
     )
-    description = models.CharField(max_length=120)
-    nature = models.CharField(choices=TransactionNature.choices, max_length=120)
-
-    transactions = models.ForeignKey(
-        Transaction, on_delete=models.PROTECT, related_name="type"
+    manager = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="transactions"
     )
