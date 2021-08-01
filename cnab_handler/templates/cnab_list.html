@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Operações{% endblock %}
+
+
+{% block content %}
+
+<main>
+    <header>
+        <h1>Transações Registradas</h1>
+    </header>
+    <section>
+        {% autoescape off %}
+
+        {{ transactions }}
+
+        {% endautoescape %}
+    </section>
+</main>
+
+{% endblock %}
