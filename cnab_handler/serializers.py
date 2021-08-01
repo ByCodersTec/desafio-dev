@@ -11,7 +11,7 @@ class TransactionTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionType
         fields = [
-            "type_id",
+            "type_ref",
             "description",
             "nature",
         ]
@@ -22,5 +22,14 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = "__all__"
+        fields = [
+            "value",
+            "date",
+            "time",
+            "recipient_cpf",
+            "card",
+            "store_owner",
+            "store_name",
+            "type",
+        ]
         depth = 1
