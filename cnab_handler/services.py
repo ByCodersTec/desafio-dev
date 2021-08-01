@@ -1,8 +1,10 @@
+from prettytable import PrettyTable
+
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from .models import Transaction, TransactionType
-from .utils import TRANSACTION_TYPES, get_transaction_data
+from .utils import TRANSACTION_TYPES, get_transaction_data, get_cnab_field_data
 
 
 class CnabServices:
@@ -44,3 +46,31 @@ class CnabServices:
                 balance -= transaction["value"]
 
         return balance
+
+    @staticmethod
+    def get_cnab_html_table(transaction_list: list[dict], balance: int):
+        table = PrettyTable()
+        table.format = True
+
+        cnab_field_names = [
+            "Tipo",
+            "Descrição",
+            "Valor",
+            "Data",
+            "Hora",
+            "CPF Beneficiário",
+            "Cartão",
+            "Dono da Loja",
+            "Nome da Loja",
+            "Saldo",
+        ]
+        table.field_names = cnab_field_names
+
+        for idx, transaction in enumerate(transaction_list):
+            transaction["balance"] = (
+                balance if idx == len(transaction_list) - 1 else "--"
+            )
+
+            table.add_row(get_cnab_field_data(transaction))
+
+        return table.get_html_string()
