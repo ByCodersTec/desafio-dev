@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bycoders-challenge"
-version = "0.1.0"
+version = "0.9.0"
 description = ""
 authors = ["Jefte Keller <jeftekeller.dev@gmail.com>"]
 
@@ -11,6 +11,7 @@ djangorestframework = "^3.12.4"
 psycopg2-binary = "^2.9.1"
 coverage = "^5.5"
 environs = {extras = ["django"], version = "^9.3.2"}
+prettytable = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
