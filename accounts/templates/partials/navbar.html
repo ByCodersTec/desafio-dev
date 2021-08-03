@@ -11,19 +11,19 @@
                 <a class="nav-link" href="#">Bem vindo(a), {{user.username}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/api/cnab/">Lista de Operações</a>
+                <a class="nav-link" href="{% url 'list-cnab' %}">Lista de Operações</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/api/cnab/upload/">Registrar Operações</a>
+                <a class="nav-link" href="{% url 'upload-cnab' %}">Registrar Operações</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/api/accounts/logout/">Sair</a>
+                <a class="nav-link" href="{% url 'rest_framework:logout' %}">Sair</a>
             </li>
 
             {% else %}
 
             <li class="nav-item">
-                <a class="nav-link" href="/api/accounts/login/">Entrar</a>
+                <a class="nav-link" href="{% url 'rest_framework:login' %}">Entrar</a>
             </li>
 
             {% endif %}

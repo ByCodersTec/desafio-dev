@@ -9,14 +9,15 @@
 
 <main class="py-5 well" style="width: 400px; margin-left: auto; margin-right: auto">
     <header>
-        <h1>Registrar Transações</h1>
+        <h3>Registrar Transações</h3>
     </header>
     <section>
-        <form action=" {% url 'upload-cnab' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'upload-cnab' %}" method="POST" enctype="multipart/form-data" class="py-2">
             {% csrf_token %}
             {% render_form file_form template_pack='rest_framework/vertical' %}
-
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <div class="py-3">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
         </form>
     </section>
 </main>
