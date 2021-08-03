@@ -17,7 +17,10 @@ class CnabServices:
         with self.file.open(mode="rb") as f:
             for line in f:
                 log_line = line.decode("UTF-8")
-                transaction_list.append(get_transaction_data(log_line))
+                transaction_data = get_transaction_data(log_line)
+
+                if transaction_data:
+                    transaction_list.append(transaction_data)
 
         return transaction_list
 
@@ -70,7 +73,9 @@ class CnabServices:
             transaction["balance"] = (
                 balance if idx == len(transaction_list) - 1 else "--"
             )
+            cnab_field_data = get_cnab_field_data(transaction)
 
-            table.add_row(get_cnab_field_data(transaction))
+            if cnab_field_data:
+                table.add_row(cnab_field_data)
 
         return table.get_html_string()
