@@ -4,6 +4,6 @@ from .views import RegisterUserView
 
 
 urlpatterns = [
-    path("accounts/", include("rest_framework.urls")),
+    path("accounts/", include("rest_framework.urls", namespace="rest_framework")),
     path("accounts/register/", RegisterUserView.as_view(), name="register-user"),
 ]
