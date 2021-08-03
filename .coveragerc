@@ -1,5 +1,6 @@
 [run]
 source = ./accounts/, ./cnab_handler/
+omit = */tests/*
 
 [report]
 fail_under = 80
