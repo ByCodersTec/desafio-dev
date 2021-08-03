@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
 {% load rest_framework %}
+
 
 {% block title %}Cadastro de Usuário{% endblock %}
 
@@ -8,16 +8,19 @@
 
 <main class="py-5 well" style="width: 320px; margin-left: auto; margin-right: auto">
     <header>
-        <h1>Cadastro de Usuário</h1>
+        <h2>Cadastro de Usuário</h2>
     </header>
     <section>
         <form action="{% url 'register-user' %}" method="POST">
             {% csrf_token %}
+
             {% render_form register_user_form template_pack='rest_framework/vertical' %}
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <div style="padding-top: 16px;">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
         </form>
-        <p class="text-center">Já possui uma conta? <a href="/api/accounts/login/">Entrar</a></p>
+        <p class="text-center py-2">Já possui uma conta? <a href="{% url 'rest_framework:login' %}">Entrar</a></p>
     </section>
 </main>
 

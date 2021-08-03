@@ -1,4 +1,4 @@
-from cnab_handler.models import Transaction
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -11,7 +11,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
-
+from .models import Transaction
 from .services import CnabServices
 from .serializers import CnabFileSerializer, TransactionSerializer
 
@@ -37,7 +37,7 @@ class CnabUploadCreateView(LoginRequiredMixin, APIView):
         transaction_list = cnab_handler.parse_transactions()
         cnab_handler.register_transactions(transaction_list, request.user.pk)
 
-        return HttpResponseRedirect(redirect_to="/api/cnab/")
+        return HttpResponseRedirect(redirect_to=reverse("list-cnab"))
 
 
 class CnabListView(LoginRequiredMixin, APIView):

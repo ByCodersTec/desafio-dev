@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from rest_framework.views import APIView
@@ -26,4 +27,4 @@ class RegisterUserView(APIView):
 
         user_serializer.save()
 
-        return HttpResponseRedirect(redirect_to="/api/accounts/login/")
+        return HttpResponseRedirect(redirect_to=reverse("rest_framework:login"))
