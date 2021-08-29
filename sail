@@ -1,0 +1,1 @@
+vendor/laravel/sail/bin/sail
