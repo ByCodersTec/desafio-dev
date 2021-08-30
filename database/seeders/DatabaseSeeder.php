@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,5 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(TipoOperacaoSeeder::class);
+        $this->call(UserSeeder::class);
+        Artisan::call('refresh:passport');
     }
 }

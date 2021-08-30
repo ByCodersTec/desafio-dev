@@ -22,7 +22,7 @@
     </head>
     <body >
         <div id="app">
-            <movimentacao-financeira />
+            <app></app>
         </div>
         
     </body>

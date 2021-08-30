@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::apiResource('movimentacao_financeira', MovimentacaoFinanceiraController::class)->only(['index', 'store']);
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('movimentacao_financeira', MovimentacaoFinanceiraController::class)->only(['index', 'store']);
+});

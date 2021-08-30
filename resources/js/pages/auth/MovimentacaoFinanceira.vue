@@ -1,29 +1,32 @@
 <template>
   <div class="movimentacao_financeira">
-    <nav class="titulo">
-      <h1>Desafio - ByCodersTech</h1>
-    </nav>
-
-    <div class="form">
-      <form>
+    <div>
+      <nav class="titulo">
+        <h1>Desafio - ByCodersTech</h1>
+      </nav>
+      <div class="sair">
+        <button @click="sair">Sair</button>
+      </div>
+      <div class="form">
         <input @change="fileUpload" type="file" />
+        <br />
         <button @click="importarDados()">Enviar</button>
-      </form>
-    </div>
+      </div>
 
-    <div class="table">
-      <h4>Resultados Financeiros</h4>
-      <vue-good-table
-        :columns="colunas"
-        :rows="movimentacao_financeira"
-        :pagination-options="{
-          enabled: true,
-          mode: 'pages',
-          perPage: 10,
-          nextLabel: 'next',
-          prevLabel: 'prev',
-        }"
-      />
+      <div class="table">
+        <h4>Resultados Financeiros</h4>
+        <vue-good-table
+          :columns="colunas"
+          :rows="movimentacao_financeira"
+          :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: 10,
+            nextLabel: 'next',
+            prevLabel: 'prev',
+          }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +46,8 @@ export default {
 
   data() {
     return {
+      isLoged: false,
+      token: "",
       movimentacao_financeira: "",
       colunas: [
         { label: "Dono da Loja", field: "dono_da_loja" },
@@ -61,7 +66,11 @@ export default {
   methods: {
     buscarDados() {
       axios
-        .get("http://localhost/api/movimentacao_financeira")
+        .get("http://localhost/api/movimentacao_financeira", {
+          headers: {
+            Authorization: "Bearer " + this.$store.getters["auth/getToken"],
+          },
+        })
         .then((response) => {
           this.movimentacao_financeira = response.data.movimentacao_financeira;
         });
@@ -72,18 +81,29 @@ export default {
       formData.append("cnab", this.file);
 
       axios
-        .post("http://localhost/api/movimentacao_financeira", formData)
+        .post(
+          "http://localhost/api/movimentacao_financeira", formData, {
+            headers: {
+              Authorization: 'Bearer ' + this.$store.getters['auth/getToken']
+            }
+          })
         .then((response) => {
-            $this.movimentacao_financeira = response.data.movimentacao_financeira;
+          this.movimentacao_financeira = response.data.movimentacao_financeira;
         });
     },
 
     fileUpload(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-    
-      this.file = files[0]
+
+      this.file = files[0];
     },
+
+    sair() {
+      this.$store.dispatch('auth/auth', null)
+      this.$store.dispatch('auth/isLoged', false)
+      this.$router.push('/')
+    }
   },
 };
 </script>
@@ -101,12 +121,25 @@ export default {
 }
 
 .form {
+  padding: 10px;
   background-color: rgb(68, 5, 68);
   border-radius: 5px;
   color: #fff;
-  height: 70px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sair {
   display: flex;
   flex-direction: row-reverse;
-  align-items: center;
+}
+button {
+  width: 100px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  color: rgb(68, 5, 68);
 }
 </style>

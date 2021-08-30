@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "vue-good-table": "^2.21.10",
-        "vue-router": "^3.5.2"
+        "vue-router": "^3.5.2",
+        "vue-simple-alert": "^1.1.1",
+        "vuex-persistedstate": "^4.0.0"
     }
 }
