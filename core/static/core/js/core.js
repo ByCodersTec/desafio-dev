@@ -1,3 +1,8 @@
+// manipulando ele
+const create_grid = () => {
+    console.log("chegou aqui")
+}
+
 //requests
 function request (url, settings) {
     url = new URL(url)
@@ -11,17 +16,20 @@ const submit_form = async () => {
         get_swal_alert(["Atenção !", "Revise o arquivo fornecido.", "info"])
         return
     }
-
+    
+    
+    const location = `${window.location.protocol}${window.location.host}`
+    const url = `${location}/api/importador/cnab/`
+    const form_data = new FormData(document.getElementById("form_arquivo"))
+    
     const settings = {
         "method": "POST",
         "headers": {
             "X-CSRFToken": get_cookie('csrftoken'),
         },
-        "body": validation["form"]
+        "body": form_data
     }
-    const location = `${window.location.protocol}${window.location.host}`
-    const url = `${location}/core/api/importador/cnab/`
-    
+
     const response_code = {
         200: success,
         404: not_found,
@@ -32,7 +40,7 @@ const submit_form = async () => {
     try {
         const response = await request(url, settings)
         const dados = await response.json()
-        response_code[response.status](dados, monta_grid_lancamentos)
+        response_code[response.status](dados, create_grid)
     } catch (e){
         console.log(e)
         swal.close()
@@ -49,6 +57,19 @@ const get_swal_alert = ([title, text, icon] = par) => {
         icon: icon,
     })
 }
+
+
+const alerta_processando = () => {
+    Swal.fire({
+        title: 'Processando!',
+        icon : "info",
+        html: 'extraindo informações..',
+            onOpen: () => {
+                swal.showLoading()
+            }
+   })
+}
+
 
 const success = (dados, metodo) => {
     metodo(dados)
@@ -74,14 +95,12 @@ const error_function_dependency = () => {
 
 const get_validation = () => {
     let is_valid = false
-    let form_data
     const file = document.getElementById("file")
     if(file.files.length > 0){
         is_valid = true
-        form_data = new FormData(document.getElementById("form_arquivo"))
     }
 
-    return { is_valid, form_data }
+    return { is_valid }
 }
 
 const get_cookie = (cname) => {
