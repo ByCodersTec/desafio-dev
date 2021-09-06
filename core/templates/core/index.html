@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+    <script  src="{% static '/core/js/core.js' %}"></script>
+{% endblock %}
+{% block main %}
+    <div class="div-form-importador">
+        <form id="form_arquivo" action="" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <input id="file" name="file" type="file"  onchange="submit_form()" accept="text/plain">
+            </div>
+        </form>
+    </div>
+{% endblock %}
