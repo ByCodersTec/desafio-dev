@@ -34,14 +34,15 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
             return fields
         return None
 
+        
+class TipoTransacaoSerializer(DynamicFieldsModelSerializer, serializers.ModelSerializer):
+    class Meta:
+        model = TipoTransacao
+        fields = "__all__"
 
-class CnabSerializer(serializers.ModelSerializer):
+class CnabSerializer(DynamicFieldsModelSerializer, serializers.ModelSerializer):
     tipo_transacao = TipoTransacaoSerializer(source='tipo', fields={"tipo", "descricao", "naturesa", "sinal"}) 
     class Meta:
         model = Cnab
         fields = "__all__"
 
-class TipoTransacaoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TipoTransacao
-        fields = "__all__"
