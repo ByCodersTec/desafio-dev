@@ -20,7 +20,7 @@ const submit_form = async () => {
         "body": validation["form"]
     }
     const location = `${window.location.protocol}${window.location.host}`
-    const url = `${location}/rh/api/importador/cnab/`
+    const url = `${location}/core/api/importador/cnab/`
     
     const response_code = {
         200: success,
