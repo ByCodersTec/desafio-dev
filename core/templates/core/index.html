@@ -2,14 +2,47 @@
 {% load static %}
 {% block header %}
     <script  src="{% static '/core/js/core.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="{% static '/core/css/core.css' %}">
 {% endblock %}
 {% block main %}
-    <div class="div-form-importador">
-        <form id="form_arquivo" action="" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <input id="file" name="file" type="file"  onchange="submit_form()" accept="text/plain">
+
+    <div class="container mt-5">
+        <div class="card col-md-12" style="padding: 0;">
+            <div class="card-header col-md-12 bg-color">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 >
+                            Importador 
+                        </h2>
+                    </div>
+                </div>
             </div>
-        </form>
+            <div id="card-body" class="card-body">
+                <div id="div-form-importador" class="hidden">
+                    <form id="form-arquivo" action="" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <input id="file" name="file" type="file"  onchange="submit_form()" accept="text/plain">
+                        </div>
+                    </form>
+                </div>
+                <div id="div-btn-importador">
+                    <button id="btn-importador" type="button" class="btn btn-outline-info">Importar Arquivo</button>
+                </div>
+                <div id="div-tabela" class="row">
+                    <div class="col-md-12 mt-2 overflow">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-color text-white font-weight-bold">
+                                </tr>
+                            </thead>
+                            <tbody id="listagem-lancamentos">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
     </div>
+
 {% endblock %}
