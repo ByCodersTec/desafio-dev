@@ -1,0 +1,1 @@
+//Aqui devem fica os códigos que podem ser aproveitados globalmente.
