@@ -9,7 +9,7 @@ class TipoTransacao(models.Model):
     sinal = models.CharField(max_length=1, blank=False, null=False)
 
 class Cnab(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     data_ocorrencia = models.DateField(blank=True, null=True)
     valor = models.DecimalField(
         max_digits=15,
@@ -17,7 +17,7 @@ class Cnab(models.Model):
         blank=True,
         null=True,
     )
-    cpf = models.IntegerField(
+    cpf = models.BigIntegerField(
         blank=True, null=True
     )
     cartao = models.CharField(
