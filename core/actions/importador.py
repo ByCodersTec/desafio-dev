@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import status as Status
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.forms.models import model_to_dict
 from decimal import Decimal
 from core.models import (
@@ -93,8 +93,11 @@ class ImportadorViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["get"], url_path="get_all_cnab")
     def get_all_cnab(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.queryset.objects.all(), fields={
-            "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
-        }, many=True)
+        serializer = self.serializer_class(
+            self.queryset.objects.all(), 
+            fields={
+                "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
+            }, 
+            many=True)
 
         return JsonResponse(serializer.data, safe=False)

@@ -24,10 +24,11 @@ class TestImportador(unittest.TestCase):
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, Status.HTTP_200_OK)
     
-    def test_canb_deve_retornar_status_200_caso_consiga_processar(self):
+    def test_cnab_deve_retornar_status_200_caso_consiga_processar(self):
         url = "/api/importador/get_all_cnab/"
         response = self.client.get(url)
-        self.assertEqual(response.status_code, Status.HTTP_200_OK)        
+        self.assertEqual(response.status_code, Status.HTTP_200_OK)
+    
 
 
 class TestUtils(unittest.TestCase):

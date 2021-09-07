@@ -1,5 +1,11 @@
 // manipulando elementos
 
+const limpa_conteudo_elemento = (id_elemento) => {
+    id_elemento = document.getElementById(id_elemento)
+    while(id_elemento.firstChild) id_elemento.removeChild(id_elemento.firstChild)
+}
+
+
 const get_total_loja = (lancamento, proximo_lancamento, dados, listagem) => {
     let insere_total = false
     let nome_loja = ""
@@ -95,6 +101,7 @@ const ordenar = (lancamento_a, lancamento_b) => {
   }
 
 const create_grid = (dados) => {
+    limpa_conteudo_elemento("listagem-lancamentos")
     document.getElementById("div-tabela").classList.remove("hidden")
     dados.sort(ordenar)
     const qtd_total = dados.length
@@ -160,6 +167,41 @@ const submit_form = async () => {
     }
 }
 
+const get_all_cnab = async () => {
+    
+    const location = `${window.location.protocol}${window.location.host}`
+    const url = `${location}/api/importador/get_all_cnab/`
+    
+    const settings = {
+        "method": "GET",
+    }
+    alerta_carregando()
+    
+    const response_code = {
+        200: success,
+        404: not_found,
+        422: error_parameters,
+        500: error_internal,
+        424: error_function_dependency
+    }
+
+    try {
+        const response = await request(url, settings)
+        const dados = await response.json()
+        document.getElementById("file").value = ""
+        swal.close()
+        if(dados.length == 0){
+            get_swal_alert(["Atenção !", "Nenhum registro encontrado.", "info"])
+            return
+        }
+        response_code[response.status](dados, create_grid)
+    } catch (e){
+        console.log(e)
+        swal.close()
+        get_swal_alert(["Erro !", "Ocorreu um erro inesperado.", "error"])
+    }
+}
+
 
 //alerts
 const get_swal_alert = ([title, text, icon] = par) => {
@@ -180,6 +222,20 @@ const alerta_processando = () => {
                 swal.showLoading()
             }
    })
+}
+
+
+function alerta_carregando(){
+
+    Swal.fire({
+        title: 'Carregando!',
+        icon : "info",
+        html: 'Buscando informações solicitadas..',
+            didOpen: () => {
+                swal.showLoading()
+            }
+   })
+
 }
 
 
@@ -235,6 +291,7 @@ const get_cookie = (cname) => {
 //ações iniciais
 const acoes_iniciais = () => {
     document.getElementById("btn-importador").addEventListener("click", click_input_arquivo)
+    document.getElementById("btn-visualizar").addEventListener("click", get_all_cnab)
 }
 
 window.addEventListener("load", acoes_iniciais)
