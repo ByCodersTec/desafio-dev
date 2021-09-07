@@ -83,9 +83,12 @@ class ImportadorViewSet(viewsets.ModelViewSet):
             linhas = f.readlines()
             lista_instancia += [ UtilsViewSet.cria_instancia(linha) for linha in linhas ]
 
-        self.queryset.objects.bulk_create(lista_instancia)
-        serializer = self.serializer_class(lista_instancia, fields={
-            "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
-        }, many=True)
+            self.queryset.objects.bulk_create(lista_instancia)
+            serializer = self.serializer_class(lista_instancia, fields={
+                "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
+            }, many=True)
 
-        return JsonResponse(serializer.data, safe=False)
+            return JsonResponse(serializer.data, safe=False)
+        return JsonResponse({}, safe=False, status=Status.HTTP_424_FAILED_DEPENDENCY)
+
+   

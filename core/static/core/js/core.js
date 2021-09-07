@@ -143,7 +143,8 @@ const submit_form = async () => {
         200: success,
         404: not_found,
         422: error_parameters,
-        500: error_internal
+        500: error_internal,
+        424: error_function_dependency
     }
 
     try {
