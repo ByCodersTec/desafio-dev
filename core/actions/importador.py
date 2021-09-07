@@ -85,7 +85,7 @@ class ImportadorViewSet(viewsets.ModelViewSet):
 
         self.queryset.objects.bulk_create(lista_instancia)
         serializer = self.serializer_class(lista_instancia, fields={
-            "tipo_transacao"
+            "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
         }, many=True)
-        
+
         return JsonResponse(serializer.data, safe=False)
