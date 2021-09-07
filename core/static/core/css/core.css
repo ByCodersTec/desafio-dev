@@ -1,0 +1,40 @@
+h2 {
+    text-align: center;
+    color: white;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #374A83;
+}
+
+.bg-color {
+    background: #0275d8;
+}
+
+.hidden {
+    display: none;
+}
+
+#btn-importador {
+    font-weight: bold;
+}
+
+#btn-importador:hover {
+    color: #FFF;
+}
+
+.overflow {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 50vh;
+    
+}
+
+@media screen and (max-width: 634px) {
+    .overflow {
+        max-width: 634px
+    }
+}
