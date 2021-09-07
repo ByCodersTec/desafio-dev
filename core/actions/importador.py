@@ -91,4 +91,10 @@ class ImportadorViewSet(viewsets.ModelViewSet):
             return JsonResponse(serializer.data, safe=False)
         return JsonResponse({}, safe=False, status=Status.HTTP_424_FAILED_DEPENDENCY)
 
-   
+    @action(detail=False, methods=["get"], url_path="get_all_cnab")
+    def get_all_cnab(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.queryset.objects.all(), fields={
+            "tipo","valor", "data_ocorrencia", "cpf", "cartao", "hora", "dono_loja", "nome_loja", "tipo_transacao"
+        }, many=True)
+
+        return JsonResponse(serializer.data, safe=False)
