@@ -18,12 +18,13 @@ thead {
     display: none;
 }
 
-#btn-importador {
+.btn-menu {
     font-weight: bold;
 }
 
-#btn-importador:hover {
+.btn-menu:hover {
     color: #FFF;
+    font-weight: bold;
 }
 
 .overflow {
