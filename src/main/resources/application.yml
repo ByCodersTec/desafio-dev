@@ -1,0 +1,8 @@
+spring:
+  flyway:
+    enabled: false
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/FINANCIAL_TRANSACTIONS
+    username: ft_user
+    password: ft_pwd
