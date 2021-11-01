@@ -1,4 +1,6 @@
 spring:
+  jpa:
+    generate-ddl: false
   flyway:
     enabled: false
   datasource:
