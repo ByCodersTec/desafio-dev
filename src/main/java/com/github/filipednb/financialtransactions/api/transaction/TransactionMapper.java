@@ -22,7 +22,7 @@ public interface TransactionMapper {
     @Mapping(target = "numCard", source = "cartao")
     @Mapping(target = "owner.name", source = "donoLoja")
     @Mapping(target = "store.name", source = "nomeLoja")
-    @Mapping(target = "document.document", source = "cpf")
+    @Mapping(target = "document.numDocument", source = "cpf")
     @Mapping(target = "transactionType", source = "dto", qualifiedByName = "dtoToTransactionType")
     @Mapping(target = "dateOccurrence", source = "dto", qualifiedByName = "dtoToDateOccurrence")
     TransactionEntity toEntity(TransactionDTO dto);
@@ -31,7 +31,6 @@ public interface TransactionMapper {
     default LocalDateTime dtoToDateOccurrence(TransactionDTO dto) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
-        System.out.println(dto);
         return LocalDateTime.of(LocalDate.parse(dto.getData(),dateFormatter),
                 LocalTime.parse(dto.getHora(), timeFormatter));
     }

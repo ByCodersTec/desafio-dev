@@ -8,6 +8,6 @@ public interface TransactionService {
 
     List<TransactionEntity> getAll();
 
-    List<TransactionEntity> uploadFile(MultipartFile file);
+    void uploadFile(MultipartFile file);
 
 }

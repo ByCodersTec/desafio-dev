@@ -2,12 +2,11 @@ package com.github.filipednb.financialtransactions.api.transaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.*;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,13 +29,12 @@ public class TransactionResource {
 
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public List<TransactionEntity> uploadTransactionsFile(@RequestParam("file") MultipartFile file) {
-        log.info("M=saveAll, I=Uploading transactions file, file={}", file);
+    public void uploadTransactionsFile(MultipartFile file) {
+        log.info("M=saveAll, I=Uploading transactions file, request={}", file);
 
         service.uploadFile(file);
-
-        return null;
     }
 
 

@@ -1,15 +1,18 @@
 package com.github.filipednb.financialtransactions.api.transaction;
 
+import com.github.filipednb.financialtransactions.api.document.DocumentEntity;
+import com.github.filipednb.financialtransactions.api.enums.TransactionType;
 import com.github.filipednb.financialtransactions.api.owner.OwnerEntity;
 import com.github.filipednb.financialtransactions.api.store.StoreEntity;
-import com.github.filipednb.financialtransactions.api.transactiontype.TransactionTypeEntity;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TRANSACTIONS")
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "TRANSACTIONS", schema = "FINANCIAL_TRANSACTIONS")
 public class TransactionEntity {
 
     public TransactionEntity() {
@@ -20,22 +23,34 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_OWNER")
     private OwnerEntity owner;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_STORE")
     private StoreEntity store;
 
-    @OneToOne
-    private TransactionTypeEntity transactionType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_DOCUMENT")
+    private DocumentEntity document;
+
+    @Column(name = "NUM_CARD")
+    private String numCard;
+
+    @Enumerated
+    @Column(name = "COD_TRANSACTION_TYPE")
+    private TransactionType transactionType;
 
     @Column(name = "NUM_AMOUNT")
     private Float amount;
 
-    private Date dateOccurrence;
+    @Column(name = "DATE_OCCURRENCE")
+    private LocalDateTime dateOccurrence;
 
     @CreatedDate
-    private Date dateCreation;
+    @Column(name = "DATE_CREATION")
+    private LocalDateTime dateCreation;
 
     public Integer getId() {
         return id;
@@ -61,11 +76,27 @@ public class TransactionEntity {
         this.store = store;
     }
 
-    public TransactionTypeEntity getTransactionType() {
+    public DocumentEntity getDocument() {
+        return document;
+    }
+
+    public void setDocument(DocumentEntity document) {
+        this.document = document;
+    }
+
+    public String getNumCard() {
+        return numCard;
+    }
+
+    public void setNumCard(String numCard) {
+        this.numCard = numCard;
+    }
+
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(TransactionTypeEntity transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 
@@ -77,19 +108,19 @@ public class TransactionEntity {
         this.amount = amount;
     }
 
-    public Date getDateOccurrence() {
+    public LocalDateTime getDateOccurrence() {
         return dateOccurrence;
     }
 
-    public void setDateOccurrence(Date dateOccurrence) {
+    public void setDateOccurrence(LocalDateTime dateOccurrence) {
         this.dateOccurrence = dateOccurrence;
     }
 
-    public Date getDateCreation() {
+    public LocalDateTime getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 }

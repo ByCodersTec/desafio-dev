@@ -1,8 +1,9 @@
 package com.github.filipednb.financialtransactions.api.transaction.impl;
 
-import com.github.filipednb.financialtransactions.api.transaction.TransactionEntity;
-import com.github.filipednb.financialtransactions.api.transaction.TransactionRepository;
-import com.github.filipednb.financialtransactions.api.transaction.TransactionService;
+import com.github.filipednb.financialtransactions.api.document.DocumentService;
+import com.github.filipednb.financialtransactions.api.owner.OwnerService;
+import com.github.filipednb.financialtransactions.api.store.StoreService;
+import com.github.filipednb.financialtransactions.api.transaction.*;
 import com.github.filipednb.financialtransactions.file.FileParser;
 import com.github.filipednb.financialtransactions.file.TransactionDTO;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -19,11 +21,23 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository repository;
     private final FileParser fileParser;
+    private final TransactionMapper mapper;
+    private final StoreService storeService;
+    private final DocumentService documentService;
+    private final OwnerService ownerService;
 
     public TransactionServiceImpl(final TransactionRepository repository,
-                                  final FileParser fileParser) {
+                                  final FileParser fileParser,
+                                  final TransactionMapper mapper,
+                                  final StoreService storeService,
+                                  final DocumentService documentService,
+                                  final OwnerService ownerService) {
         this.repository = repository;
         this.fileParser = fileParser;
+        this.mapper = mapper;
+        this.storeService = storeService;
+        this.documentService = documentService;
+        this.ownerService = ownerService;
     }
 
 
@@ -33,10 +47,19 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionEntity> uploadFile(MultipartFile file) {
+    public void uploadFile(MultipartFile file) {
         log.info("M=uploadFile, I=Uploading file, fileName={}", file.getOriginalFilename());
         List<TransactionDTO> transactionDTOS = fileParser.parse(file);
+        List<TransactionEntity> entities = transactionDTOS.stream()
+                .map(mapper::toEntity)
+                .peek(t -> {
+                    t.setStore(storeService.retrieveStore(t.getStore().getName()));
+                    t.setDocument(documentService.retrieveDocument(t.getDocument().getNumDocument()));
+                    t.setOwner(ownerService.retrieveOwner(t.getOwner().getName()));
+                })
+                .collect(Collectors.toList());
 
-        return null;
+
+        repository.saveAll(entities);
     }
 }
