@@ -18,7 +18,7 @@ public class TransactionTypeEntity {
     private String description;
 
     @Column
-    private TransactionType type;
+    private TransactionTypeEnum type;
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class TransactionTypeEntity {
         this.description = description;
     }
 
-    public TransactionType getType() {
+    public TransactionTypeEnum getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
+    public void setType(TransactionTypeEnum type) {
         this.type = type;
     }
 }
