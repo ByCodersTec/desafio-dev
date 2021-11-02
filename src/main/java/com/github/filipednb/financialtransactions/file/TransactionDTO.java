@@ -1,20 +1,17 @@
 package com.github.filipednb.financialtransactions.file;
 
 import com.ancientprogramming.fixedformat4j.annotation.Field;
-import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
-
-import java.util.Date;
 
 @Record
 public class TransactionDTO {
 
     private Integer tipo;
-    private Date data;
+    private String data;
     private Integer valor;
     private String cpf;
     private String cartao;
-    private Integer hora;
+    private String hora;
     private String donoLoja;
     private String nomeLoja;
 
@@ -28,12 +25,11 @@ public class TransactionDTO {
     }
 
     @Field(offset = 2, length = 8)
-    @FixedFormatPattern("yyyyMMdd")
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -65,11 +61,11 @@ public class TransactionDTO {
     }
 
     @Field(offset = 43, length = 6)
-    public Integer getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Integer hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
