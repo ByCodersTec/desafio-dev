@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +22,9 @@ public class FileParserImpl implements FileParser {
 
     private static final FixedFormatManager manager = new FixedFormatManagerImpl();
 
-
-
     @Override
     public List<TransactionDTO> parse(MultipartFile file) {
-        log.info("M=parse, I=Parsing file, file={}", file);
+        log.info("M=parse, I=Parsing file, fileName={}", file.getOriginalFilename());
         try {
 
             String fileContent = new String(file.getBytes());
@@ -38,9 +35,9 @@ public class FileParserImpl implements FileParser {
                     .collect(Collectors.toList());
 
         } catch (IOException | FixedFormatException ex) {
-            log.error(ex.getMessage());
+            log.error("M=parse, E=Error in file parsing, fileName={}, errorMessage={}",
+                   file.getOriginalFilename(), ex.getMessage(), ex);
+            throw new FileParsingException(String.format("Erro ao analisar o arquivo %s", file.getOriginalFilename()));
         }
-
-        return null;
     }
 }

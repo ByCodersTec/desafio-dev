@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.github.filipednb'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "13"
 
 repositories {
 	mavenCentral()
@@ -46,3 +46,4 @@ flyway {
 	password = 'migration_pwd'
 	schemas = ['FINANCIAL_TRANSACTIONS']
 }
+targetCompatibility = JavaVersion.VERSION_13

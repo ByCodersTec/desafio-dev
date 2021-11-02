@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionEntity> uploadFile(MultipartFile file) {
-        log.info("M=uploadFile, I=Uploading file");
+        log.info("M=uploadFile, I=Uploading file, fileName={}", file.getOriginalFilename());
         List<TransactionDTO> transactionDTOS = fileParser.parse(file);
 
         return null;
