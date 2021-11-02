@@ -1,6 +1,9 @@
 spring:
   jpa:
     generate-ddl: false
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   flyway:
     enabled: false
   datasource:
