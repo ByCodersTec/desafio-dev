@@ -2,6 +2,7 @@ package com.github.filipednb.financialtransactions.file.impl;
 
 import com.github.filipednb.financialtransactions.file.FileParser;
 import com.github.filipednb.financialtransactions.file.TransactionDTO;
+import com.github.filipednb.financialtransactions.file.exception.FileParsingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

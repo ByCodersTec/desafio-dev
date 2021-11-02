@@ -5,6 +5,7 @@ import com.ancientprogramming.fixedformat4j.format.FixedFormatManager;
 import com.ancientprogramming.fixedformat4j.format.impl.FixedFormatManagerImpl;
 import com.github.filipednb.financialtransactions.file.FileParser;
 import com.github.filipednb.financialtransactions.file.TransactionDTO;
+import com.github.filipednb.financialtransactions.file.exception.FileParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

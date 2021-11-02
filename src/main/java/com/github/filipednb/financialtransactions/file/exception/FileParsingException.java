@@ -1,4 +1,4 @@
-package com.github.filipednb.financialtransactions.file.impl;
+package com.github.filipednb.financialtransactions.file.exception;
 
 public class FileParsingException extends RuntimeException {
     public FileParsingException(String msg) {
