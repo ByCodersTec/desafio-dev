@@ -1,5 +1,7 @@
 package com.github.filipednb.financialtransactions.api.owner;
 
+import com.github.filipednb.financialtransactions.api.transaction.TransactionEntity;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,13 +12,21 @@ public class OwnerEntity {
     public OwnerEntity() {
     }
 
+    public OwnerEntity(String name) {
+        this.name = name;
+    }
+
     @Id
     @Column(name = "ID_OWNER")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "NAM_OWNER")
+    @Column(name = "NAM_OWNER", unique = true)
     private String name;
+
+    @JoinColumn(name="ID_TRANSACTION")
+    @OneToOne(fetch = FetchType.LAZY)
+    private TransactionEntity transaction;
 
     public Integer getId() {
         return id;
