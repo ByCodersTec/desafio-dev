@@ -1,6 +1,5 @@
 package com.github.filipednb.financialtransactions.api.store.impl;
 
-import com.github.filipednb.financialtransactions.api.owner.impl.OwnerServiceImpl;
 import com.github.filipednb.financialtransactions.api.store.StoreEntity;
 import com.github.filipednb.financialtransactions.api.store.StoreRepository;
 import com.github.filipednb.financialtransactions.api.store.StoreService;
@@ -13,7 +12,7 @@ public class StoreServiceImpl implements StoreService {
 
     private static final Logger log = LoggerFactory.getLogger(StoreServiceImpl.class);
 
-    private StoreRepository repository;
+    private final StoreRepository repository;
 
     public StoreServiceImpl(StoreRepository repository) {
         this.repository = repository;

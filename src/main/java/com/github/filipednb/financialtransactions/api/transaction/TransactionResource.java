@@ -24,16 +24,13 @@ public class TransactionResource {
     @GetMapping
     public List<TransactionEntity> getAll() {
         log.info("M=getAll, I=Get all transactions");
-
         return service.getAll();
-
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void uploadTransactionsFile(MultipartFile file) {
         log.info("M=saveAll, I=Uploading transactions file, request={}", file);
-
         service.uploadFile(file);
     }
 

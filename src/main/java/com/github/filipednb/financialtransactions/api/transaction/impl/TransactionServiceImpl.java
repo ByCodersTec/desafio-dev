@@ -43,7 +43,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionEntity> getAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
