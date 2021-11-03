@@ -1,11 +1,12 @@
 spring:
   jpa:
-    generate-ddl: true
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
   flyway:
     enabled: false
   datasource:
     driverClassName: org.h2.Driver
     platform: mysql
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;IGNORECASE=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS FINANCIAL_TRANSACTIONS
     username: sa
     password:

@@ -5,7 +5,7 @@ import com.github.filipednb.financialtransactions.api.transaction.TransactionEnt
 import javax.persistence.*;
 
 @Entity
-@Table(name = "OWNERS")
+@Table(name = "OWNERS", schema = "FINANCIAL_TRANSACTIONS")
 
 public class OwnerEntity {
 

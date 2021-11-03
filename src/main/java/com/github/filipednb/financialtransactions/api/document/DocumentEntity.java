@@ -5,7 +5,7 @@ import com.github.filipednb.financialtransactions.api.transaction.TransactionEnt
 import javax.persistence.*;
 
 @Entity
-@Table(name = "DOCUMENTS")
+@Table(name = "DOCUMENTS", schema = "FINANCIAL_TRANSACTIONS")
 public class DocumentEntity {
 
     public DocumentEntity() {
