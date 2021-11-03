@@ -9,6 +9,7 @@ import com.github.filipednb.financialtransactions.file.TransactionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public void uploadFile(MultipartFile file) {
         log.info("M=uploadFile, I=Uploading file, fileName={}", file.getOriginalFilename());
         List<TransactionDTO> transactionDTOS = fileParser.parse(file);
