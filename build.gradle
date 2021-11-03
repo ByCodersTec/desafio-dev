@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'org.flywaydb.flyway' version '8.0.2'
+	id 'com.github.node-gradle.node' version '3.1.1'
 }
 
 group = 'com.github.filipednb'
@@ -11,6 +12,10 @@ sourceCompatibility = "13"
 
 repositories {
 	mavenCentral()
+}
+
+node {
+	version = '14.18.1'
 }
 
 ext {
@@ -50,4 +55,19 @@ flyway {
 	password = 'migration_pwd'
 	schemas = ['FINANCIAL_TRANSACTIONS']
 }
+
+task buildReactApp(type: NodeTask, dependsOn: 'npmInstall') {
+	script = project.file('node_modules/webpack/bin/webpack.js')
+	args = [
+			'--mode', 'production',
+			'--entry', './src/main/webapp/Main.jsx',
+			'-o', './src/main/resources/static/dist'
+	]
+}
+
+processResources.dependsOn 'buildReactApp'
+
+clean.delete << file('node_modules')
+clean.delete << file('src/main/resources/static/dist')
+
 targetCompatibility = JavaVersion.VERSION_13
