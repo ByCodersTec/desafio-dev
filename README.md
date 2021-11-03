@@ -18,9 +18,9 @@ Foi pensado que a estrutura do Banco deveria ser versionado, portando criaremos 
 um para a aplicação, com permissão apenas de leitura e escrita e outro para o Flyway, com
 mais privilégios, podendo criar, apagar e alterar a estrutura das tabelas.  
 
-### Preparando o ambiente:
+## Preparando o ambiente:
 
-#### Banco de dados:
+### Banco de dados:
 
 Criar container do MySQL à partir da imagem padrão do docker hub:
 
@@ -47,7 +47,7 @@ Saia do mysql digitando `exit`:
 `mysql> exit` 
 
 
-####Rodando a API:
+### Rodando a API:
 
 Para criar a estrutura inicial das tabelas, no terminal, na raiz do projeto, executar:
 `./gradlew flywayMigrate`
