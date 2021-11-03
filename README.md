@@ -20,6 +20,13 @@ mais privilégios, podendo criar, apagar e alterar a estrutura das tabelas.
 
 ## Preparando o ambiente:
 
+### Java
+Para preparar o ambiente corretamente eu utilizo o [Jabba](https://github.com/shyiko/jabba) para gerenciar as versões da JDK.
+
+`jabba install zulu@1.13.0-0`
+
+`jabba use zulu@1.13.0-0`
+
 ### Banco de dados:
 
 Criar container do MySQL à partir da imagem padrão do docker hub:
