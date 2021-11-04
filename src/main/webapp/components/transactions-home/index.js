@@ -1,0 +1,1 @@
+export { default as TransactionsHome } from './container';
