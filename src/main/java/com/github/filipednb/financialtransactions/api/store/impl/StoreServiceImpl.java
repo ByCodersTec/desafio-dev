@@ -6,6 +6,8 @@ import com.github.filipednb.financialtransactions.api.store.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -19,6 +21,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public StoreEntity retrieveStore(String name) {
         log.info("M=retrieveStore, I=Retrieving store, name={}", name);
 

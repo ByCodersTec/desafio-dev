@@ -10,4 +10,6 @@ public interface TransactionService {
 
     void uploadFile(MultipartFile file);
 
+    TransactionsResume getTransactionsResumeByStoreName(String storeName);
+
 }

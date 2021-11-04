@@ -1,6 +1,8 @@
 package com.github.filipednb.financialtransactions.api.transaction.impl;
 
 import com.github.filipednb.financialtransactions.api.document.DocumentService;
+import com.github.filipednb.financialtransactions.api.enums.Movement;
+import com.github.filipednb.financialtransactions.api.exception.NotFoundStoreException;
 import com.github.filipednb.financialtransactions.api.owner.OwnerService;
 import com.github.filipednb.financialtransactions.api.store.StoreService;
 import com.github.filipednb.financialtransactions.api.transaction.*;
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +65,38 @@ public class TransactionServiceImpl implements TransactionService {
                 })
                 .collect(Collectors.toList());
 
-
         repository.saveAll(entities);
+    }
+
+    @Override
+    public TransactionsResume getTransactionsResumeByStoreName(String storeName) {
+        log.info("M=getTransactionsResumeByStoreName, I=Searching for store transactions, storeName={}", storeName);
+
+        List<TransactionEntity> transactions = repository.findByStoreName(storeName);
+
+        Optional.ofNullable(transactions).orElseThrow(() -> new NotFoundStoreException("Loja não encontrada"));
+
+        final TransactionsResume resume = new TransactionsResume();
+
+        resume.setStore(transactions.get(0).getStore());
+        resume.setTransactions(transactions);
+        resume.setTotalAmount(sumTotalAmount(transactions));
+
+        return resume;
+    }
+
+    private BigDecimal sumTotalAmount(List<TransactionEntity> transactions) {
+        BigDecimal totalIN = BigDecimal.ZERO;
+        BigDecimal totalOUT = BigDecimal.ZERO;
+
+        for(TransactionEntity t : transactions) {
+            if(Movement.IN.equals(t.getTransactionType().getMovement())) {
+                totalIN = totalIN.add(t.getAmount());
+            } else if(Movement.OUT.equals(t.getTransactionType().getMovement())) {
+                totalOUT = totalOUT.add(t.getAmount());
+            }
+        }
+
+        return totalIN.subtract(totalOUT);
     }
 }

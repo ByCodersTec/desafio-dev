@@ -1,12 +1,9 @@
 package com.github.filipednb.financialtransactions.api.owner;
 
-import com.github.filipednb.financialtransactions.api.transaction.TransactionEntity;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "OWNERS", schema = "FINANCIAL_TRANSACTIONS")
-
 public class OwnerEntity {
 
     public OwnerEntity() {
@@ -24,10 +21,6 @@ public class OwnerEntity {
     @Column(name = "NAM_OWNER", unique = true)
     private String name;
 
-    @JoinColumn(name="ID_TRANSACTION")
-    @OneToOne(fetch = FetchType.LAZY)
-    private TransactionEntity transaction;
-
     public Integer getId() {
         return id;
     }
@@ -43,6 +36,7 @@ public class OwnerEntity {
     public void setName(String name) {
         this.name = name;
     }
+
 }
 
 

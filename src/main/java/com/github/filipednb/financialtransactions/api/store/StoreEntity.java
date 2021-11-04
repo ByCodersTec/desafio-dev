@@ -23,10 +23,6 @@ public class StoreEntity {
     @Column(name = "NAM_STORE", unique = true)
     private String name;
 
-    @JoinColumn(name="ID_TRANSACTION")
-    @OneToOne(fetch = FetchType.LAZY)
-    private TransactionEntity transaction;
-
     public Integer getId() {
         return id;
     }

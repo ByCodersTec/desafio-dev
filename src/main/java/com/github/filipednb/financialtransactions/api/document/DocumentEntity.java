@@ -23,10 +23,6 @@ public class DocumentEntity {
     @Column(name = "NUM_DOCUMENT", unique = true)
     private String numDocument;
 
-    @JoinColumn(name="ID_TRANSACTION")
-    @OneToOne(fetch = FetchType.LAZY)
-    private TransactionEntity transaction;
-
     public Integer getId() {
         return id;
     }
@@ -42,4 +38,5 @@ public class DocumentEntity {
     public void setNumDocument(String numDocument) {
         this.numDocument = numDocument;
     }
+
 }
