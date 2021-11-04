@@ -7,6 +7,8 @@ import com.github.filipednb.financialtransactions.api.store.impl.StoreServiceImp
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -20,6 +22,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public DocumentEntity retrieveDocument(String numDocument) {
         log.info("M=retrieveDocument, I=Retrieving document, numDocument={}", numDocument);
 

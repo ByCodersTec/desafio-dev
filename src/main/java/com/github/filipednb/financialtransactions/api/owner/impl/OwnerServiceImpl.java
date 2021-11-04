@@ -6,6 +6,8 @@ import com.github.filipednb.financialtransactions.api.owner.OwnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -19,6 +21,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public OwnerEntity retrieveOwner(String name) {
         log.info("M=retrieveOwner, I=Retrieving owner, name={}", name);
 
