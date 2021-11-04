@@ -33,4 +33,8 @@ public enum TransactionType {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Unsupported transaction type: %s.", code)));
     }
 
+    public Movement getMovement() {
+        return this.movement;
+    }
+
 }

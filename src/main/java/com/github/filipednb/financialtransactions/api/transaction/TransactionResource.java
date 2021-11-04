@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -35,5 +36,10 @@ public class TransactionResource {
         service.uploadFile(file);
     }
 
+    @GetMapping("/resume")
+    public TransactionsResume getTransactionsResumeByStoreName(@PathParam("storeName") @NotEmpty String storeName) {
+        log.info("M=getTransactionsResumeByStoreName, I=Get all transactions from store, storeName={}", storeName);
+        return service.getTransactionsResumeByStoreName(storeName);
+    }
 
 }

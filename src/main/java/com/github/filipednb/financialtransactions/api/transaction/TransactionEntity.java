@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,12 +39,12 @@ public class TransactionEntity {
     @Column(name = "NUM_CARD")
     private String numCard;
 
-    @Enumerated
-    @Column(name = "COD_TRANSACTION_TYPE")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TRANSACTION_TYPE")
     private TransactionType transactionType;
 
     @Column(name = "NUM_AMOUNT")
-    private Float amount;
+    private BigDecimal amount;
 
     @Column(name = "DATE_OCCURRENCE")
     private LocalDateTime dateOccurrence;
@@ -100,11 +101,11 @@ public class TransactionEntity {
         this.transactionType = transactionType;
     }
 
-    public Float getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

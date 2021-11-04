@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -25,6 +24,12 @@ public class ApiExceptionHandler {
     public ResponseEntity<Object> handleDateException(FileParsingException ex) {
         Map<String, Object> body = getExceptionBoddy(ex);
         return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(NotFoundStoreException.class)
+    public ResponseEntity<Object> handleStoreNotFoundException(FileParsingException ex) {
+        Map<String, Object> body = getExceptionBoddy(ex);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
     private Map<String, Object> getExceptionBoddy(FileParsingException ex) {
