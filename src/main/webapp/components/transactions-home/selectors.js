@@ -1,0 +1,1 @@
+export const selectTransactionsList = (state) => state.transactionsReducer.transactionsList;
