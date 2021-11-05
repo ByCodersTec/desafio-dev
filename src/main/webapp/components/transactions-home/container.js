@@ -1,5 +1,5 @@
 import React from "react";
-import  TransactionsHome  from "./presentation";
+import TransactionsHome from "./presentation";
 
 const TransactionsHomeContainer = () => {
     return (

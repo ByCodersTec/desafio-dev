@@ -1,0 +1,25 @@
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 100%;
+}
+
+tfoot > tr > td {
+    text-align: right;
+}
+
+table {
+    margin-bottom: 100px;
+}
+
+footer {
+    clear: both;
+    position: relative;
+    height: 100px;
+    margin-top: -100px;  
+}
