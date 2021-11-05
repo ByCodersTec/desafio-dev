@@ -5,14 +5,18 @@ import { Footer } from "../footer"
 import { TransactionsList } from "../transactions-list";
 import "../../styles/global.css"
 
-const TransactionsHome = () => {
+const TransactionsHome = ({transactionsList, submitHandler, fileChangeHandler, file}) => {
     return (
-        <body>
+        <>
             <Header />
-            <UploadForm />
-            <TransactionsList />
+            <UploadForm
+                file={file}
+                fileChangeHandler={fileChangeHandler}
+                submitHandler={submitHandler}
+            />
+            <TransactionsList list={transactionsList}/>
             <Footer />
-        </body>
+        </>
     );
 }
 

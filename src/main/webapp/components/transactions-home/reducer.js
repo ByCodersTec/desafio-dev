@@ -1,20 +1,21 @@
-import { TRANSACTIONS_ERROR, TRANSACTIONS_SET, TRANSACTIONS_LOADING } from './constants'
+import { TRANSACTIONS_ERROR, TRANSACTIONS_SET, TRANSACTIONS_LOADING, CHANGE_FILE } from './constants'
 
 const INITIAL_STATE = {
     isLoading: false,
-    transactionsList: {},
+    transactionsList: [],
     selectedStore: '',
     file: '',
     error: '',
 }
 
-export const transactionsReducer = (state = INITIAL_STATE, { type, payload}) => {
+export const transactionsReducer = (state = INITIAL_STATE, { type, payload }) => {
     switch (type) {
-        case TRANSACTIONS_SET: 
+        case TRANSACTIONS_SET:
             return {
                 ...state,
                 transactionsList: payload,
-                isLoading: false
+                isLoading: false,
+                file: ''
             };
         case TRANSACTIONS_ERROR:
             return {
@@ -22,11 +23,18 @@ export const transactionsReducer = (state = INITIAL_STATE, { type, payload}) => 
                 error: 'Houve um erro na requisição, tente novamente',
                 isLoading: false
             };
-        case TRANSACTIONS_LOADING: 
+        case TRANSACTIONS_LOADING:
             return {
                 ...state,
                 isLoading: true
             }
+        case CHANGE_FILE:
+            return {
+                ...state,
+                file: payload,
+            }
+        default:
+            return state;
     }
 }
 

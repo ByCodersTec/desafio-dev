@@ -1,25 +1,65 @@
 html {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-    font-size: 20px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    height: 100%;
+  font-size: 1.2em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  height: 100%;
 }
 
 tfoot > tr > td {
-    text-align: right;
+  text-align: right;
 }
 
-table {
-    margin-bottom: 100px;
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+td,
+th {
+  padding: 10px;
 }
 
 footer {
-    clear: both;
-    position: relative;
-    height: 100px;
-    margin-top: -100px;  
+  clear: both;
+  position: relative;
+  height: 100px;
+  margin-top: -100px;
+}
+
+button {
+  background-color: #04aa6d;
+  color: #fff;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #999999;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #04aa6d;
+  font-size: 20px;
+  padding: 10px;
+  color: #fff;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #008655;
 }

@@ -1,13 +1,13 @@
 import React from "react";
 
-const TransactionsList = () => {
+const TransactionsList = ({ list }) => {
     return (
         <table>
             <thead>
                 <tr>
-                    <th>ID Transação</th>
+                    <th>ID</th>
                     <th>Número Cartão</th>
-                    <th>Nome da Loja</th>
+                    <th>Loja / Dono</th>
                     <th>CPF</th>
                     <th>Tipo</th>
                     <th>Data Ocorrência</th>
@@ -15,6 +15,21 @@ const TransactionsList = () => {
                 </tr>
             </thead>
             <tbody>
+                {
+                    list.map((t) => {
+                        return (
+                            <tr key={t.id}>
+                                <td>{t.id}</td>
+                                <td>{t.numCard}</td>
+                                <td>{t.owner.name} / {t.store.name}</td>
+                                <td>{t.document.numDocument}</td>
+                                <td>{t.transactionType}</td>
+                                <td>{t.dateOccurrence}</td>
+                                <td>{t.dateCreation}</td>
+                            </tr>
+                        )
+                    })
+                }
                 <tr>
                     <td>-----</td>
                     <td>-----</td>
@@ -25,12 +40,6 @@ const TransactionsList = () => {
                     <td>-----</td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colSpan={6}>Total:</td>  
-                    <td>R$ 100,00</td>
-                </tr>
-            </tfoot>
         </table>
     )
 }
