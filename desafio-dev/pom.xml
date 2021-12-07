@@ -15,6 +15,7 @@
 	<description>API para leitura de arquivo CNAB do projeto desafio dev</description>
 	<properties>
 		<java.version>11</java.version>
+        <spring-fox.version>2.9.2</spring-fox.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,6 +74,30 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.6.0</version>
         </dependency>
+        <!-- Documentação OpenAPI - Swagger-->
+        <!--<dependency>-->
+            <!--<groupId>io.springfox</groupId>-->
+            <!--<artifactId>springfox-swagger2</artifactId>-->
+            <!--<version>${spring-fox.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>io.springfox</groupId>-->
+            <!--<artifactId>springfox-swagger-ui</artifactId>-->
+            <!--<version>${spring-fox.version}</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webmvc-core</artifactId>
+            <version>1.5.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>

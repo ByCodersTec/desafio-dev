@@ -73,7 +73,7 @@ public class ArquivoResourceTest {
 
 
         mvc.perform(multiparRequest.file(arquivoCnab))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
 
