@@ -7,6 +7,10 @@ import br.com.desafiodev.repository.TipoTransacaoRepository;
 import br.com.desafiodev.repository.TransacaoRepository;
 import br.com.desafiodev.utils.DataUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,4 +73,13 @@ public class ArquivoService {
         return transacoes;
     }
 
+    public Page<Transacao> findAll(Transacao filter, Pageable pageRequest) {
+        Example<Transacao> example = Example.of(filter,
+                ExampleMatcher
+                        .matching()
+                        .withIgnoreCase()
+                        .withIgnoreNullValues()
+                        .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING));
+        return repository.findAll(example, pageRequest);
+    }
 }

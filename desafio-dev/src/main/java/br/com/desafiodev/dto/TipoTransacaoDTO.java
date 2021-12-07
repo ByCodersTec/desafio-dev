@@ -17,4 +17,5 @@ public class TipoTransacaoDTO {
     private String descricao;
     private String natureza;
     private String sinal;
+
 }

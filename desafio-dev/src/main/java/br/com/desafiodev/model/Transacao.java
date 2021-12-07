@@ -2,7 +2,10 @@ package br.com.desafiodev.model;
 
 import br.com.desafiodev.dto.TipoTransacaoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(schema = "transacao")
 public class Transacao {
@@ -44,4 +50,5 @@ public class Transacao {
 
     @Column(name = "nome_loja")
     private String nomeLoja;
+
 }

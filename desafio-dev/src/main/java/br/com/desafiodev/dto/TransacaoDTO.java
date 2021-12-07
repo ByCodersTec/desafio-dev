@@ -24,4 +24,5 @@ public class TransacaoDTO {
     private LocalTime hora;
     private String nomeDono;
     private String nomeLoja;
+
 }
