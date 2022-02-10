@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  desafiodev-api:
+    container_name: "desafiodev-api"
+    build: ./backend/api
+    restart: always
+    environment:
+      - NODE_ENV=dev
+      - DBNAME=${DBNAME}
+      - DBUSER=${DBUSER}
+      - DBPASSWORD=${DBPASSWORD}
+      - DBHOST=${DBHOST}
+    depends_on:
+      - postgresdb
+    volumes:
+      - ./backend/api:/usr/src/api
+    ports:
+      - "3100:3000"
+    networks:
+      - stacknet
+  
+  postgresdb:
+    image: postgres
+    ports: 
+      - "5433:5432"
+    volumes:
+       - pgdb:/var/lib/postgrespers
+    environment:
+      POSTGRES_USER: ${DBUSER}
+      POSTGRES_PASSWORD: ${DBPASSWORD}
+      POSTGRES_DB: ${DBNAME}
+    networks:
+      - stacknet
+
+networks:
+  stacknet:
+    driver: bridge
+
+volumes:
+  pgdb: {}
