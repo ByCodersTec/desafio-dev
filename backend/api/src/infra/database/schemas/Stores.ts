@@ -1,12 +1,12 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { sequelize } from '../index';
 
-export class Stores extends Model {}
-Stores.init({
+
+export const Stores = sequelize.define("Stores", {
   id: {
     type: DataTypes.UUID,
     primaryKey: true
   },
   storeOwner: DataTypes.STRING,
   storeName: DataTypes.STRING
-}, { sequelize, modelName: 'stores' });
+}, { modelName: 'Stores', tableName: 'stores' });
