@@ -10,20 +10,21 @@ export default class PostgresRepostory implements IRepository {
     return this.model.findByPk(id);
   }
 
-  findOne(where: object) {
-    return this.model.findOne({ where });
+  findOne(where: object, options: object = {}) {
+    console.log({ where, ...options });
+    return this.model.findOne({ where, ...options });
   }
 
-  findAll(where: object) {
+  findAll(where: object, options: object = {}) {
     if (!where) {
-      return this.model.findAll();
+      return this.model.findAll({ ...options });
     }
-    return this.model.findAll({ where });
+    return this.model.findAll({ where, ...options });
   }
   
-  save(data: object) {
+  save(data: object, options: object = {}) {
     Object.assign(data, { id: uuid() });
-    return this.model.create(data);
+    return this.model.create(data, options);
   }
 
   async exists(where: object) {
