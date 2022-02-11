@@ -1,16 +1,22 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { sequelize } from '../';
+import { Stores } from './Stores';
+import { TransactionsTypes } from './TransactionsTypes';
 
-export class Transactions extends Model {}
-Transactions.init({
+export const Transactions = sequelize.define("Transactions", {
   id: {
     type: DataTypes.UUID,
     primaryKey: true
   },
-  transactionTypeId: DataTypes.UUID,
-  storeId: DataTypes.UUID,
   value: DataTypes.DECIMAL,
   occurence: DataTypes.DATE,
-  buyerIdentification: DataTypes.NUMBER,
-  creditCard: DataTypes.NUMBER,
-}, { sequelize, modelName: 'transactions', timestamps: true });
+  buyerIdentification: DataTypes.STRING,
+  creditCard: DataTypes.STRING,
+}, {
+  modelName: 'Transactions',
+  tableName: 'transactions',
+  timestamps: true
+});
+
+Transactions.belongsTo(Stores, {as: 'store', foreignKey: 'storeId'});
+Transactions.belongsTo(TransactionsTypes, {as: 'ttypes', foreignKey: 'transactionTypeId'});
