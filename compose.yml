@@ -11,6 +11,9 @@ services:
       - DBUSER=${DBUSER}
       - DBPASSWORD=${DBPASSWORD}
       - DBHOST=${DBHOST}
+      - KAFKA_TOPIC_NAME=${KAFKA_TOPIC_NAME}
+      - KAFKA_INTERNAL_HOST=${KAFKA_INTERNAL_HOST}
+      - KAFKA_INTERNAL_PORT=${KAFKA_INTERNAL_PORT}
     depends_on:
       - postgresdb
     volumes:
@@ -19,10 +22,26 @@ services:
       - "3100:3000"
     networks:
       - stacknet
-  
+
+  desafiodev-parser:
+    container_name: "desafiodev-parser"
+    build: ./backend/parser
+    restart: always
+    environment:
+      - KAFKA_TOPIC_NAME=${KAFKA_TOPIC_NAME}
+      - KAFKA_INTERNAL_HOST=${KAFKA_INTERNAL_HOST}
+      - KAFKA_INTERNAL_PORT=${KAFKA_INTERNAL_PORT}
+    depends_on:
+      - desafiodev-api
+      - kafka
+    volumes:
+      - ./backend/parser:/usr/src/parser
+    networks:
+      - stacknet
+
   postgresdb:
     image: postgres
-    ports: 
+    ports:
       - "5433:5432"
     volumes:
        - pgdb:/var/lib/postgrespers
@@ -32,6 +51,41 @@ services:
       POSTGRES_DB: ${DBNAME}
     networks:
       - stacknet
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - stacknet
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${ZOOKEEPER_CLIENT_PORT}
+      ZOOKEEPER_TICK_TIME: ${ZOOKEEPER_TICK_TIME}
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - stacknet
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_CLIENT_PORT}
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_INTERNAL_HOST}:${KAFKA_INTERNAL_PORT},PLAINTEXT_HOST://${KAFKA_EXTERNAL_HOST}:${KAFKA_EXTERNAL_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    networks:
+      - stacknet
+    depends_on:
+      - kafka
+    ports:
+      - 19000:9000
+    environment:
+      KAFKA_BROKERCONNECT: ${KAFKA_INTERNAL_HOST}:${KAFKA_INTERNAL_PORT}
 
 networks:
   stacknet:
