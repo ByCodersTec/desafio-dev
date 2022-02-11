@@ -1,17 +1,19 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { sequelize } from '../';
 
-export class TransactionsTypes extends Model {}
-TransactionsTypes.init({
+export const TransactionsTypes = sequelize.define("TransactionsTypes", {
   id: {
     type: DataTypes.UUID,
     primaryKey: true
   },
-  code: DataTypes.INTEGER,
+  code: {
+    type: DataTypes.INTEGER,
+    unique: true
+  },
   label: DataTypes.STRING,
   type: {
     type: DataTypes.STRING,
-    values: ["input", "output"]
+    values: ["in", "out"]
   },
 
-}, { sequelize, modelName: 'transactionsTypes', tableName: 'transactions_types', timestamps: true });
+}, { modelName: 'TransactionsTypes', tableName: 'transactions_types', timestamps: true });
