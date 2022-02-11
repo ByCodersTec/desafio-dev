@@ -1,10 +1,10 @@
 
 export interface IRepository {
-  findById: (id: string) => Promise<void>;
-  findOne: (where: object) => Promise<void>;
-  findAll: (where: object) => Promise<void>;
-  save: (data: object) => Promise<void>;
+  findById: (id: string, options: object) => Promise<any>;
+  findOne: (where: object, options: object) => Promise<any>;
+  findAll: (where: object, options: object) => Promise<any>;
+  save: (data: object) => Promise<any>;
   exists: (where: object) => Promise<boolean>;
-  destroy: (id: string) => Promise<void>;
-  update: (id: string, data: object) => Promise<void>;
+  destroy: (id: string) => Promise<any>;
+  update: (id: string, data: object) => Promise<any>;
 }
