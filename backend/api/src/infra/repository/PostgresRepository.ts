@@ -22,13 +22,15 @@ export default class PostgresRepostory implements IRepository {
     return this.model.findAll({ where, ...options });
   }
   
-  save(data: object, options: object = {}) {
-    Object.assign(data, { id: uuid() });
+  save(data: any, options: object = {}, customid: string|null = null) {
+    if (!data.id) {
+      Object.assign(data, { id: uuid() });
+    }
     return this.model.create(data, options);
   }
 
   async exists(where: object) {
-    const find = await this.model.findOne(where);
+    const find = await this.model.findOne({ where });
     return find !== null;
   }
 
