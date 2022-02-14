@@ -3,6 +3,7 @@ import { SchemaValidator } from '../../../validators/schema';
 
 export const Schema = (req, res, next) => {
   const schema = Joi.object({
+    id: Joi.string(),
     storeOwner: Joi.string().required(),
     storeName: Joi.string().required(),
   }).required().min(1);
