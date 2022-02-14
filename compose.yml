@@ -16,10 +16,27 @@ services:
       - KAFKA_INTERNAL_PORT=${KAFKA_INTERNAL_PORT}
     depends_on:
       - postgresdb
+      - kafka
     volumes:
       - ./backend/api:/usr/src/api
     ports:
       - "3100:3000"
+    networks:
+      - stacknet
+  
+  desafiodev-seeds:
+    container_name: "desafiodev-seeds"
+    build: ./backend/seeds
+    environment:
+      - NODE_ENV=dev
+      - DBNAME=${DBNAME}
+      - DBUSER=${DBUSER}
+      - DBPASSWORD=${DBPASSWORD}
+      - DBHOST=${DBHOST}
+    depends_on:
+      - postgresdb
+    volumes:
+      - ./backend/seeds:/usr/src/seeds
     networks:
       - stacknet
 
@@ -28,6 +45,7 @@ services:
     build: ./backend/parser
     restart: always
     environment:
+      - API_URL=desafiodev-api:3000
       - KAFKA_TOPIC_NAME=${KAFKA_TOPIC_NAME}
       - KAFKA_INTERNAL_HOST=${KAFKA_INTERNAL_HOST}
       - KAFKA_INTERNAL_PORT=${KAFKA_INTERNAL_PORT}
