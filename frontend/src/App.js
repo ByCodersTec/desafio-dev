@@ -5,6 +5,7 @@ import PublicRoute from './routes/Public';
 import PrivateRoute from './routes/Private';
 
 import LoginPage from "./components/Auth";
+import AppModule from './components/App';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <PublicRoute exact path="/">
           <Redirect to="/app" />
         </PublicRoute>
-        <PrivateRoute path="/app" component={() => { <h1>Private Route</h1> }} />
+        <PrivateRoute path="/app" component={AppModule} />
         <PublicRoute path="/login" component={LoginPage} restricted={true} />
       </Switch>
     </BrowserRouter>
