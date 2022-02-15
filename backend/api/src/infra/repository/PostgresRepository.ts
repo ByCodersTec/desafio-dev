@@ -11,7 +11,6 @@ export default class PostgresRepostory implements IRepository {
   }
 
   findOne(where: object, options: object = {}) {
-    console.log({ where, ...options });
     return this.model.findOne({ where, ...options });
   }
 
