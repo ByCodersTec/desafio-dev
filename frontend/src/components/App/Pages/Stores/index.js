@@ -38,7 +38,6 @@ const StoresPage = ({loading, stores, StoresDispatch}) => {
                 <TableBody>
                     <>
                         {Object.values(stores).map((store, i) => {
-                            console.log(store)
                             return <TableRow key={i}>
                                 <TableColumn>{store.id}</TableColumn>
                                 <TableColumn>{store.storeName}</TableColumn>
