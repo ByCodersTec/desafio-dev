@@ -4,6 +4,8 @@ import { Container, Contents } from "./styles";
 
 import Sidebar from "./Sidebar";
 
+import StoresPage from './Pages/Stores';
+
 
 const AppPage = () => {
 
@@ -16,7 +18,7 @@ const AppPage = () => {
                 <Route exact path={path}>
                     <Redirect to={`${path}/stores`} />
                 </Route>
-                <Route path={`${path}/stores`} />
+                <Route path={`${path}/stores`} component={StoresPage} />
                 <Route path={`${path}/portfolio`} />
                 <Route path={`${path}/transactions`} />
             </Switch>
