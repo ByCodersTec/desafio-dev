@@ -6,12 +6,15 @@ import TransactionsRoutes from './transactions';
 import TransactionsTypesRoutes from './transactionsTypes';
 
 import uploadHandler from '../domains/UploadToParse';
+import authenticateHandler from '../domains/Authenticate';
 
 const router = Router();
 
 router.get('/', (request, response) => response.status(200).json({
   message: 'Status Ok',
 }));
+
+router.post('/authenticate', authenticateHandler);
 
 const storage = multer.memoryStorage();
 const uploader = multer({ storage });
