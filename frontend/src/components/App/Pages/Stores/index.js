@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { connect } from 'react-redux';
 
-import { Table, TableHeader, TableHeaderItem, TableBody, TableRow, TableColumn, ActiveIcon } from "./table";
+import { Table, TableHeader, TableHeaderItem, TableBody, TableRow, TableColumn } from "./table";
 import { Container, PageHeader, Contents } from '../styles';
 
 import { RefreshButton } from "./styles"
