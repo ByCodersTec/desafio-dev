@@ -57,6 +57,23 @@ services:
     networks:
       - stacknet
 
+  desafiodev-frontend:
+    container_name: "desafiodev-frontend"
+    build: ./frontend
+    restart: always
+    environment:
+      - PORT=8000
+      - API_URL=desafiodev-api:3000
+    depends_on:
+      - desafiodev-api
+      - desafiodev-parser
+    volumes:
+      - ./frontend:/usr/src/frontend
+    ports:
+      - "8000:8000"
+    networks:
+      - stacknet
+
   postgresdb:
     image: postgres
     ports:
