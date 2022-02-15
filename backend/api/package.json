@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.16.0",
     "multer": "^1.4.4",
     "pg": "^8.7.3",
