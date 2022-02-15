@@ -1,5 +1,23 @@
+import React from 'react';
+import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
+
+import PublicRoute from './routes/Public';
+import PrivateRoute from './routes/Private';
+
+import LoginPage from "./components/Auth";
+
 function App() {
-  return <h1>Frontend</h1>
+  return (
+    <BrowserRouter>
+      <Switch>
+        <PublicRoute exact path="/">
+          <Redirect to="/app" />
+        </PublicRoute>
+        <PrivateRoute path="/app" component={() => { <h1>Private Route</h1> }} />
+        <PublicRoute path="/login" component={LoginPage} restricted={true} />
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
 export default App;
