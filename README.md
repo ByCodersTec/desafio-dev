@@ -1,6 +1,6 @@
 <p align="center">
     <a href="" rel="noopener">
-        <img src="preview.png" alt="Repo preview">
+        <img src="./src/preview.png" alt="Repo preview">
     </a>
 </p>
 
@@ -8,10 +8,10 @@
 
 <div align="center">
 
-[![Bitbucket open issues](https://img.shields.io/bitbucket/issues/preduus/sportscore-api?style=for-the-badge)](https://github.com/preduus/sportscore-api/issues)
-[![GitHub forks](https://img.shields.io/github/forks/preduus/sportscore-api?style=for-the-badge)]()
-[![GitHub stars](https://img.shields.io/github/stars/preduus/sportscore-api?style=for-the-badge)]()
-[![GitHub forks](https://img.shields.io/github/license/preduus/sportscore-api?style=for-the-badge)](/LICENSE)
+[![Bitbucket open issues](https://img.shields.io/bitbucket/issues/preduus/desafio-dev?style=for-the-badge)](https://github.com/preduus/desafio-dev/issues)
+[![GitHub forks](https://img.shields.io/github/forks/preduus/desafio-dev?style=for-the-badge)]()
+[![GitHub stars](https://img.shields.io/github/stars/preduus/desafio-dev?style=for-the-badge)]()
+[![GitHub forks](https://img.shields.io/github/license/preduus/desafio-dev?style=for-the-badge)](/LICENSE)
 
 </div>
 
@@ -44,6 +44,7 @@ What things you need to install the software and how to install them.
 We chose to use [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) to develop this application. If you haven't installed it, you can find the installation steps [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-pt).
 
 ## 🎈 Usage <a name="usage"></a>
+<img src="./src/using.gif" />
 
 **To see API Documentation, [click here](https://documenter.getpostman.com/view/6161616/UVkiRcxa).**
 
