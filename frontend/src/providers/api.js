@@ -26,6 +26,10 @@ class API {
     return provider.post(endpoint, data, { headers })
   }
 
+  remove(endpoint) {
+    return provider.delete(endpoint)
+  }
+
   get(endpoint, params={}, headers={}) {
     return provider.get(endpoint, { params, headers })
   }
