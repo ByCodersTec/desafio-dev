@@ -1,85 +1,116 @@
-# Desafio programação - para vaga desenvolvedor
+<p align="center">
+    <a href="" rel="noopener">
+        <img src="./src/preview.png" alt="Repo preview">
+    </a>
+</p>
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+<h3 align="center">MyTransactions</h3>
 
-# Instruções de entrega do desafio
+<div align="center">
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
+[![Bitbucket open issues](https://img.shields.io/bitbucket/issues/preduus/desafio-dev?style=for-the-badge)](https://github.com/preduus/desafio-dev/issues)
+[![GitHub forks](https://img.shields.io/github/forks/preduus/desafio-dev?style=for-the-badge)]()
+[![GitHub stars](https://img.shields.io/github/stars/preduus/desafio-dev?style=for-the-badge)]()
+[![GitHub forks](https://img.shields.io/github/license/preduus/desafio-dev?style=for-the-badge)](/LICENSE)
 
-# Descrição do projeto
-
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
-
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
-
-**Sua aplicação web DEVE:**
-
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
-
-**Sua aplicação web não precisa:**
-
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
-
-# Documentação do CNAB
-
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
-
-# Documentação sobre os tipos das transações
-
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
-
-# Avaliação
-
-Seu projeto será avaliado de acordo com os seguintes critérios.
-
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
-
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
-
-# Referência
-
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
+</div>
 
 ---
 
-Boa sorte!
+
+## 📝 Table of Contents
+
+- [About](#about)
+- [Installing](#installing)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [License](#license)
+
+## 🧐 About <a name="about"></a>
+
+The idea of ​​the project is to process information related to financial transactions and store them in a database.
+A simple approach was used, with some concepts of asynchronous processes in an ecosystem in docker and docker-compose, the communication is carried out through the internal docker network, simulating a private production environment.
+Kafka was the library used to communicate between the services developed, with the aim of guaranteeing security in the processing of information and thinking about the UX.
+## Prerequisites
+
+What things you need to install the software and how to install them.
+
+* [Docker](https://docs.docker.com/get-docker/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+
+## Installation
+
+We chose to use [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) to develop this application. If you haven't installed it, you can find the installation steps [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-pt).
+
+## 🎈 Usage <a name="usage"></a>
+<img src="./src/using.gif" />
+
+**To see API Documentation, [click here](https://documenter.getpostman.com/view/6161616/UVkiRcxa).**
+
+You just go up the stack and use it. Run:
+```bash
+$ docker-compose up -d
+
+Starting desafio-dev_postgresdb_1 ... done
+Starting desafio-dev_zookeeper_1  ... done
+Starting desafio-dev_kafka_1      ... done
+Starting desafiodev-api           ... done
+Starting desafio-dev_kafdrop_1    ... done
+Starting desafiodev-parser        ... done
+Starting desafiodev-seeds         ... done
+Starting desafiodev-frontend      ... done
+Attaching to desafio-dev_zookeeper_1, desafio-dev_postgresdb_1, desafio-dev_kafka_1, desafio-dev_kafdrop_1, desafiodev-api, desafiodev-parser, desafiodev-seeds, desafiodev-frontend
+```
+
+### Services available:
+* Frontend Microservice: http://localhost:8000
+* Server API Microservice: http://localhost:3100
+* PostgreSQL Service: http://localhost:5433
+* Kafka Service: http://localhost:9092
+* Kafdrop Service: http://localhost:19000
+
+#### Fake login
+* Username: **desafiodev@email.com**
+* Password: **desafiodev**
+
+The project structure is simple. There are 4 microservices and some services available in the environment.
+
+#### Microservices:
+* [Server API](./backend/api)
+* [Parser Service](./backend/parser)
+* [Database Seeds](./backend/seeds)
+* [Frontend](./frontend)
+
+#### Services:
+* [Apache Kafka](https://kafka.apache.org/)
+* [Zookeeper](https://zookeeper.apache.org/)
+* [Kafdrop](https://github.com/obsidiandynamics/kafdrop)
+* [PostgreSQL](https://www.postgresql.org/)
+
+
+**If you want to test it, just import the [API collection](./collection.json) into Postman.**
+
+You can change params in [**compose.yml**](compose.yml) file.
+
+
+## ⛏️ Built Using <a name="built_using"></a>
+
+- [Docker](https://www.docker.com/)
+- [Node.js](https://nodejs.org/)
+- [Python 3.8](https://www.python.org/downloads/release/python-380/)
+- [Redux](https://redux.js.org/)
+- [React Redux](https://react-redux.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
+- [Vercel SWR](https://swr.vercel.app/)
+- [Express](https://expressjs.com/)
+- [Joi](https://joi.dev/api/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Sequelize ORM](https://sequelize.org/)
+- [Apache Kafka](https://kafka.apache.org/)
+- [Zookeeper](https://zookeeper.apache.org/)
+- [Kafdrop](https://github.com/obsidiandynamics/kafdrop)
+
+## 📝 License <a name="license"></a>
+
+Distributed under the MIT License. See LICENSE for more information.
