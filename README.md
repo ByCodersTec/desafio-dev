@@ -24,7 +24,6 @@
 - [Installing](#installing)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [Contribute](#contribute)
 - [License](#license)
 
 ## 🧐 About <a name="about"></a>
@@ -46,7 +45,7 @@ We chose to use [docker](https://docs.docker.com/get-docker/) and [docker compos
 
 ## 🎈 Usage <a name="usage"></a>
 
-**To see API Documentation, [click here](https://documenter.getpostman.com/view/6161616/UVeJMRTa).**
+**To see API Documentation, [click here](https://documenter.getpostman.com/view/6161616/UVkiRcxa).**
 
 You just go up the stack and use it. Run:
 ```bash
@@ -98,6 +97,11 @@ You can change params in [**compose.yml**](compose.yml) file.
 
 - [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/)
+- [Python 3.8](https://www.python.org/downloads/release/python-380/)
+- [Redux](https://redux.js.org/)
+- [React Redux](https://react-redux.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
+- [Vercel SWR](https://swr.vercel.app/)
 - [Express](https://expressjs.com/)
 - [Joi](https://joi.dev/api/)
 - [PostgreSQL](https://www.postgresql.org/)
