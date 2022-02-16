@@ -5,6 +5,8 @@ import { Container, Contents } from "./styles";
 import Sidebar from "./Sidebar";
 
 import StoresPage from './Pages/Stores';
+import PortfolioPage from './Pages/Portfolio';
+import PortfolioViewerPage from './Pages/Portfolio/viewer';
 
 
 const AppPage = () => {
@@ -19,7 +21,8 @@ const AppPage = () => {
                     <Redirect to={`${path}/stores`} />
                 </Route>
                 <Route path={`${path}/stores`} component={StoresPage} />
-                <Route path={`${path}/portfolio`} />
+                <Route path={`${path}/portfolio`} component={PortfolioPage} />
+                <Route path={`${path}/portfolio-details/:id`} component={PortfolioViewerPage} />
                 <Route path={`${path}/transactions`} />
             </Switch>
         </Contents>
