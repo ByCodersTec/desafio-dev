@@ -39,6 +39,11 @@ const GlobalStyles = createGlobalStyle`
         cursor: pointer;
         opacity: 0.9;
     }
+    .remove-button {
+        padding: 5px 7px;
+        color: var(--white);
+        background-color: var(--danger);
+    }
     #application {
         height: 100%;
     }
