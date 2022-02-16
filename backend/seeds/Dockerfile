@@ -1,8 +1,8 @@
-FROM node:16
+FROM python:3.8
 
 WORKDIR /usr/src/seeds
 
 COPY . .
-RUN npm install
+RUN pip install -r requirements.txt
 
-CMD ["node", "index.js"]
+CMD ["python", "main.py"]

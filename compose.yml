@@ -28,14 +28,12 @@ services:
   desafiodev-seeds:
     container_name: "desafiodev-seeds"
     build: ./backend/seeds
+    restart: on-failure
     environment:
-      - NODE_ENV=dev
-      - DBNAME=${DBNAME}
-      - DBUSER=${DBUSER}
-      - DBPASSWORD=${DBPASSWORD}
-      - DBHOST=${DBHOST}
+      - API_URL=desafiodev-api:3000
     depends_on:
-      - postgresdb
+      - desafiodev-api
+      - kafka
     volumes:
       - ./backend/seeds:/usr/src/seeds
     networks:
