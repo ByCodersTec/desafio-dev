@@ -6,6 +6,7 @@ class Transactions:
     transactionTypeId: str = ""
     transactionType: str = ""
     storeId: str = ""
+    parserStatusId: str = ""
     value: float = 0
     occurence: str = ""
     datestring: str = ""
@@ -33,6 +34,9 @@ class Transactions:
 
     def getStoreId(self) -> str:
         return self.storeId
+
+    def getParserStatusId(self) -> str:
+        return self.parserStatusId
 
     def getValue(self) -> float:
         return self.value

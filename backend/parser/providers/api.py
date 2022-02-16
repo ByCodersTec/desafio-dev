@@ -25,6 +25,20 @@ class API:
         except Exception:
             return False, req.content
 
+    def put(self, endpoint: str, data: Union[str, dict], headers=None):
+        if headers is None:
+            headers = {}
+
+        req = requests.put(f"{self.api_url.rstrip('/')}/{endpoint}", data=data, headers=default_headers.update(headers))
+        status = req.status_code in [200, 201]
+
+        try:
+            return status, req.json()
+        except ValueError:
+            return status, req.content
+        except Exception:
+            return False, req.content
+
     def get(self, endpoint: str, params=None, headers=None):
         if params is None:
             params = {}

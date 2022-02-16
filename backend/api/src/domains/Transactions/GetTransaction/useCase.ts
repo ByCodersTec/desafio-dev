@@ -8,7 +8,7 @@ export default class UseCase implements IUseCase {
   async execute(id: string) {
     const data = await this.repository.findOne({ id },
       {
-        include: ['store', 'ttypes']
+        include: ['store', 'parser', 'ttypes']
       }
     );
 

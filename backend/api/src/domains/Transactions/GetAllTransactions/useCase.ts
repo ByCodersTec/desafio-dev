@@ -8,7 +8,7 @@ export default class UseCase implements IUseCase {
   async execute() {
     return await this.repository.findAll(null, 
       {
-        include: ['store', 'ttypes']
+        include: ['store', 'parser', 'ttypes']
       }
     );
   }

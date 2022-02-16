@@ -7,6 +7,7 @@ from kafka import KafkaConsumer
 
 from entities.transactions import Transactions
 from infra.repositories.stores import StoresRepository
+from infra.repositories.parserStatus import ParserStatusRepository
 from infra.repositories.transactions import TransactionsRepository
 from infra.repositories.transactionsTypes import TransactionsTypesRepository
 from helpers.transaction import get_transaction_block
@@ -16,10 +17,11 @@ BOOTSTRAP_SERVER = f"{os.environ['KAFKA_INTERNAL_HOST']}:{os.environ['KAFKA_INTE
 
 stores_repository = StoresRepository()
 transactions_repository = TransactionsRepository()
+parser_status_repository = ParserStatusRepository()
 transactions_types_repository = TransactionsTypesRepository()
 
 
-def get_parsed_transactions_block(value: str) -> dict:
+def get_parsed_transactions_block(key: str, value: str) -> dict:
     transaction_types = transactions_types_repository.get_transactions_types()
 
     if len(transaction_types) == 0:
@@ -30,7 +32,8 @@ def get_parsed_transactions_block(value: str) -> dict:
         if line.strip("") == "":
             continue
         single_transaction = get_transaction_block(line)
-        single_transaction.update({"transactionTypeId": transaction_types[single_transaction["transactionType"]]})
+        single_transaction.update(
+            {"transactionTypeId": transaction_types[single_transaction["transactionType"]], "parserStatusId": key})
 
         transaction = Transactions(single_transaction)
 
@@ -50,11 +53,13 @@ def get_parsed_transactions_block(value: str) -> dict:
 
 
 def send_transactions_to_server(transactions):
+    processed = 0
     for storeId, data in transactions.items():
         has_store = stores_repository.get_store(storeId)
         if not has_store:
             stores_repository.create_store(data["store"])
 
+        processed += len(data["transactions"])
         for transaction in data["transactions"]:
             transaction: Transactions
             try:
@@ -62,17 +67,25 @@ def send_transactions_to_server(transactions):
             except Exception as e:
                 print("Error in transaction creation: ", e)
 
+    return processed
+
 
 def parser_transaction(transaction):
     key = transaction.key.decode("utf8")
     value = base64.b64decode(str(transaction.value.decode("utf8"))).decode('utf-8')
+    parser_status_repository.update_parser_status(key, status="processing", message="Parsing transactions block...")
 
-    parsed_transactions_block = get_parsed_transactions_block(value)
+    try:
+        parsed_transactions_block = get_parsed_transactions_block(key, value)
 
-    if len(parsed_transactions_block) == 0:
-        raise "No parsed transactions"
+        if len(parsed_transactions_block) == 0:
+            raise "No parsed transactions"
 
-    send_transactions_to_server(parsed_transactions_block)
+        processed = send_transactions_to_server(parsed_transactions_block)
+        parser_status_repository.update_parser_status(key, status="complete", message="Successfully", count=processed)
+
+    except Exception as e:
+        parser_status_repository.update_parser_status(key, status="error", message=e)
 
 
 def start_consumer():
@@ -88,10 +101,7 @@ def start_consumer():
             break
 
     for transation in wait_for_transactions:
-        try:
-            parser_transaction(transation)
-        except Exception as e:
-            print("Error: ", e)
+        parser_transaction(transation)
 
 
 if __name__ == "__main__":

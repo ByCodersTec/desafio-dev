@@ -2,6 +2,7 @@ import { Router } from 'express';
 const multer = require('multer');
 
 import StoresRoutes from './stores';
+import ParsersRoutes from './parsers';
 import TransactionsRoutes from './transactions';
 import TransactionsTypesRoutes from './transactionsTypes';
 
@@ -21,6 +22,7 @@ const uploader = multer({ storage });
 router.post('/upload-to-parser', uploader.single('transactions'), uploadHandler);
 
 router.use('/stores', StoresRoutes);
+router.use('/parser-status', ParsersRoutes);
 router.use('/transactions', TransactionsRoutes);
 router.use('/transactions-types', TransactionsTypesRoutes);
 

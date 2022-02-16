@@ -5,6 +5,7 @@ export const Schema = (req, res, next) => {
   const schema = Joi.object({
     transactionTypeId: Joi.string().required(),
     storeId: Joi.string().required(),
+    parserStatusId: Joi.string().required(),
     value: Joi.number().required(),
     occurence: Joi.date().required(),
     buyerIdentification: Joi.string().required(),
