@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+export const UploadFileContent = styled.div`
+
+`;
+
+export const UploadFileMask = styled.button`
+    background-color: var(--gray-secondary);
+    color: var(--white);
+
+    &:hover {
+        background-color: var(--active);
+    }
+`;
+
+export const UploadFileButton = styled.input`
+    display: none;
+`;
+
 const handleStatusBackground = (status) => {
     switch (status) {
         case 'pending':
