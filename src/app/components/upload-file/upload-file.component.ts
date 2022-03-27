@@ -7,13 +7,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./upload-file.component.css']
 })
 export class UploadFileComponent implements OnInit {
-
   files: Set<File>;
   constructor() {}
 
   ngOnInit(): void {}
 
-  onChange(event): void {}
+  onChange($event): void {}
 
   onUpload(): void {}
 }
