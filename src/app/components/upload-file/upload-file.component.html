@@ -5,13 +5,15 @@
       <div class="form-group">
         <label><strong>Upload Files</strong></label>
         <div class="custom-file">
-          <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFile" (change)="onChange($event)"/>
+          <input type="file" name="files[]" accept=".txt" multiple class="custom-file-input form-control"
+            id="customFile" (change)="onChange($event)" />
           <label class="custom-file-label" for="customFile">Choose file</label>
           <label class="custom-file-label" for="customFile" id="customFileLabel">Selecionar Arquivo</label>
         </div>
       </div>
       <div class="form-group">
-        <button type="button" name="upload" value="upload" id="upload" class="btn btn-block btn-dark"  (click)="onUpload()" [disabled]="!files"><i class="fa fa-fw fa-upload"></i> Upload</button>
+        <button type="button" name="upload" value="upload" id="upload" class="btn btn-block btn-dark"
+          (click)="onUpload()" [disabled]="!files"><i class="fa fa-fw fa-upload"></i> Upload</button>
       </div>
     </form>
   </div>

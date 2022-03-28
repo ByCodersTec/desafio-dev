@@ -12,6 +12,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TableGridParserComponent } from './components/table-grid-parser/table-grid-parser.component';
 import { GuiGridModule } from '@generic-ui/ngx-grid';
 import { HttpClientModule } from '@angular/common/http';
+import { AlertModule, AlertConfig } from 'ngx-bootstrap/alert';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     UploadFileComponent,
     NavbarComponent,
     FooterComponent,
-    TableGridParserComponent,
+    TableGridParserComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +34,12 @@ import { HttpClientModule } from '@angular/common/http';
     GuiGridModule,
     HttpClientModule,
     RouterModule,
+    AlertModule,
+    AccordionModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [AlertConfig],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
