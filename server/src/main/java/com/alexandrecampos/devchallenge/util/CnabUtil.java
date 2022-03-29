@@ -28,38 +28,38 @@ public final class CnabUtil {
 
         // Single digite
         if (!cnabRawDto.getOperationTypeId().matches("\\d")) {
-            return InvalidCnabField.builder().field("operation").line(lineNumber).value(cnabRawDto.getOperationTypeId()).build();
+            return InvalidCnabField.builder().field("operação").line(lineNumber).value(cnabRawDto.getOperationTypeId()).build();
         }
 
         // Date
         if (!isValidDate(cnabRawDto.getDate())) {
-            return InvalidCnabField.builder().field("date").line(lineNumber).value(cnabRawDto.getDate()).build();
+            return InvalidCnabField.builder().field("data").line(lineNumber).value(cnabRawDto.getDate()).build();
         }
 
         // Only digits
         if (!isOnlyDigits(cnabRawDto.getValue())) {
-            return InvalidCnabField.builder().field("value").line(lineNumber).value(cnabRawDto.getValue()).build();
+            return InvalidCnabField.builder().field("valor").line(lineNumber).value(cnabRawDto.getValue()).build();
         }
 
         // Only digits
         if (!isOnlyDigits(cnabRawDto.getDocumentId())) {
-            return InvalidCnabField.builder().field("document").line(lineNumber).value(cnabRawDto.getDocumentId()).build();
+            return InvalidCnabField.builder().field("CPF").line(lineNumber).value(cnabRawDto.getDocumentId()).build();
         }
 
         if (!isMaskedDigits(cnabRawDto.getCardNumber())) {
-            return InvalidCnabField.builder().field("card").line(lineNumber).value(cnabRawDto.getCardNumber()).build();
+            return InvalidCnabField.builder().field("cartão").line(lineNumber).value(cnabRawDto.getCardNumber()).build();
         }
 
         if (!isValidTime(cnabRawDto.getTime())) {
-            return InvalidCnabField.builder().field("time").line(lineNumber).value(cnabRawDto.getTime()).build();
+            return InvalidCnabField.builder().field("hora").line(lineNumber).value(cnabRawDto.getTime()).build();
         }
 
         if (!notEmpty(cnabRawDto.getStoreOwner())) {
-            return InvalidCnabField.builder().field("owner").line(lineNumber).value(cnabRawDto.getStoreOwner()).build();
+            return InvalidCnabField.builder().field("dono").line(lineNumber).value(cnabRawDto.getStoreOwner()).build();
         }
 
         if (!notEmpty(cnabRawDto.getStoreName())) {
-            return InvalidCnabField.builder().field("name").line(lineNumber).value(cnabRawDto.getStoreName()).build();
+            return InvalidCnabField.builder().field("nome").line(lineNumber).value(cnabRawDto.getStoreName()).build();
         }
 
         return null;
@@ -71,6 +71,9 @@ public final class CnabUtil {
     }
 
     public static String getFieldByStartAndSize(String line, int start, int size) {
+        if (start > line.length()) {
+            return "";
+        }
         return line.substring(start - 1, Math.min(start - 1 + size, line.length()));
     }
 

@@ -25,3 +25,7 @@ body {
 #table-wrapper {
   text-align: center;
 }
+
+#errors-wrapper {
+  margin: 10px 0;
+}

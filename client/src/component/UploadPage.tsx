@@ -5,6 +5,8 @@ import Dragger from "antd/lib/upload/Dragger";
 import { UploadFile } from "antd/lib/upload/interface";
 import { useState } from "react";
 import cnabApi from "../api/CnabApi";
+import { InvalidLine } from "../model/UploadResponse";
+import { LastErrors } from "./LastErrors";
 
 interface UploadPageProps {
   refresh: () => void;
@@ -12,14 +14,18 @@ interface UploadPageProps {
 
 export const UploadPage = ({ refresh }: UploadPageProps) => {
   const [loading, setLoading] = useState(false);
+  const [lastErrors, setLastErrors] = useState<InvalidLine[]>([]);
 
   const uploadFile = (uploadFile: UploadChangeParam<UploadFile>) => {
     setLoading(true);
+    setLastErrors([]);
+
     cnabApi
       .upload(uploadFile)
-      .then(() => {
-        refresh();
+      .then((response) => {
         message.success("Arquivo enviado com sucesso");
+        setLastErrors(response.data.invalidLines);
+        refresh();
       })
       .catch((error) => {
         message.error("Não foi possível fazer o upload do arquivo", error);
@@ -49,6 +55,8 @@ export const UploadPage = ({ refresh }: UploadPageProps) => {
           </p>
         </Dragger>
       )}
+
+      {lastErrors.length > 0 && <LastErrors lastErrors={lastErrors} />}
     </div>
   );
 };
