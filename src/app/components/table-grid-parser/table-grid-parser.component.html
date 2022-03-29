@@ -1,0 +1,42 @@
+<div class="container" style="padding-top: 50px">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header bg-primary">
+          Total de Receita
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Total de clientes: {{countClient}}</h5>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header bg-primary">
+          Total de Entrada
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Total de Entrada: {{saldoEntradas | currency: 'BRL': 'symbol':'4.2-2'}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header bg-primary">
+          Total de Saida
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Total de Saida: {{saldoSaidas | currency: 'BRL': 'symbol':'4.2-2'}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding-top: 10px">
+  <gui-grid #grid [source]="cnab" [infoPanel]="infoPanel" [sorting]="sorting" [columns]="columns" [theme]="'material'"
+    [rowHeight]="30" [searching]="searching" [maxHeight]="500" [summaries]="summaries" [columnMenu]="columnMenu">
+  </gui-grid>
+
+</div>

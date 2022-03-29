@@ -1,0 +1,5 @@
+.vscode/
+.git/
+.idea/
+dump/
+node_modules/

@@ -1,0 +1,18 @@
+.container {
+  padding: 140px 16px;
+}
+
+.character {
+  height: 50px;
+  width: 50px;
+}
+
+.character__image {
+  width: 100%;
+  min-height: 100%;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
