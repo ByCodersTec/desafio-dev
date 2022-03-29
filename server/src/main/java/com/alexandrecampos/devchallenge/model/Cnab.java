@@ -21,7 +21,7 @@ public class Cnab {
     @Column(name = "document_id")
     private String documentId;
 
-    private Integer value;
+    private String value;
 
     @Column(name = "card_number")
     private String cardNumber;

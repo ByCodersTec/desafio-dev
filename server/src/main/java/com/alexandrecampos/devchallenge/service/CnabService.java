@@ -1,6 +1,7 @@
 package com.alexandrecampos.devchallenge.service;
 
 import com.alexandrecampos.devchallenge.dto.CnabDto;
+import com.alexandrecampos.devchallenge.response.CnabFileResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -8,5 +9,5 @@ import java.util.List;
 public interface CnabService {
     List<CnabDto> list();
 
-    List<CnabDto> upload(MultipartFile file);
+    CnabFileResponse upload(MultipartFile file);
 }

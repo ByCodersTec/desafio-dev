@@ -2,6 +2,7 @@ package com.alexandrecampos.devchallenge.controller.impl;
 
 import com.alexandrecampos.devchallenge.controller.CnabController;
 import com.alexandrecampos.devchallenge.dto.CnabDto;
+import com.alexandrecampos.devchallenge.response.CnabFileResponse;
 import com.alexandrecampos.devchallenge.service.CnabService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class CnabControllerImpl implements CnabController {
     }
 
     @Override
-    public List<CnabDto> upload(MultipartFile file) {
+    public CnabFileResponse upload(MultipartFile file) {
         return cnabService.upload(file);
     }
 }
