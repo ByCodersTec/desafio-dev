@@ -5,10 +5,15 @@ import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "antd/dist/antd.css";
+import { ConfigProvider } from "antd";
+
+import ptBR from "antd/lib/locale/pt_BR";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={ptBR}>
+      <App />
+    </ConfigProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

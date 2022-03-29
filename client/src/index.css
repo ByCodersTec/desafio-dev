@@ -19,4 +19,9 @@ body {
 
 #dragger-wrapper {
   margin: 50px;
+  text-align: center;
+}
+
+#table-wrapper {
+  text-align: center;
 }
