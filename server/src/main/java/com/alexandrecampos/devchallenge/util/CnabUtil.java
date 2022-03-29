@@ -112,10 +112,10 @@ public final class CnabUtil {
         cnab.setOperationTypeId(Integer.parseInt(raw.getOperationTypeId()));
         cnab.setDate(LocalDateTime.of(LocalDate.parse(raw.getDate(), DATE_PARSER), LocalTime.parse(raw.getTime(), TIME_PARSER)));
         cnab.setValue(raw.getValue());
-        cnab.setDocumentId(raw.getDocumentId());
-        cnab.setCardNumber(raw.getCardNumber());
-        cnab.setStoreOwner(raw.getStoreOwner());
-        cnab.setStoreName(raw.getStoreName());
+        cnab.setDocumentId(raw.getDocumentId().strip());
+        cnab.setCardNumber(raw.getCardNumber().strip());
+        cnab.setStoreOwner(raw.getStoreOwner().strip());
+        cnab.setStoreName(raw.getStoreName().strip());
         return cnab;
     }
 }

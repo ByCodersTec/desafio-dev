@@ -10,6 +10,7 @@ sourceCompatibility = '11'
 
 ext {
 	lombokVersion = "1.18.22"
+	simpleflatmapperVersion = "8.2.3"
 }
 
 repositories {
@@ -33,6 +34,9 @@ dependencies {
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
 	implementation "org.springdoc:springdoc-openapi-ui:1.6.6"
+
+	implementation "org.simpleflatmapper:sfm-springjdbc:$simpleflatmapperVersion"
+	implementation "org.simpleflatmapper:sfm-tuples:$simpleflatmapperVersion"
 }
 
 tasks.named('test') {

@@ -1,10 +1,12 @@
 package com.alexandrecampos.devchallenge.service.impl;
 
 import com.alexandrecampos.devchallenge.dto.CnabDto;
+import com.alexandrecampos.devchallenge.dto.GenericPage;
 import com.alexandrecampos.devchallenge.dto.InvalidCnabField;
 import com.alexandrecampos.devchallenge.exception.InvalidParameterException;
 import com.alexandrecampos.devchallenge.model.Cnab;
 import com.alexandrecampos.devchallenge.repository.CnabRepository;
+import com.alexandrecampos.devchallenge.request.CnabListRequest;
 import com.alexandrecampos.devchallenge.response.CnabFileResponse;
 import com.alexandrecampos.devchallenge.service.CnabService;
 import com.alexandrecampos.devchallenge.util.CnabUtil;
@@ -33,8 +35,8 @@ public class CnabServiceImpl implements CnabService {
     }
 
     @Override
-    public List<CnabDto> list() {
-        return cnabRepository.findAll().stream().map(this::convertCnab).collect(Collectors.toList());
+    public GenericPage<CnabDto> list(CnabListRequest request) {
+        return cnabRepository.list(request);
     }
 
     @Override
