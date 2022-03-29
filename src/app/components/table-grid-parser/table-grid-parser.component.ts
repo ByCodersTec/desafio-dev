@@ -10,9 +10,20 @@ import {
   GuiGridComponent,
   GuiGridApi
 } from '@generic-ui/ngx-grid';
-
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import * as moment from 'moment';
+
+interface ICnab {
+  type_transaction: string;
+  create_at: string;
+  transaction_value: string;
+  cpf: string;
+  credit_card: string;
+  time_create: string;
+  owner: string;
+  store_name: string;
+}
 
 @Component({
   selector: 'app-table-grid-parser',
@@ -22,10 +33,12 @@ import { environment } from '../../../environments/environment';
 export class TableGridParserComponent implements OnInit {
   @ViewChild('grid', { static: true })
   gridComponent: GuiGridComponent;
-  cnab = [];
+  cnab: Array<ICnab>;
   private API_URL: string = environment.API_URL;
+  countClient: number;
+  saldoEntradas: number;
+  saldoSaidas: number;
 
-  // id, type_transaction, create_at, transaction_value, cpf, credit_card, time_create, owner, store_name
   searching: GuiSearching = {
     enabled: true,
     placeholder: 'Procura',
@@ -37,7 +50,7 @@ export class TableGridParserComponent implements OnInit {
       header: 'Tipo',
       field: 'type_transaction',
       type: 'string',
-      width: 180
+      width: 220
     },
     {
       header: 'Data',
@@ -48,7 +61,7 @@ export class TableGridParserComponent implements OnInit {
     {
       header: 'Valor',
       field: 'transaction_value',
-      width: 100
+      width: 120
     },
     {
       header: 'CPF',
@@ -63,10 +76,10 @@ export class TableGridParserComponent implements OnInit {
     {
       header: 'Hora',
       field: 'time_create',
-      width: 100
+      width: 150
     },
     {
-      header: 'Dono da loja',
+      header: 'proprietario',
       field: 'owner',
       width: 150
     },
@@ -107,14 +120,54 @@ export class TableGridParserComponent implements OnInit {
     setTimeout(() => {
       this.ngOnInit();
     }, 1000 * 10);
-
+    this.saldoEntradas = 0;
+    this.saldoSaidas = 0;
     this.getList();
   }
 
   getList() {
-    this.httpClient.get(`${this.API_URL}/list`).subscribe((data: any) => {
-      console.log(data);
-      this.cnab = data;
+    this.httpClient.get(`${this.API_URL}/list`).subscribe((item: ICnab[]) => {
+      item.map((inab) => {
+        inab.cpf = this.formatCpf(inab.cpf);
+        inab.create_at = this.formatData(inab.create_at);
+        inab.time_create = this.formatTime(inab.time_create);
+        this.getTranslations(inab.type_transaction, inab.transaction_value);
+        inab.type_transaction = inab.type_transaction.toUpperCase();
+        inab.transaction_value = this.formatMoney(inab.transaction_value);
+      });
+
+      this.cnab = item;
+      this.countClient = this.cnab.length;
+      return;
     });
+  }
+
+  getTranslations(type_transaction: string, transaction_value: string) {
+    console.log('--> ', type_transaction);
+    if (type_transaction == 'aluguel' || type_transaction == 'boleto' || type_transaction == 'financiamento') {
+      this.saldoSaidas = parseFloat(transaction_value) + this.saldoSaidas;
+      return;
+    }
+    this.saldoEntradas = parseFloat(transaction_value) + this.saldoEntradas;
+    return;
+  }
+
+  formatTime(time_format: string) {
+    moment.locale('pt-br');
+    return moment(time_format, 'hmmss').format('HH:mm:ss');
+  }
+
+  formatCpf(cpf_format?: string) {
+    let cpf = cpf_format.replace(/[^\d]/g, '');
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  formatData(date_format: string) {
+    return moment(date_format).format('DD/MM/YYYY');
+  }
+
+  formatMoney(transaction) {
+    let format_cnab_money = parseInt(transaction);
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(format_cnab_money);
   }
 }

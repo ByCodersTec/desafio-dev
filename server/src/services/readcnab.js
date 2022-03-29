@@ -9,7 +9,6 @@ const lineByLine = require('n-readlines');
 
 function cnabRead(fileTxt) {
   let data_line = [];
-  console.log('aqui');
   try {
     const liner = new lineByLine(fileTxt.file.path);
     let line;
@@ -18,9 +17,7 @@ function cnabRead(fileTxt) {
       data_line.push({
         tipo: typesTransactions(line.toString('utf-8').substring(0, 1)),
         data: line.toString('utf-8').substring(1, 9),
-        valor: Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(
-          line.toString('utf-8').substring(10, 19) / 100.0
-        ),
+        valor: line.toString('utf-8').substring(10, 19),
         cpf: line.toString('utf-8').substring(19, 30),
         cartao: line.toString('utf-8').substring(30, 42),
         hora: line.toString('utf-8').substring(42, 48),
@@ -30,8 +27,7 @@ function cnabRead(fileTxt) {
     }
     return createCnab(data_line);
   } catch (err) {
-    console.error(`Error3 `, err.message);
-    res.status(err.statusCode || 500).json({ message: err.message });
+    console.error(`Error `, err.message);
   }
 }
 async function createCnab(cnab) {
@@ -45,8 +41,7 @@ async function createCnab(cnab) {
 
     if (result.length) return { status: 200, message: 'Sucess' };
   } catch (error) {
-    console.error(`Error `, err.message);
-    res.status(err.statusCode || 500).json({ message: err.message });
+    console.error(`Error `, error.message);
   }
 }
 
@@ -87,11 +82,8 @@ function typesTransactions(types = 0) {
 
     return type;
   } catch (error) {
-    console.error(`Error `, err.message);
-    res.status(err.statusCode || 500).json({ message: err.message });
+    console.error(`Error `, error.message);
   }
-
-  return;
 }
 
 async function getList() {
@@ -103,7 +95,6 @@ async function getList() {
     return data;
   } catch (error) {
     console.error(`Error `, error.message);
-    res.status(err.statusCode || 500).json({ message: err.message });
   }
 }
 

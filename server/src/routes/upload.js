@@ -17,16 +17,24 @@ router.post('/', multipartMiddleware, async function (req, res) {
     const files = req.files;
     res.json(await readcnab.cnabRead(files));
   } catch (err) {
-    console.error(`Error 2`, err.message);
+    console.error(`Error`, err.message);
     res.status(err.statusCode || 500).json({ message: err.message });
   }
 });
+
+/**
+ * @swagger
+ *   /api/v1/list:
+ *   post:
+ *     summary: Search for information to fill the CNAB list
+ *     description: Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional
+ */
 
 router.get('/', async function (req, res, next) {
   try {
     res.json(await readcnab.getList());
   } catch (err) {
-    console.error(`Error while getting quotes `, err.message);
+    console.error(`Error `, err.message);
     res.status(err.statusCode || 500).json({ message: err.message });
   }
 });
