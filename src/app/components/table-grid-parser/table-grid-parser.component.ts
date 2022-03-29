@@ -143,7 +143,6 @@ export class TableGridParserComponent implements OnInit {
   }
 
   getTranslations(type_transaction: string, transaction_value: string) {
-    console.log('--> ', type_transaction);
     if (type_transaction == 'aluguel' || type_transaction == 'boleto' || type_transaction == 'financiamento') {
       this.saldoSaidas = parseFloat(transaction_value) + this.saldoSaidas;
       return;
