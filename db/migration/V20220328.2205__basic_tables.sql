@@ -7,7 +7,7 @@ create table if not exists core.operation_type (
 create table if not exists core.cnab (
     id serial primary key,
     operation_type_id int not null,
-    "date" date not null,
+    "date" timestamp not null,
     "value" varchar(10) not null,
     document_id varchar(11) not null,
     card_number varchar(12) not null,
