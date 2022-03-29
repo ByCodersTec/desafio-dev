@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class CnabDto {
     private Integer id;
-    private Integer operationTypeId;
+    private OperationTypeDto operationType;
     private LocalDateTime date;
     private String documentId;
     private Integer value;

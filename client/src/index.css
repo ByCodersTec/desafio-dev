@@ -5,8 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #fff;
 }
 
-.main-app {
+#main-app {
   margin: 10px;
+}
+
+#main-app h1 {
+  text-align: center;
+  font-weight: bold;
+}
+
+#dragger-wrapper {
+  margin: 50px;
 }

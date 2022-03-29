@@ -2,9 +2,13 @@ package com.alexandrecampos.devchallenge.model;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
+@Entity
+@Table(name = "operation_type", schema = "core")
 public class OperationType {
     @Id
     private Integer id;
@@ -12,6 +16,4 @@ public class OperationType {
     private String description;
 
     private String type;
-
-    private String signal;
 }

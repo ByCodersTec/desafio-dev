@@ -16,6 +16,10 @@ public class Cnab {
     @Column(name = "operation_type_id")
     private Integer operationTypeId;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "operation_type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private OperationType operationType;
+
     private LocalDateTime date;
 
     @Column(name = "document_id")

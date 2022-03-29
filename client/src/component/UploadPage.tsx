@@ -15,7 +15,7 @@ export const UploadPage = () => {
       });
   };
   return (
-    <div>
+    <div id="dragger-wrapper">
       <Dragger
         onChange={(info) => uploadFile(info)}
         beforeUpload={() => {
@@ -23,6 +23,7 @@ export const UploadPage = () => {
           return false;
         }}
         fileList={[]}
+        style={{ backgroundColor: "#ddd" }}
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />

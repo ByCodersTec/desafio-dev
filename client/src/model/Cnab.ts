@@ -1,6 +1,12 @@
+interface OperationType {
+  id: number;
+  description: string;
+  type: string;
+}
+
 export interface Cnab {
   id: null;
-  operationTypeId: null;
+  operationType: OperationType;
   date: string;
   documentId: string;
   value: number;

@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { useEffect, useState } from "react";
 import cnabApi from "../api/CnabApi";
@@ -7,8 +7,14 @@ import { Cnab } from "../model/Cnab";
 const columns: ColumnsType<Cnab> = [
   {
     title: "Tipo da Transação",
-    dataIndex: "name",
-    key: "name",
+    key: "id",
+    render: (cnab: Cnab) => {
+      return (
+        <Tag color={cnab.operationType.type === "I" ? "green" : "red"}>
+          {cnab.operationType.description.toUpperCase()}
+        </Tag>
+      );
+    },
   },
   {
     title: "Data",
@@ -55,7 +61,11 @@ export const CnabList = () => {
   }, []);
   return (
     <div>
-      <Table columns={columns} dataSource={cnabs} />
+      <Table
+        columns={columns}
+        dataSource={cnabs}
+        pagination={{ position: ["topCenter"] }}
+      />
     </div>
   );
 };
