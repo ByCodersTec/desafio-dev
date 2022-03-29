@@ -10,10 +10,10 @@ body {
 
 #main-app {
   margin: 10px;
+  text-align: center;
 }
 
 #main-app h1 {
-  text-align: center;
   font-weight: bold;
 }
 
@@ -28,4 +28,8 @@ body {
 
 #errors-wrapper {
   margin: 10px 0;
+}
+
+.ant-input-number {
+  width: 100% !important;
 }
