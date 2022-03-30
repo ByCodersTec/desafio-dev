@@ -3,6 +3,7 @@ package com.alexandrecampos.devchallenge.controller.impl;
 import com.alexandrecampos.devchallenge.controller.CnabController;
 import com.alexandrecampos.devchallenge.dto.CnabDto;
 import com.alexandrecampos.devchallenge.dto.GenericPage;
+import com.alexandrecampos.devchallenge.model.CnabSummaryDto;
 import com.alexandrecampos.devchallenge.request.CnabListRequest;
 import com.alexandrecampos.devchallenge.response.CnabFileResponse;
 import com.alexandrecampos.devchallenge.service.CnabService;
@@ -20,6 +21,11 @@ public class CnabControllerImpl implements CnabController {
     @Override
     public GenericPage<CnabDto> list(CnabListRequest request) {
         return cnabService.list(request);
+    }
+
+    @Override
+    public CnabSummaryDto summary(String documentId, String cardNumber) {
+        return cnabService.summary(documentId, cardNumber);
     }
 
     @Override

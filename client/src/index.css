@@ -33,3 +33,12 @@ body {
 .ant-input-number {
   width: 100% !important;
 }
+
+.filter-icon {
+  font-size: 2em !important;
+  margin-bottom: 20px;
+}
+
+.summary {
+  margin-bottom: 10px;
+}

@@ -18,6 +18,7 @@ const columns: ColumnsType<Cnab> = [
   {
     title: "Data",
     dataIndex: "date",
+    align: "center",
     render: (dateString: string) => {
       let date = new Date(dateString);
       return `${date.toLocaleDateString("pt-BR")} ${date.toLocaleTimeString(
@@ -28,23 +29,28 @@ const columns: ColumnsType<Cnab> = [
   {
     title: "Valor",
     dataIndex: "value",
+    align: "center",
     render: (value: number) => `R$ ${value.toFixed(2)}`,
   },
   {
     title: "CPF",
     dataIndex: "documentId",
+    align: "center",
   },
   {
     title: "Cartão",
     dataIndex: "cardNumber",
+    align: "center",
   },
   {
     title: "Dono da Loja",
     dataIndex: "storeOwner",
+    align: "center",
   },
   {
     title: "Nome da Loja",
     dataIndex: "storeName",
+    align: "center",
   },
 ];
 

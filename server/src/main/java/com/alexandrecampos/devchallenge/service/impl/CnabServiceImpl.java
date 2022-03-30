@@ -5,6 +5,7 @@ import com.alexandrecampos.devchallenge.dto.GenericPage;
 import com.alexandrecampos.devchallenge.dto.InvalidCnabField;
 import com.alexandrecampos.devchallenge.exception.InvalidParameterException;
 import com.alexandrecampos.devchallenge.model.Cnab;
+import com.alexandrecampos.devchallenge.model.CnabSummaryDto;
 import com.alexandrecampos.devchallenge.repository.CnabRepository;
 import com.alexandrecampos.devchallenge.request.CnabListRequest;
 import com.alexandrecampos.devchallenge.response.CnabFileResponse;
@@ -59,6 +60,11 @@ public class CnabServiceImpl implements CnabService {
         } catch (IOException ioException) {
             throw new InvalidParameterException("There was an error while reading the file");
         }
+    }
+
+    @Override
+    public CnabSummaryDto summary(String documentId, String cardNumber) {
+        return cnabRepository.summary(documentId, cardNumber);
     }
 
     private CnabDto convertCnab(Cnab cnab) {

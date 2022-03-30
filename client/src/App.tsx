@@ -1,5 +1,5 @@
 import { FilterFilled } from "@ant-design/icons";
-import { Badge, Button, Pagination, Spin, Tooltip } from "antd";
+import { Badge, Button, Pagination, Spin, Tag, Tooltip } from "antd";
 import { compact } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import cnabApi from "./api/CnabApi";
@@ -8,12 +8,14 @@ import { CnabList } from "./component/CnabList";
 import { UploadPage } from "./component/UploadPage";
 import { Cnab } from "./model/Cnab";
 import { DefaultPagination, DEFAULT_PAGINATION } from "./model/GenericPage";
+import { Summary } from "./model/Summary";
 
 export const App = () => {
   const [cnabs, setCnabs] = useState<Cnab[]>([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState<CnabFilter>({});
+  const [summary, setSummary] = useState<Summary>();
   const [pagination, setPagination] = useState<DefaultPagination>({
     ...DEFAULT_PAGINATION,
   });
@@ -40,7 +42,18 @@ export const App = () => {
     []
   );
 
+  const fetchSummary = useCallback((filter: CnabFilter) => {
+    setLoading(true);
+
+    cnabApi
+      .getSummary(filter)
+      .then((response) => setSummary(response.data))
+      .finally(() => setLoading(false));
+  }, []);
+
   useEffect(() => fetchData({}, 0), [fetchData]);
+
+  useEffect(() => fetchSummary(filter), [filter]);
 
   const count = !!filter ? compact(Object.values(filter)).length : 0;
 
@@ -75,7 +88,7 @@ export const App = () => {
       <Tooltip title="Filtro avançado" placement="bottom">
         <Button
           type="link"
-          style={{ fontSize: "2em" }}
+          className="filter-icon"
           icon={<FilterFilled />}
           onClick={() => setModalOpen((f) => !f)}
         >
@@ -90,7 +103,13 @@ export const App = () => {
           fetchData(f, 0);
         }}
       />
-      {loading ? <Spin /> : cnalList}
+      {!!summary && (
+        <div className="summary">
+          <Tag>Total: R$ {summary.totalValue.toFixed(2)}</Tag>
+          <Tag>Operações: {summary.totalOperations}</Tag>
+        </div>
+      )}
+      <div>{loading ? <Spin /> : cnalList}</div>
     </div>
   );
 };
