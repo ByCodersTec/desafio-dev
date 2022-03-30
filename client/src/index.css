@@ -42,3 +42,11 @@ body {
 .summary {
   margin-bottom: 10px;
 }
+
+.output-operation {
+  color: red;
+}
+
+.input-operation {
+  color: blue;
+}

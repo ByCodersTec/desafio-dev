@@ -9,7 +9,7 @@ const columns: ColumnsType<Cnab> = [
     align: "right",
     render: (cnab: Cnab) => {
       return (
-        <Tag color={cnab.operationType.type === "I" ? "green" : "red"}>
+        <Tag color={cnab.operationType.type === "I" ? "blue" : "red"}>
           {cnab.operationType.description.toUpperCase()}
         </Tag>
       );
@@ -30,7 +30,11 @@ const columns: ColumnsType<Cnab> = [
     title: "Valor",
     dataIndex: "value",
     align: "center",
-    render: (value: number) => `R$ ${value.toFixed(2)}`,
+    render: (value: number) => (
+      <span className={value < 0 ? "output-operation" : "input-operation"}>
+        R$ {value.toFixed(2)}
+      </span>
+    ),
   },
   {
     title: "CPF",

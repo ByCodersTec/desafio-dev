@@ -48,6 +48,7 @@ public class CnabServiceImpl implements CnabService {
             List<String> list = br.lines().collect(Collectors.toList());
 
             List<InvalidCnabField> invalidLines = IntStream.range(0, list.size())
+                    .filter(i -> list.get(i).length() > 0)
                     .filter(i -> CnabUtil.invalidField(list.get(i)) != null)
                     .mapToObj(i -> CnabUtil.invalidField(list.get(i), i))
                     .collect(Collectors.toList());

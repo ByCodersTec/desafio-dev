@@ -11,7 +11,12 @@ with cnabs as (
 		or document_id = :DOCUMENT_ID
 )
 select
-	sum("value") total_value,
-	count(1) total_operations
+	sum(
+		case
+			when "type" = 'I' then "value"
+			else -1 * "value"
+		end
+	) totalValue,
+	count(1) totalOperations
 from
 	cnabs

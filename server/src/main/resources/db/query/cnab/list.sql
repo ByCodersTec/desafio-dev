@@ -2,7 +2,10 @@ select
 	c.id,
 	date,
 	document_id,
-	value,
+	case
+		when type = 'I' then value
+		else -1 * "value"
+	end value,
 	card_number,
 	store_owner,
 	store_name,
