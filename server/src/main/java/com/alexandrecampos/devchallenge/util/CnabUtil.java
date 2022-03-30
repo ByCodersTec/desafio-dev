@@ -5,6 +5,8 @@ import com.alexandrecampos.devchallenge.dto.InvalidCnabField;
 import com.alexandrecampos.devchallenge.model.Cnab;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public final class CnabUtil {
     private static final DateTimeFormatter DATE_PARSER = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final DateTimeFormatter TIME_PARSER = DateTimeFormatter.ofPattern("Hmmss");
-
+    private static final BigDecimal BD_100 = new BigDecimal(100);
 
     private CnabUtil() {
     }
@@ -111,7 +113,7 @@ public final class CnabUtil {
         Cnab cnab = new Cnab();
         cnab.setOperationTypeId(Integer.parseInt(raw.getOperationTypeId()));
         cnab.setDate(LocalDateTime.of(LocalDate.parse(raw.getDate(), DATE_PARSER), LocalTime.parse(raw.getTime(), TIME_PARSER)));
-        cnab.setValue(raw.getValue());
+        cnab.setValue(new BigDecimal(raw.getValue()).divide(BD_100, 2, RoundingMode.HALF_UP));
         cnab.setDocumentId(raw.getDocumentId().strip());
         cnab.setCardNumber(raw.getCardNumber().strip());
         cnab.setStoreOwner(raw.getStoreOwner().strip());

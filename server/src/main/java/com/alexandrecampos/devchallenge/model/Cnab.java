@@ -3,6 +3,7 @@ package com.alexandrecampos.devchallenge.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,7 +26,7 @@ public class Cnab {
     @Column(name = "document_id")
     private String documentId;
 
-    private String value;
+    private BigDecimal value;
 
     @Column(name = "card_number")
     private String cardNumber;

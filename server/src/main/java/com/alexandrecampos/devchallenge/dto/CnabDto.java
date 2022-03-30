@@ -3,6 +3,7 @@ package com.alexandrecampos.devchallenge.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,7 +13,7 @@ public class CnabDto {
     private OperationTypeDto operationType;
     private LocalDateTime date;
     private String documentId;
-    private Integer value;
+    private BigDecimal value;
     private String cardNumber;
     private String storeOwner;
     private String storeName;

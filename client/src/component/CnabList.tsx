@@ -6,6 +6,7 @@ import { DefaultPagination } from "../model/GenericPage";
 const columns: ColumnsType<Cnab> = [
   {
     title: "Tipo da Transação",
+    align: "right",
     render: (cnab: Cnab) => {
       return (
         <Tag color={cnab.operationType.type === "I" ? "green" : "red"}>
@@ -27,6 +28,7 @@ const columns: ColumnsType<Cnab> = [
   {
     title: "Valor",
     dataIndex: "value",
+    render: (value: number) => `R$ ${value.toFixed(2)}`,
   },
   {
     title: "CPF",
