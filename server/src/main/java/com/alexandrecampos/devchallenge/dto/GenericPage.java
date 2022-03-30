@@ -12,4 +12,6 @@ public class GenericPage<T> {
     private int page;
     private int size;
     private boolean last;
+    private int totalElements;
+    private int totalPages;
 }

@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.Objects;
 
 @Repository
@@ -25,17 +26,19 @@ public class CnabRepositoryJdbcImpl implements CnabRepositoryJdbc {
 
     @Override
     public GenericPage<CnabDto> list(CnabListRequest request) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue(CnabListRequest.Fields.CARD_NUMBER.name(), request.getCardNumber(), Types.VARCHAR)
+                .addValue(CnabListRequest.Fields.DOCUMENT_ID.name(), request.getDocumentId(), Types.VARCHAR)
+                .addValue(CnabListRequest.Fields.PAGE.name(), request.getPage())
+                .addValue(CnabListRequest.Fields.SIZE.name(), request.getSize());
+        int total = namedParameterJdbcTemplate.queryForObject(QueryUtil.getQuery("cnab/listCount"), params, Integer.class);
         return QueryUtil.buildPage(Objects.requireNonNull(namedParameterJdbcTemplate.query(
                         QueryUtil.getQuery("cnab/list"),
-                        new MapSqlParameterSource()
-                                .addValue(CnabListRequest.Fields.CARD_NUMBER.name(), request.getCardNumber())
-                                .addValue(CnabListRequest.Fields.DOCUMENT_ID.name(), request.getDocumentId())
-                                .addValue(CnabListRequest.Fields.PAGE.name(), request.getPage())
-                                .addValue(CnabListRequest.Fields.SIZE.name(), request.getSize()),
+                        params,
                         JdbcTemplateMapperFactory
                                 .newInstance()
                                 .newResultSetExtractor(CnabDto.class)
-                )), request.getPage(), request.getSize()
+                )), total, request.getPage(), request.getSize()
         );
     }
 }

@@ -1,6 +1,7 @@
 import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Cnab } from "../model/Cnab";
+import { DefaultPagination } from "../model/GenericPage";
 
 const columns: ColumnsType<Cnab> = [
   {
@@ -47,15 +48,16 @@ const columns: ColumnsType<Cnab> = [
 
 interface CnabListProps {
   cnabs: Cnab[];
+  pagination: DefaultPagination;
 }
 
-export const CnabList = ({ cnabs }: CnabListProps) => {
+export const CnabList = ({ cnabs, pagination }: CnabListProps) => {
   return (
     <div id="table-wrapper">
       <Table
         columns={columns}
         dataSource={cnabs}
-        pagination={{ position: ["topCenter"] }}
+        pagination={false}
         rowKey="id"
       />
     </div>

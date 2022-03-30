@@ -3,6 +3,7 @@ import { UploadFile } from "antd/lib/upload/interface";
 import Axios from "axios";
 import { CnabFilter } from "../component/CnabFilters";
 import { Cnab } from "../model/Cnab";
+import { GenericPage } from "../model/GenericPage";
 import { UploadResponse } from "../model/UploadResponse";
 
 class CnabApi {
@@ -12,7 +13,10 @@ class CnabApi {
     this.BASE_URL = process.env.REACT_APP_BASE_URL! + "/cnab";
   }
 
-  list = (params: CnabFilter) => Axios.get<Cnab[]>(this.BASE_URL, { params });
+  list = (params: CnabFilter, page: number, size?: number) =>
+    Axios.get<GenericPage<Cnab>>(this.BASE_URL, {
+      params: { ...params, page, size },
+    });
 
   upload = (file: UploadChangeParam<UploadFile>) => {
     const formData = new FormData();
