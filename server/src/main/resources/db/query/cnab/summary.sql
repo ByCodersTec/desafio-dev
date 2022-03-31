@@ -11,11 +11,14 @@ with cnabs as (
 		or document_id = :DOCUMENT_ID
 )
 select
-	sum(
-		case
-			when "type" = 'I' then "value"
-			else -1 * "value"
-		end
+	coalesce(
+		sum(
+			case
+				when "type" = 'I' then "value"
+				else -1 * "value"
+			end
+		),
+		0
 	) totalValue,
 	count(1) totalOperations
 from

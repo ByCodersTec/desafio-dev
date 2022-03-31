@@ -106,7 +106,7 @@ export const App = () => {
       {!!summary && (
         <div className="summary">
           <Tag color={summary.totalValue < 0 ? "red" : "blue"}>
-            Total: R$ {summary.totalValue.toFixed(2)}
+            Total: R$ {summary.totalValue?.toFixed(2)}
           </Tag>
           <Tag>Operações: {summary.totalOperations}</Tag>
         </div>

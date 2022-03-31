@@ -10,22 +10,6 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - "./db/migration/:/docker-entrypoint-initdb.d/"
-      - "./db/00_keycloak_schema.sql:/docker-entrypoint-initdb.d/00_keycloak_schema.sql"
     ports:
       - "5432:5432"
-  dev-challenge-api-keycloak:
-    container_name: dev-challenge-api-keycloak
-    image: jboss/keycloak:16.1.1
-    environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: dev-challenge-api-db
-      DB_DATABASE: dev_challenge_db
-      DB_USER: root
-      DB_PASSWORD: password
-      DB_SCHEMA: keycloak
-      KEYCLOAK_USER: keycloak
-      KEYCLOAK_PASSWORD: keycloak
-    ports:
-      - "8081:8080"
-    depends_on:
-      - dev-challenge-api-db
+
