@@ -84,7 +84,12 @@ export const App = () => {
   return (
     <div id="main-app">
       <h1>Arquivo de Controle Bancário</h1>
-      <UploadPage refresh={() => fetchData(filter, 0)} />
+      <UploadPage
+        refresh={() => {
+          fetchData(filter, 0);
+          fetchSummary(filter);
+        }}
+      />
       <Tooltip title="Filtro avançado" placement="bottom">
         <Button
           type="link"
