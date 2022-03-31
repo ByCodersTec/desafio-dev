@@ -1,0 +1,201 @@
+@import "../../variables/navigation.theme";
+
+@import "../background";
+@import "../scroll";
+
+@mixin navigation-drawer-background(
+    $background-url
+) {
+    :host ::ng-deep app-navigation-drawer {
+        .menu {
+            .navbar-header:before,
+            .navbar-menu .nav .background-fill:before {
+                background: url(#{$background-url});
+            }
+        }
+
+        .nav-item .nav-link .item-background {
+            background: url(#{$background-url}) no-repeat;
+        }
+    }
+}
+
+@mixin navigation-drawer-set-custom-size(
+    $menu-expanded-width,
+    $menu-collapsed-width
+) {
+    :host ::ng-deep app-navigation-drawer {
+        @include navigation-drawer-set-size(
+            $menu-expanded-width,
+            $menu-collapsed-width
+        );
+    }
+}
+
+
+@mixin navigation-drawer(
+    $menu-fore-color: darken($home-base-color, 10%),
+    $menu-background-color: darken($home-base-color3, 5%),
+    $menu-shadow-color: $home-base-color4,
+    $picture-background-color: $home-base-color,
+    $jobTitle-fore-color: lighten($home-fore-color, 50%),
+    $scroll-color: darken($home-base-color3, 7%),
+    $items-container-background-color: darken($home-base-color3, 7%)
+) {
+    .menu {
+        color: darken($menu-fore-color, 10%);
+
+        box-shadow: 0 0 4px 0 rgba($menu-shadow-color, 0.2), 6px 0 20px 0 rgba($menu-shadow-color, 0.19);
+        -webkit-box-shadow: 0 0 4px 0 rgba($menu-shadow-color, 0.2), 6px 0 20px 0 rgba($menu-shadow-color, 0.19);
+        -moz-box-shadow: 0 0 4px 0 rgba($menu-shadow-color, 0.2), 6px 0 20px 0 rgba($menu-shadow-color, 0.19);
+
+        .navbar-header {
+            @include background($menu-background-color, .95);
+        }
+
+        .navbar-menu {
+            @include scroll($scroll-color);
+    
+            .nav .background-fill {
+                @include background($items-container-background-color, .95);
+            }
+        }
+    }
+}
+
+@mixin navigation-drawer-set-size(
+    $menu-expanded-width: $menu-expanded-default-width,
+    $menu-collapsed-width: $menu-collapsed-default-width
+) {
+    @keyframes collapse#{$menu-expanded-width}_#{$menu-collapsed-width} {
+        from { width: $menu-expanded-width; }
+        to { width: $menu-collapsed-width; }
+    }
+    
+    @keyframes expand#{$menu-collapsed-width}_#{$menu-expanded-width} {
+        from { width: $menu-collapsed-width; }
+        to { width: $menu-expanded-width; }
+    }
+
+    .menu {
+        &.collapsed {
+            width: $menu-collapsed-width;
+
+            &:not(.first-opened) {
+                animation-name: collapse#{$menu-expanded-width}_#{$menu-collapsed-width};
+            }
+        }
+
+        &.expanded {
+            width: $menu-expanded-width;
+
+            &:not(.first-opened) {
+                animation-name: expand#{$menu-collapsed-width}_#{$menu-expanded-width};
+            }
+        }
+    }
+
+    .logo-expanded {
+        width: $menu-expanded-width;
+    }
+
+    .logo-collapsed {
+        width: $menu-collapsed-width;
+    }
+
+    @media (max-width:768px) {
+        .menu {
+            margin-left: -$menu-collapsed-width;
+            max-width: $menu-collapsed-width !important;
+            width: $menu-collapsed-width !important;
+        }
+    }
+
+
+    @keyframes openFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width} {
+        from { left: - ($menu-expanded-width - $menu-collapsed-width); }
+        to { left: $menu-collapsed-width; }
+    }
+    
+    @keyframes closeFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width} {
+        from { left: $menu-collapsed-width; }
+        to { left: - ($menu-expanded-width - $menu-collapsed-width); }
+    }
+
+    @keyframes expandNav#{$menu-collapsed-width}_#{$menu-expanded-width} {
+        0% {
+            position: absolute;
+            top: 0;
+            width: 150px;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+            transition: .4s ease-in-out;
+            z-index: -1;
+            max-height: inherit;
+            height: auto !important;
+            
+            -webkit-transform: translateX(- ($menu-expanded-width - $menu-collapsed-width));
+			transform: translateX(- ($menu-expanded-width - $menu-collapsed-width));
+            // left: - ($menu-expanded-width - $menu-collapsed-width);
+        }
+        1% { height: 0px; }
+    }
+    
+    @keyframes expandNavFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width} {
+        0% {
+            position: absolute;
+            top: 0;
+            width: 150px;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+            transition: .4s ease-in-out;
+            z-index: -1;
+            max-height: inherit;
+            height: auto !important;
+            
+            -webkit-transform: translateX($menu-collapsed-width);
+			transform: translateX($menu-collapsed-width);
+            // left: $menu-collapsed-width;
+        }
+        50% {
+            position: absolute;
+            top: 0;
+            width: 150px;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+            transition: .4s ease-in-out;
+            z-index: -1;
+            max-height: inherit;
+            height: auto !important;
+    
+            -webkit-transform: translateX(- ($menu-expanded-width - $menu-collapsed-width));
+			transform: translateX(- ($menu-expanded-width - $menu-collapsed-width));
+            // left: - ($menu-expanded-width - $menu-collapsed-width);
+        }
+        51% { height: 0px; }
+    }
+
+    :host ::ng-deep app-navigation-item {
+        .nav-item {
+            &.menu-collapsed.first-level > .nav {
+                &.open-float-menu {
+                    animation-name: openFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width};
+                }
+                &.close-float-menu {
+                    animation: closeFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width};
+                }
+                &.show {
+                    -webkit-transform: translateX($menu-collapsed-width);
+                    transform: translateX($menu-collapsed-width);
+                    // left: $menu-collapsed-width;
+                }
+            }
+
+            &.menu-expanded:not(.menu-first-opened).first-level > .nav {
+                &.open-float-menu {
+                    animation-name: expandNavFloatMenu#{$menu-collapsed-width}_#{$menu-expanded-width};
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@import '/src/app/styles/mixins/navigation/navigation-drawer';
+@import '/src/app/styles/mixins/no-select';
+
+@include navigation-drawer();
+
+.menu {
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .navbar-header {
+        padding-top: .5rem;
+        padding-bottom: 1rem;
+        flex-shrink: 0;
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            height: 50px;
+
+            .logo-expanded, .logo-collapsed {
+                font-size: 2rem;
+                font-weight: 800;
+
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: contain;
+            }
+        }
+    }
+
+    .navbar-menu {
+        overflow-y: auto;
+
+        .nav {
+            z-index: 1;
+                
+            .background-fill {
+                z-index: -1;
+            }
+        }
+    }
+}

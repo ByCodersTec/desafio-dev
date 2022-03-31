@@ -1,0 +1,47 @@
+@import "/src/app/styles/variables/home.theme";
+@import "/src/app/styles/mixins/background";
+@import "/src/app/styles/bootstrap";
+
+@import '/src/app/styles/mixins/navigation/navigation-drawer';
+
+.main {
+    overflow: hidden;
+
+    .toolbar {
+        border-bottom: 1px solid darken($home-base-color, 15%);
+        font-size: 0.9rem;
+        color: $home-fore-color;
+        z-index: 2;
+
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+
+        @include background($home-base-color, .95);
+
+        .background:before {
+            box-shadow: inset 0 0 500px 500px rgb(255 255 255 / 95%);
+        }
+
+        .btn-collapse-menu {
+            @include button-variant($home-base-color5, darken($home-base-color5, 3%));
+        }
+
+        .btn-transparent {
+            @include button-variant(transparent, darken(darken($home-base-color, 8%), 3%), $color: darken($home-fore-color, 20%));
+        }
+        
+        .btn-log-out {
+            $color-contrast-light: 'white';
+            @include button-variant(lighten($home-base-color2, 38%), darken(lighten($home-base-color2, 38%), 15%), $color: darken(red, 20%), $hover-color: darken(red, 20%));
+        }
+    }
+
+    .container-fluid {    
+        @include background(darken($home-base-color, 13%), .9);
+
+        .background:before {
+            box-shadow: inset 0 0 500px 500px rgba(darken($home-base-color, 10%), .9);
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@import "../../variables/navigation.theme";
+
+@import "../background";
+@import "../scroll";
+
+@mixin navigation-item(
+    $item-fore-color: darken($home-base-color, 10%),
+    $item-background-color: darken($home-base-color3, 13%),
+    $item-hover-background-color: darken($home-base-color3, 17%),
+    $active-item-indicator-color: darken($home-base-color, 10%),
+    $subitem-fore-color: $home-base-color,
+    $subitem-background-color: darken($home-base-color3, 10%),
+    $subitem-hover-background-color: darken($home-base-color3, 15%),
+    $scroll-color: darken($home-base-color3, 7%),
+) {
+    .nav-item {
+        
+        .active-item:before {
+            background-color: $active-item-indicator-color;
+        }
+
+        &.first-level {
+            &.active > .nav-link, > .nav .nav-link {
+                &:before {
+                    box-shadow: inset 0 0 500px 500px rgba($item-background-color, 0.95);
+                }
+
+                &:hover, &:focus {
+                    &:before {
+                        box-shadow: inset 0 0 500px 500px rgba($item-hover-background-color, 0.95);
+                    }
+                }
+            }
+        }
+
+        &.menu-collapsed.first-level > .nav.show {
+            @include scroll($scroll-color);
+        }
+
+        .nav-link {
+            color: $item-fore-color;
+
+            &:hover, &:focus {
+                color: $subitem-fore-color;
+    
+                &:before {
+                    box-shadow: inset 0 0 500px 500px rgba($subitem-hover-background-color, 0.95);
+                }
+            }
+
+            .item-background {
+                @include background($subitem-background-color, .95);
+            }
+        }
+    }
+}
+
+@mixin navigation-item-set-size(
+    $item-height: $item-default-height
+) {
+    .nav-item .active-item:before, .nav-link {
+        height: $item-height;
+    }
+}

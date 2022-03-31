@@ -1,0 +1,94 @@
+@import "/src/app/styles/variables/navigation.theme";
+
+@keyframes collapseItem {
+    from { text-overflow: ellipsis; }
+    to { text-overflow: clip; }
+}
+
+@keyframes expandItem {
+    from { text-overflow: clip; }
+    to { text-overflow: ellipsis; }
+}
+
+.nav-item {
+
+    &.first-level > .nav-link {
+        &.has-sub-menu:after {
+            transition: all $opacity-animation-speed ease;
+        }
+
+        .icon {
+            transition: all $icon-animation-speed ease-in-out;
+        }
+
+        .label {
+            transition: opacity $opacity-animation-speed ease;
+        }
+    }
+
+    &.menu-collapsed {
+
+        &:not(.menu-first-opened).first-level > .nav-link {
+            animation: collapseItem $menu-animation-speed ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        &.first-level > .nav {
+            &.hide {
+                transition: height 0s;
+            }
+
+            &.open-float-menu, &.close-float-menu {
+                animation-duration: 0.4s;
+                animation-timing-function: ease-in-out;;
+                animation-fill-mode: forwards;
+                transition: height 0s;
+            }
+        }
+    }
+
+    &.menu-expanded:not(.menu-first-opened).first-level {
+
+        > .nav-link {
+            animation: expandItem $menu-animation-speed ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        > .nav.open-float-menu {
+            animation-duration: $menu-open-close-speed;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    &.menu-scrolling.nav {
+        transition:
+            height $menu-open-close-speed ease-in-out,
+            margin-top 0s ease-in-out
+    }
+
+    &:not(.menu-first-opened) .nav-link {
+        transition: all $menu-hover-speed;
+
+        &.has-sub-menu:after {
+            transition: all $menu-animation-speed ease-in-out;
+        }
+    }
+    
+    &.opened  > .nav-link.has-sub-menu:after {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .active-item:before {
+        transition: width $menu-animation-speed linear;
+    }
+
+    .nav {
+        transition:
+            height $menu-open-close-speed ease-in-out,
+            margin-top $menu-open-close-speed ease-in-out;
+    }
+}

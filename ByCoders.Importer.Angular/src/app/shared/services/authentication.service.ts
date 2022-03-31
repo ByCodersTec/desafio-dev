@@ -49,18 +49,6 @@ export class AuthenticationService {
       }
     }
   
-    private get userInfo(): string | null {
-      return localStorage.getItem('userInfo');
-    }
-    private set userInfo(value: string | null) {
-      if (value) {
-        localStorage.setItem('userInfo', value);
-      }
-      else {
-        localStorage.removeItem('userInfo');
-      }
-    }
-  
   
     constructor(private router: Router, private http: HttpClient, private jwtHelper: JwtHelperService) {
     }
@@ -87,8 +75,6 @@ export class AuthenticationService {
             this.username = res.username;
             this.token = res.token;
             this.refreshToken = res.refreshToken;
-
-            this.userInfo = btoa(JSON.stringify(res));
   
             of('').pipe(delay(2000)).subscribe(() => {
                 this.router.navigate(["/"]);
@@ -119,8 +105,6 @@ export class AuthenticationService {
             this.token = res.token;
             this.refreshToken = res.refreshToken;
   
-            this.userInfo = btoa(JSON.stringify(res));
-  
             return this.token;
           }),
           map(res => res.token),
@@ -134,8 +118,6 @@ export class AuthenticationService {
       this.username = null;
       this.token = null;
       this.refreshToken = null;
-  
-      this.userInfo = null;
       
       this.router.navigate(["/login"]);
     }

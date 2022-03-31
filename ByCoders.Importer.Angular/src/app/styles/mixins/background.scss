@@ -1,0 +1,23 @@
+@mixin background($color, $alpha) {
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        background: url(#{$background-url}) no-repeat;
+        background-repeat: no-repeat;
+        background-attachment: fixed; 
+        background-size: cover;        
+
+        box-shadow: inset 0 0 500px 500px rgba($color, $alpha);
+        filter: blur(15px);
+        margin: -40px;
+    }
+}

@@ -1,0 +1,31 @@
+<div class="h-100 mh-100 d-flex">
+    <app-navigation-drawer #navigation [menus]="navigationMenus$ | async">
+    </app-navigation-drawer>
+
+    <div class="main d-flex flex-grow-1 flex-column">
+        <div class="toolbar position-relative d-flex flex-shrink-0 p-2 align-items-center">
+            <div>
+                <button type="button" class="btn btn-collapse-menu" (click)="navigation.toggleState()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+            </div>
+
+            <div class="mx-auto text-center">
+                <h4 class="d-none d-md-inline">Welcome to ByCoders - Importer</h4>
+            </div>
+
+            <div>            
+                <button type="button" class="btn ms-2 btn-log-out" (click)="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Log out
+                </button>
+            </div>
+        </div>
+
+        <div class="container-fluid position-relative d-flex flex-grow-1 pt-3 pb-2 ">
+            <router-outlet ></router-outlet>
+        </div>
+    </div>
+</div>
+
+<app-logout-modal #logoutModal (logout)="logoutConfirmed()"></app-logout-modal>

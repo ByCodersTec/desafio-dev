@@ -1,0 +1,28 @@
+@mixin scroll($color) {
+    &::-webkit-scrollbar {
+        width: 7px;
+        height: 0;
+        background: $color;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: darken($color, 10%);
+
+        &:hover {
+            background: rgba(0, 0, 0, .55);
+        }
+    }
+
+    &:hover {
+        &::-webkit-scrollbar-thumb{
+            background: rgba(0, 0, 0, .45)
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+    }
+}

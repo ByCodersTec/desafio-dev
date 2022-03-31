@@ -5,29 +5,34 @@ import { AuthGuard } from './shared/auth.guard';
 
 import { AppComponent } from './app.component';
 
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
+
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-    {
-        path: '',
-        //component: MainLayoutComponent,
-        children: [
-        { path: '', redirectTo: '/home', pathMatch: 'full' },
-        { path: 'home', component: AppComponent },
-        ],
-        canActivate: [ AuthGuard ]
-    },
-    {
-      path: '',
-      component: LoginLayoutComponent,
-      children: [
-        { path: '', redirectTo: 'login', pathMatch: 'full' },
-        { path: 'login', component: LoginComponent }
-      ]
-    }
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      { path: 'home', component: AppComponent },
+      { path: 'importer', component: AppComponent },
+      { path: 'operations', component: AppComponent },
+    ],
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: '',
+    component: LoginLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent }
+    ]
+  }
 ];
 
 @NgModule({

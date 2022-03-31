@@ -1,0 +1,40 @@
+<nav class="menu"
+    [class.expanded]="!collapsed"
+    [class.collapsed]="collapsed"
+    [class.first-opened]="firstOpened"
+    >
+    
+    <!--Header-->
+    <div class="navbar-header">
+        <div class="logo-container replace-content">
+            <div class="logo-expanded">ByCoders</div>
+            <div class="logo-collapsed">BC</div>
+        </div>
+    </div>
+
+    <div class="navbar-menu d-flex flex-column flex-grow-1" #navMenu app-track-scroll (scrolled)="updateScroll($event)">
+        <ul class="nav flex-column flex-nowrap w-100 flex-grow-1">
+    
+            <ng-container *ngIf="menus !== null">
+                <ng-container *ngFor="let menu of menus">
+                    <app-navigation-item
+                        [parentCollapsed]="collapsed"
+                        [parentScrolling]="scrolling"
+                        [firstOpened]="firstOpened"
+                        [menu]="menu"
+                        [parentScroll]="currentScroll"
+                        [parentOffsetTop]="getOffsetTop()"
+                        [parentOffsetHeight]="getOffsetHeight()"
+                        (menuClick)="menuClick($event)"
+                        (closeFloatMenu)="closeFloatMenu()"></app-navigation-item>
+                </ng-container>
+            </ng-container>
+    
+            <li class="background-fill flex-grow-1">
+                <div *ngIf="menus === null" class="loading text-center pt-2">
+                    <i class="spinner-border spinner-border-md"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
