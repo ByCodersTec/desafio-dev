@@ -1,0 +1,98 @@
+@import "/src/app/styles/variables/login.theme";
+@import "/src/app/styles/mixins/background-container";
+
+$component-active-bg: $login-base-color3;
+
+@import "/src/app/styles/bootstrap";
+
+.grid {
+    width: 650px;
+    position: relative;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+    border-radius: 10px;
+    padding: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    .background {
+        @include background(rgb(255,255,255), 0.75);
+    }
+
+    .content {
+        padding: 15px;
+
+        h3 {
+            margin-top: .5rem;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+        }
+
+        .validations {
+            font-weight: bold;
+            text-align: center;
+
+            button {
+                background: transparent;
+                padding: 0 2px 0 0;
+                border: none;
+                color: inherit;
+            }
+        }
+
+        .form-item {
+            margin-bottom: .75rem;
+        }
+
+        .separator {
+            margin: 0 auto;
+            position: relative;
+            width: 95%;
+            transition: width 2s;
+            margin-bottom: .5rem;
+
+            &.hidden {
+                width: 0;
+                transition: width .5s;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+
+            .btn-login {
+                $color-contrast-light: 'white';
+                @include button-variant($login-base-color3, darken($login-base-color3, 3%));
+            }
+        }
+    }
+}
+
+.copyright {
+    padding: 13px 10px 3px 10px;
+    margin-top: -10px;
+    position: relative;
+    z-index: -2;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+
+    background-color: rgba(0, 0, 0, .85);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}

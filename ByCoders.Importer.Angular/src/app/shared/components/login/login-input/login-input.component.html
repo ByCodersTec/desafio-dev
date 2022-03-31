@@ -1,0 +1,23 @@
+<div class="input-group" [formGroup]="formGroup">
+    <span class="input-group-text"
+        [class.is-invalid]="isInvalid"
+        [class.border-danger]="isInvalid"
+        [class.bg-danger]="isInvalid"
+    >
+        <label [for]="controlName"><i class="fas fa-{{icon}} fa-fw"></i></label>
+    </span>
+
+    <input class="form-control rounded-end"
+        [type]="type"
+        [class.is-invalid]="isInvalid"
+        [class.border-danger]="isInvalid"
+        [placeholder]="placeholder"
+        [id]="controlName"
+        [formControlName]="controlName"
+        [autofocus]="autofocus"
+    />
+
+    <div class="invalid-feedback">
+        <ng-content select="[validations]"></ng-content>
+    </div>
+</div>

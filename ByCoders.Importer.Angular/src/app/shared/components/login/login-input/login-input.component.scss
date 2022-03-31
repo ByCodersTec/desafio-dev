@@ -1,0 +1,12 @@
+@import "/src/app/styles/variables/login.theme";
+
+.input-group-text {
+    background: $login-base-color3;
+    border-color: $login-base-color3;
+    color: $login-base-color;
+}
+
+.form-control {
+    border-color: $login-base-color2;
+    border-left: 0;
+}

@@ -1,0 +1,74 @@
+<div class="grid">
+    <div class="container">
+        <div class="background"></div>
+
+        <div class="content">
+            <div class="title">
+                <h3 class="text-center">ByCoders - Importer</h3>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                <div class="validations text-danger" [class.d-none]="!hasFormErrors()">
+                    <div [class.d-none]="!loginForm.errors?.['invalid']">
+                        The username or password you entered is incorrect.
+                        <button type="button" data-bs-placement="right" data-bs-trigger="focus" attr.data-bs-content="You may be entering the wrong password, or you may have CAPS LOCK on.">
+                            <i class="fas fa-question-circle fa-lg"></i>
+                        </button>
+                    </div>
+                    
+                    <div [class.d-none]="!loginForm.errors?.['internalServerError']">Occurred some error with the server, please try again.</div>
+                </div>
+                <div class="separator border-bottom border-danger" [class.hidden]="!hasFormErrors()"></div>
+
+
+                <div class="form-item">
+                    <app-login-input icon="user"
+                        [placeholder]="'Type your username'"
+                        [formGroup]="loginForm" [controlName]="'username'" 
+                        [isInvalid]="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"
+                        [autofocus]="true"
+                    >
+                        <div validations>
+                            <div [class.d-none]="!loginForm.controls['username'].errors?.['required']">Please enter the username</div>
+                        </div>
+                    </app-login-input>
+                </div>
+
+                <div class="form-item">
+                    <app-login-input icon="key"
+                        type="password"
+                        [placeholder]="'Type your password'"
+                        [formGroup]="loginForm" [controlName]="'password'" 
+                        [isInvalid]="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+                    >
+                        <div validations>
+                            <div [class.d-none]="!loginForm.controls['password'].errors?.['required']">Please enter the password</div>
+                        </div>
+                    </app-login-input>
+                </div>
+
+
+                <div class="button-container">
+                    <button type="submit" class="btn"
+                        [class.btn-login]="!hasFormErrors() && !success"
+                        [disabled]="loginForm.disabled"
+                        [class.btn-danger]="hasFormErrors()"
+                        [class.btn-success]="success"
+                    >
+                        <i *ngIf="!hasFormErrors() && !loginForm.disabled" class="fas fa-sign-in-alt"></i>
+                        <i *ngIf="loginForm.disabled && !success" class="spinner-border spinner-border-sm"></i>
+                        <i *ngIf="hasFormErrors() && !loginForm.disabled" class="fas fa-exclamation-circle"></i>
+                        <i *ngIf="success" class="fas fa-check"></i>
+
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <span>Copyright &copy; 2021 Ricardo Zambon. All Rights Reserved</span>
+        <span>Design by Ricardo Zambon</span>
+    </div>
+</div>
