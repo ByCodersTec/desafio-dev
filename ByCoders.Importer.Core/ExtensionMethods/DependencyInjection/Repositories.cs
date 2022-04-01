@@ -12,6 +12,7 @@ namespace ByCoders.Importer.Core.ExtensionMethods.DependencyInjection
                 .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ITransactionRepository, TransactionRepository>()
+                .AddScoped<ITransactionTypeRepository, TransactionTypeRepository>()
                 ;
         }
     }
