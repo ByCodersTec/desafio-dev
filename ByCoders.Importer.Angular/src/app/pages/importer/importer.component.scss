@@ -1,0 +1,36 @@
+@import "/src/app/styles/variables/home.theme";
+@import "/src/app/styles/bootstrap";
+
+.validations, .success {
+    font-weight: bold;
+    text-align: center;
+}
+
+.separator {
+    margin: 0 auto;
+    position: relative;
+    width: 95%;
+    transition: width 2s;
+    margin-bottom: .5rem;
+
+    &.hidden {
+        width: 0;
+        transition: width .5s;
+    }
+}
+
+.form-item {
+    margin-bottom: 1rem;    
+}
+
+.btn {
+    &.btn-importer {
+        $color-contrast-light: 'white';
+        @include button-variant($home-base-color3, darken($home-base-color3, 3%));
+    
+    }
+
+    .fas, .fa-spinner {
+        margin-right: .5rem;
+    }
+}

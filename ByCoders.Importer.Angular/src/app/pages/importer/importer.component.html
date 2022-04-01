@@ -1,0 +1,57 @@
+<div class="card">
+    <div class="card-body">
+        
+        <h4 class="card-title">File importer:</h4>
+        
+        <form [formGroup]="importerForm" (ngSubmit)="submit()">
+            <div class="success text-success" [class.d-none]="!success">
+                The file was uploaded and imported with success!
+            </div>
+            <div class="separator border-bottom border-success" [class.hidden]="!success"></div>
+
+            <div class="validations text-danger" [class.d-none]="!hasFormErrors()">
+                <div [class.d-none]="!importerForm.errors?.['invalid']">
+                    You must inform a file to upload.
+                </div>
+
+                <div [class.d-none]="!importerForm.errors?.['internalServerError']">
+                    Occurred some error with the server, please try again.
+                </div>
+            </div>
+            <div class="separator border-bottom border-danger" [class.hidden]="!hasFormErrors()"></div>
+
+            <div class="form-item">
+                <label for="file">Select the file you want to process and import the data:</label>
+            </div>
+
+            <div class="form-item">
+                <input type="file" id="file" class="form-control" #upload
+                    [disabled]="importerForm.disabled"
+                    [class.is-invalid]="this.importerForm.controls['file'].touched && this.importerForm.controls['file'].errors" 
+                    [placeholder]="'Select the file to import'"
+                    (change)="uploadFile($event)" 
+                />
+
+                <div class="invalid-feedback">
+                    <div [class.d-none]="!importerForm.controls['file'].errors?.['required']">The file is mandatory</div>
+                </div>
+            </div>
+            
+            <div class="form-item">
+                <button class="btn"
+                    [class.btn-importer]="!hasFormErrors() && !successButton"
+                    [class.btn-danger]="hasFormErrors()"
+                    [class.btn-success]="successButton"
+                    [disabled]="importerForm.disabled"
+                >
+                    <i *ngIf="!hasFormErrors() && !importerForm.disabled" class="fas fa-cloud-arrow-up"></i>
+                    <i *ngIf="importerForm.disabled && !successButton" class="fa-solid fa-spinner fa-spin-pulse"></i>
+                    <i *ngIf="hasFormErrors() && !importerForm.disabled" class="fas fa-exclamation-circle"></i>
+                    <i *ngIf="successButton" class="fas fa-check"></i>
+                    
+                    Upload file
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

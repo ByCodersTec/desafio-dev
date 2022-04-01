@@ -9,6 +9,7 @@ namespace ByCoders.Importer.WebApi.ExtensionMethods.DependencyInjection
         {
             return services
                 .AddScoped<IAuthenticationService, AuthenticationServiceDefault>()
+                .AddScoped<ITransactionService, TransactionsServiceDefault>()
                 ;
         }
     }
