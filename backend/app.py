@@ -6,7 +6,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object('config')
-app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI']
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -21,18 +20,16 @@ class Cnab(db.Model):
     hour = db.Column(db.DateTime)
     store_owner = db.Column(db.String(80))
     store_name = db.Column(db.String(120))
-    
-    transaction_type_id = db.Column(db.Integer, db.ForeignKey('transaction_types.id'),
-        nullable=False)
+    transaction_type = db.Column(db.Integer)
+
 
 class TransactionType(db.Model):
     __tablename__ = 'transaction_types'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(120))
     nature = db.Column(db.String(11))
-    signal = db.Column(db.String(1))
+    type = db.Column(db.String(1))
 
-    cnabs = db.relationship('Cnab', backref='transaction_types', lazy=True)
 
 
     
@@ -54,21 +51,27 @@ def upload_file_function():
 
 @app.route('/read_cnab', methods = ['GET', 'POST'])
 def read_cnab(filename): 
-    lista = []  
-    with open(filename) as f:
+    with open(filename, mode="r", encoding="utf-8") as f:
         line = f.readline()
         while line:
             line = f.readline()
-            tipo = line[0:1]
-            data = line[1:9]
-            valor = float(line[9:19])/100 if line[9:19] != '' else 0
+            transaction_type = line[0:1]
+            date = line[1:9]
+            value = float(line[9:19])/100 if line[9:19] != '' else 0
             cpf = line[19:30]
-            cartao = line[30:42]
-            hora = line[42:48]
-            dono = line[48:62]
-            nome = line[62:81]
+            card = line[30:42]
+            hour = line[42:48]
+            store_owner = line[48:62]
+            store_name = line[62:81].rstrip()
 
-            lista.append({'tipo': tipo, 'data': data, 'valor': valor, 'cpf': cpf, 'hora': hora, 'cartao': cartao, 'nome': nome, 'hora': hora, 'dono': dono})
-        print(lista)
+            cnab = Cnab(transaction_type=transaction_type,
+                        date=date,
+                        value=value,
+                        cpf=cpf,
+                        card=card,
+                        hour=hour,
+                        store_owner=store_owner,
+                        store_name=store_name)
+            db.session.add(cnab)
 
-
+        db.session.commit()
