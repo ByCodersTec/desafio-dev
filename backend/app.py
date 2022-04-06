@@ -1,11 +1,41 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
-#from flask_migrate import Migrate
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI']
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+class Cnab(db.Model):
+    __tablename__ = 'cnabs'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    value = db.Column(db.Float)
+    cpf = db.Column(db.String(11))
+    card = db.Column(db.String(12))
+    hour = db.Column(db.DateTime)
+    store_owner = db.Column(db.String(80))
+    store_name = db.Column(db.String(120))
+    
+    transaction_type_id = db.Column(db.Integer, db.ForeignKey('transaction_types.id'),
+        nullable=False)
+
+class TransactionType(db.Model):
+    __tablename__ = 'transaction_types'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    description = db.Column(db.String(120))
+    nature = db.Column(db.String(11))
+    signal = db.Column(db.String(1))
+
+    cnabs = db.relationship('Cnab', backref='transaction_types', lazy=True)
 
 
+    
 @app.route("/")
 def home():
     return "Hello, Flask! First Commit!"
