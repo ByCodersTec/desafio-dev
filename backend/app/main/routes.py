@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, Blueprint
 from werkzeug.utils import secure_filename
 import json
 from datetime import datetime
-from app.main.models import Store, Transaction, TransactionType
+from .models import Store, Transaction, TransactionType
 from app import db
+from .utils import serialize
 
 main = Blueprint('main', __name__)
 
@@ -39,28 +40,15 @@ def get_transactions_by_store(store_id):
     transactions = Transaction.query.join(Store, Transaction.id_store == Store.id).filter(Store.id == store_id).all()
     value_sum = 0
     for t in transactions:
-        t.transaction_type = TransactionType.query.filter(TransactionType.id == t.transaction_type).with_entities(TransactionType.description).first().description
-        value_sum += t.value
+        t.transaction_type = TransactionType.query.filter(TransactionType.id == t.transaction_type).first()
+        value_sum = value_sum + t.value if(t.transaction_type.type == '+') else value_sum - t.value
+        t.transaction_type = t.transaction_type.description + ' - ' + t.transaction_type.nature
     return {"response": serialize(transactions), "value_sum": value_sum}
 
 @main.route("/stores", methods=["GET"])
 def get_stores():
     stores = Store.query.all()
     return {"response": serialize(stores)}
-
-def serialize(itens):
-    response = []
-    for item in itens:
-        try:
-            item_serialized = item.__dict__
-            try:
-                item_serialized.pop('_sa_instance_state')
-            except:
-                ...
-            response.append(item_serialized)
-        except:
-            ...
-    return response
 
 @main.route('/read_cnab', methods = ['GET', 'POST'])
 def read_cnab(filename): 
