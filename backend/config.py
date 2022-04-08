@@ -21,6 +21,8 @@ class Development(Config):
     # Connect to the database
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     CORS_HEADERS = 'Content-Type'
+    UPLOAD_FOLDER = "uploads"
+
     # Turn off the Flask-SQLAlchemy event system and warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
