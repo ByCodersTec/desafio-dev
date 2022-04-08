@@ -54,7 +54,10 @@ def upload_file_function():
             basedir = os.path.abspath(os.path.dirname(__file__))
             destination_file = os.path.join(basedir, 'uploads', filename)
             f.save(destination_file)
-            read_cnab(f.filename)
+            try:
+                response = read_cnab(f.filename)
+            except Exception as e:
+                response = {"message": "Error reading file.", "error": str(e)}
             return {"file": filename}, 201
         except:
             raise
@@ -120,5 +123,6 @@ def read_cnab(filename):
                     return { "message": "Error when reading the CNAB file. Error: ", "error": str(e)}
 
             db.session.commit()
+            return { "message": "Succesfully uploaded file." }
     except Exception as e:
         return { "message": "Error when reading the CNAB file. Error: ", "error": str(e)}
