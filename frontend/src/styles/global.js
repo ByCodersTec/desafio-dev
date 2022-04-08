@@ -26,4 +26,9 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  button:hover {
+    font-size: 150%;
+    transition: 0.4s;
+  }
 `;
