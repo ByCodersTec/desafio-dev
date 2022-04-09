@@ -1,12 +1,15 @@
-from flask import render_template, request, Blueprint
+
+from ..models.Transaction import Transaction
+from ..models.Store import Store
+from ..models.TransactionType import TransactionType
+
+from app import db
+from flask_sqlalchemy import SQLAlchemy
+from ..utils import serialize
+from datetime import datetime
+from flask import request
 from werkzeug.utils import secure_filename
 import os
-from datetime import datetime
-from .models import Store, Transaction, TransactionType
-from app import db
-from .utils import serialize
-
-main = Blueprint('main', __name__)
 
 class InvalidUsage(Exception):
     status_code = 400
@@ -22,23 +25,27 @@ class InvalidUsage(Exception):
             'message': self.error_message,
             'error': True,
         }
+    
+def index():
+    transactions = Transaction.query.all()
+    return {"response": serialize(transactions)}
 
-@main.errorhandler(InvalidUsage)
-def handle_invalid_usage(error):
-    return error.to_dict(), error.status_code
+def store():
+    ...
+def show(id):
+    ...
+
+def show_by_store(store_id):
+    transactions = Transaction.query.join(Store, Transaction.id_store == Store.id).filter(Store.id == store_id).all()
+    value_sum = 0
+    for t in transactions:
+        t.transaction_type = TransactionType.query.filter(TransactionType.id == t.transaction_type).first()
+        value_sum = value_sum + t.value if(t.transaction_type.type == '+') else value_sum - t.value
+        t.transaction_type = t.transaction_type.description + ' - ' + t.transaction_type.nature
+    return {"response": serialize(transactions), "value_sum": value_sum}
 
 
-
-@main.route("/")
-def home():
-    return "Hello, Flask! First Commit!"
-
-@main.route('/upload')
-def upload_file():
-   return render_template('upload.html')
-	
-@main.route('/uploader', methods = ['GET', 'POST'])
-def upload_file_function():
+def upload():
    if request.method == 'POST':
         try:
             f = request.files['file']
@@ -51,45 +58,18 @@ def upload_file_function():
         try:
             f.save(secure_filename(f.filename))
             filename = secure_filename(f.filename)
-            basedir = os.path.abspath(os.path.dirname(__file__))
+            basedir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
             destination_file = os.path.join(basedir, 'uploads', filename)
             f.save(destination_file)
             try:
                 response = read_cnab(f.filename)
             except Exception as e:
                 response = {"message": "Error reading file.", "error": str(e)}
-            return {"file": filename}, 201
+            return response, 201
         except:
             raise
             raise InvalidUsage('Failed to upload text', status_code=500)
-        
 
-@main.route("/transactions", methods=["GET"])
-def get_transactions():
-    transactions = Transaction.query.all()
-    return {"response": serialize(transactions)}
-
-@main.route("/transaction_type/<id>", methods=["GET"])
-def get_transaction_type(id):
-    transaction_type = TransactionType.query.filter(TransactionType.id == id).all()
-    return {"response": serialize(transaction_type)}
-
-@main.route("/transactions/<store_id>", methods=["GET"])
-def get_transactions_by_store(store_id):
-    transactions = Transaction.query.join(Store, Transaction.id_store == Store.id).filter(Store.id == store_id).all()
-    value_sum = 0
-    for t in transactions:
-        t.transaction_type = TransactionType.query.filter(TransactionType.id == t.transaction_type).first()
-        value_sum = value_sum + t.value if(t.transaction_type.type == '+') else value_sum - t.value
-        t.transaction_type = t.transaction_type.description + ' - ' + t.transaction_type.nature
-    return {"response": serialize(transactions), "value_sum": value_sum}
-
-@main.route("/stores", methods=["GET"])
-def get_stores():
-    stores = Store.query.all()
-    return {"response": serialize(stores)}
-
-@main.route('/read_cnab', methods = ['GET', 'POST'])
 def read_cnab(filename):
     try:
         with open(filename, mode="r", encoding="utf-8") as f:

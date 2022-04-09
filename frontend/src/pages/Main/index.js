@@ -26,7 +26,7 @@ const Main = (props) => {
 
   const changeTransactions = async(e) => {
     setStore(e)
-    const resp = await api.get(`/transactions/${e.value}`)
+    const resp = await api.get(`/transactions/store/${e.value}`)
     setTransactions(resp.data.response)
     setSum(resp.data.value_sum)
   }
@@ -67,7 +67,7 @@ const Main = (props) => {
           }
         </tbody>
         </Table>
-        <h4 style={{ float: 'right'}}>Sum of values: R${sum.toFixed(2)},00</h4>
+        <h4 style={{ float: 'right'}}>Sum of values: R${sum.toFixed(2)}</h4>
         <Button style={{ marginTop:'30px', textAlign:'center', justifyContent: 'center'}}
             onClick={async () => {
                 history.push('/upload')

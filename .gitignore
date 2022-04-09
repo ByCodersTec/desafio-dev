@@ -1,7 +1,6 @@
 
 .vscode/
 backend/.venv
-backend/app/main/__pycache__
-backend/app/__pycache__
+__pycache__/
+*.py[cod]
 backend/app/migrations
-backend/__pycache__
