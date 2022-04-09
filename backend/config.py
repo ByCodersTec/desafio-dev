@@ -1,5 +1,6 @@
 import os
 from tkinter import FALSE
+from datetime import timedelta
 
 
 class Config(object):
@@ -17,6 +18,10 @@ class Development(Config):
     DB_HOST = 'localhost'
     DB_PORT = '3306'
     DB_NAME = 'cnab_bycoders'
+
+    SESSION_COOKIE_NAME = 'google-login-session'
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=5)
+
 
     # Connect to the database
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
