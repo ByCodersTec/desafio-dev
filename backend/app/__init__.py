@@ -7,6 +7,7 @@ import os
 from app.auth_decorator import login_required
 from config import config
 from flask_cors import CORS, cross_origin
+from flask_swagger_ui import get_swaggerui_blueprint
 
 
 db = SQLAlchemy(session_options={"autoflush": False})
@@ -16,6 +17,14 @@ def create_app(app_config='development'):
     app.config.from_object(config[app_config])
     cors = CORS(app)
     migrate = Migrate(app, db)
+
+    #Blueprints
+    from app.main.routes.store_bp import store_bp
+    from app.main.routes.transaction_bp import transaction_bp
+
+
+    app.register_blueprint(store_bp, url_prefix='/stores')
+    app.register_blueprint(transaction_bp, url_prefix='/transactions')
 
     app.secret_key = 'random secret key'
 
@@ -35,15 +44,19 @@ def create_app(app_config='development'):
     )
 
 
-    #from app.main.routes import main
-    #Blueprints
-    from app.main.routes.store_bp import store_bp
-    from app.main.routes.transaction_bp import transaction_bp
-
-
-    app.register_blueprint(store_bp, url_prefix='/stores')
-    app.register_blueprint(transaction_bp, url_prefix='/transactions')
-    #app.register_blueprint(main)
+    ### swagger specific ###
+    SWAGGER_URL = '/apidocs'
+    API_URL = '/static/swagger.json'
+    SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+        SWAGGER_URL,
+        API_URL,
+        config={
+            'app_name': "Flaks-Bycoders-Challenge"
+        }
+    )
+    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+    ### end swagger specific ###
+    
 
     @app.route('/')
 
