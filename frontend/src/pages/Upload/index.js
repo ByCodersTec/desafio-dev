@@ -13,7 +13,7 @@ const Upload = (props) => {
           Upload
         </h1>
 
-      <Form style={{paddingTop:'20px', textAlign:'center'}} action = "http://localhost:5000/upload" method = "POST" 
+      <Form style={{paddingTop:'20px', textAlign:'center'}} action = "http://localhost:5000/transactions/upload" method = "POST" 
          encType = "multipart/form-data">
          <input type = "file" name = "file" />
          <input type = "submit"/>
