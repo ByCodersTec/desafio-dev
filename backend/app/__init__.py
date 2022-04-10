@@ -26,23 +26,7 @@ def create_app(app_config='development'):
     app.register_blueprint(store_bp, url_prefix='/stores')
     app.register_blueprint(transaction_bp, url_prefix='/transactions')
 
-    app.secret_key = 'random secret key'
-
-    # oAuth Setup
-    oauth = OAuth(app)
-    google = oauth.register(
-        name='google',
-        client_id='149775317225-laslcu0s7575et41cbnijh0bodsapkp5.apps.googleusercontent.com',
-        client_secret='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',
-        access_token_url='https://accounts.google.com/o/oauth2/token',
-        access_token_params=None,
-        authorize_url='https://accounts.google.com/o/oauth2/auth',
-        authorize_params=None,
-        api_base_url='https://www.googleapis.com/oauth2/v1/',
-        userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
-        client_kwargs={'scope': 'openid email profile'},
-    )
-
+    
 
     ### swagger specific ###
     SWAGGER_URL = '/apidocs'
@@ -57,6 +41,23 @@ def create_app(app_config='development'):
     app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
     ### end swagger specific ###
     
+
+
+    # oAuth Setup - UNUSED
+    app.secret_key = 'random secret key'
+    oauth = OAuth(app)
+    google = oauth.register(
+        name='google',
+        client_id='149775317225-laslcu0s7575et41cbnijh0bodsapkp5.apps.googleusercontent.com',
+        client_secret='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',
+        access_token_url='https://accounts.google.com/o/oauth2/token',
+        access_token_params=None,
+        authorize_url='https://accounts.google.com/o/oauth2/auth',
+        authorize_params=None,
+        api_base_url='https://www.googleapis.com/oauth2/v1/',
+        userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
+        client_kwargs={'scope': 'openid email profile'},
+    )
 
     @app.route('/')
 

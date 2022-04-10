@@ -61,13 +61,13 @@ const Main = (props) => {
               <td>{t.cpf}</td>
               <td>{t.card}</td>
               <td>{t.hour}</td>
-              <td>R${t.value}</td>
+              <td>{ t.transaction_type.includes('Entrada') ? '+' : '-' }  R${t.value}</td>
             </tr>
           )) ): (<FaSpinner/>)
           }
         </tbody>
         </Table>
-        <h4 style={{ float: 'right'}}>Sum of values: R${sum.toFixed(2)}</h4>
+        <h4 style={{ float: 'right'}}>TOTAL: R${sum.toFixed(2)}</h4>
         <Button style={{ marginTop:'30px', textAlign:'center', justifyContent: 'center'}}
             onClick={async () => {
                 history.push('/upload')

@@ -53,7 +53,7 @@
         }
       }
     },
-    "/transactions/id": {
+    "/transactions/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -74,6 +74,27 @@
             "schema": {
               "$ref": "#/components/schemas/transaction"
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Delete transaction from given id",
+        
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/transaction"
+            }
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Book request not found."
           }
         }
       }
@@ -136,7 +157,6 @@
       }
     }
   },
-  
   "components": {
     "schemas": {
       "store": {

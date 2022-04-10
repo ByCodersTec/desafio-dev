@@ -76,7 +76,7 @@ class TransactionController():
                 destination_file = os.path.join(basedir, 'uploads', filename)
                 f.save(destination_file)
                 try:
-                    response = self.read_cnab(f.filename)
+                    response = TransactionController.read_cnab(f.filename)
                 except Exception as e:
                     response = {"message": "Error reading file.", "error": str(e)}
                 return response, 201
