@@ -1,0 +1,38 @@
+version: "2.3"
+
+services:
+  quarkus-service:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.native
+    image: lreimer/hands-on-quarkus:native
+    mem_limit: 128m
+    environment:
+      - QUARKUS_DATASOURCE_URL=jdbc:postgresql://quarkus-db:5433/bancoDev
+    ports:
+      - "8080:8080"
+    depends_on:
+      quarkus-db:
+        condition: service_healthy
+    networks:
+      - quarkus
+
+  quarkus-db:
+    image: "postgres:10.5"
+    mem_limit: 128m
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quarkus"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5433:5433"
+    networks:
+      - quarkus
+
+networks:
+  quarkus:
+    driver: bridge
