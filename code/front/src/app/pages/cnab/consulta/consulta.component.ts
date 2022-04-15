@@ -16,8 +16,8 @@ export class ConsultaComponent implements OnInit {
   constructor(private cnabService: CnabService, public http: HttpClient) { }
 
   ngOnInit(){
-    this.http.get<CnabDTO[]>(`${environment.baseURL}/cnab`)
-    // this.cnabService.buscarTodosRegistosCNAB()
+    // this.http.get<CnabDTO[]>(`${environment.baseURL}/cnab`)
+    this.cnabService.buscarTodosRegistosCNAB()
       .subscribe(retorno => {
         console.log("Chegou aqui");
         this.cnabs = retorno;
