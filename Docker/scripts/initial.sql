@@ -46,7 +46,7 @@ VALUES(4, 'Crédito', 'Entrada', '+');
 
 INSERT INTO public.tipotransacao
 (tipo, descricao, natureza, sinal )
-VALUES(5,'Recebimento Empreéstimo', 'Entrada', '+');
+VALUES(5,'Recebimento Empréstimo', 'Entrada', '+');
 
 INSERT INTO public.tipotransacao
 (tipo, descricao, natureza, sinal )

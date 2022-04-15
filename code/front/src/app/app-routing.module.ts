@@ -15,10 +15,6 @@ const config: ExtraOptions ={
     useHash: false,
     onSameUrlNavigation: 'reload',
     relativeLinkResolution: 'legacy'
-}{
-    useHash: false,
-    onSameUrlNavigation: 'reload',
-    relativeLinkResolution: 'legacy'
 }
 
 @NgModule({
