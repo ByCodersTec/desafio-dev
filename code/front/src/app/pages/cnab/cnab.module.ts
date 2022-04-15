@@ -11,6 +11,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SnackBarComponent } from './upload/snack-bar/snack-bar.component';
 import { SnackBarNoFileComponent } from './upload/snack-bar/snack-bar-no-file.component';
 import { SnackBarTypeFileErrorComponent } from './upload/snack-bar/snack-bar-type-file-error.component';
+import { CnabService } from 'src/app/services/cnab.service';
 
 @NgModule({
   declarations: [UploadComponent, ConsultaComponent, SnackBarComponent, SnackBarNoFileComponent, SnackBarTypeFileErrorComponent],
@@ -20,6 +21,7 @@ import { SnackBarTypeFileErrorComponent } from './upload/snack-bar/snack-bar-typ
     MatProgressBarModule,
     MatIconModule,
     MatSnackBarModule
-  ]
+  ],
+  providers: [CnabService]
 })
 export class CnabModule { }

@@ -10,6 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { HttpSuccessInterceptor } from './core/interceptors/http-success.interceptor';
 import { MatMenuModule } from '@angular/material/menu';
+import { CnabService } from './services/cnab.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    CnabService,
     ToastrService,
     {provide: LOCALE_ID, useValue: 'pt'},
     {

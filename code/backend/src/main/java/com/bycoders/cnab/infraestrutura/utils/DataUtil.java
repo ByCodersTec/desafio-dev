@@ -53,6 +53,12 @@ public class DataUtil {
 		return LocalTime.parse(hora, formatter);
 	}
 
+	
+	public static String converterLocalDateTimeForStringWithFormatter(final LocalDateTime data, final String formato){
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+		return data.format(formatter);
+	}
+
 
 
 

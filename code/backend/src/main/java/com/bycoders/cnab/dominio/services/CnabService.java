@@ -66,7 +66,7 @@ public class CnabService {
     public List<CnabDTO> obterTodosRegistros(){
         final List<CnabDTO> registrosCnabsDTO = new ArrayList<>();
 
-        final List<Cnab> cnabs = repository.findAll().list();
+        final List<Cnab> cnabs = repository.findOrdered();
         cnabs.stream().forEach(cnab -> {
             final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
             final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
@@ -74,7 +74,30 @@ public class CnabService {
             registrosCnabsDTO.add(CnabDTO.builder()
                     .numeroCartao(cnab.getNumeroCartao())
                     .cpf(cnab.getCpf())
-                    .dataHoraTransacao(cnab.getDataHoraTransacao())
+                    .dataHoraTransacao(DataUtil.converterLocalDateTimeForStringWithFormatter(cnab.getDataHoraTransacao(), "yyyy-MM-dd HH:mm:ss"))
+                    .nomeLoja(cnab.getNomeLoja())
+                    .representanteLoja(cnab.getRepresentanteLoja())
+                    .valor(cnab.getValor())
+                    .tipo(tipoTransacaoDTO)
+                    .build());
+                });
+
+        return registrosCnabsDTO;
+    }
+
+    public List<CnabDTO> obterTodosRegistrosPorNomeLoja(final String nomeLoja){
+        final List<CnabDTO> registrosCnabsDTO = new ArrayList<>();
+
+        final List<Cnab> cnabs = repository.findOrdered();
+
+        cnabs.stream().forEach(cnab -> {
+            final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
+            final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
+            
+            registrosCnabsDTO.add(CnabDTO.builder()
+                    .numeroCartao(cnab.getNumeroCartao())
+                    .cpf(cnab.getCpf())
+                    .dataHoraTransacao(DataUtil.converterLocalDateTimeForStringWithFormatter(cnab.getDataHoraTransacao(), "yyyy-MM-dd HH:mm:ss"))
                     .nomeLoja(cnab.getNomeLoja())
                     .representanteLoja(cnab.getRepresentanteLoja())
                     .valor(cnab.getValor())

@@ -33,6 +33,7 @@ public class CnabResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response consultaTodos(){
         return Response.ok(cnabService.obterTodosRegistros()).build();
     }

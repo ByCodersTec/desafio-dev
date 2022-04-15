@@ -8,6 +8,5 @@ export class PagesComponent implements OnInit {
 
     menu;
     ngOnInit(){
-        console.log('Chegou no pages Component');
     }
 }

@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { PagesComponent } from './pages.component';
 import { PagesRoutingModule, routes } from './pages-routing.module';
 import { RouterModule } from '@angular/router';
+import { CnabService } from '../services/cnab.service';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     PagesRoutingModule,
     RouterModule.forChild(routes),
   ],
+  providers: [CnabService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule { }

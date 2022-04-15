@@ -1,7 +1,6 @@
 package com.bycoders.cnab.application.controllers.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class CnabDTO {
     private TipoTransacaoDTO tipo;
-    private LocalDateTime dataHoraTransacao;
+    private String dataHoraTransacao;
     private BigDecimal valor;
     private String cpf;
     private String numeroCartao;

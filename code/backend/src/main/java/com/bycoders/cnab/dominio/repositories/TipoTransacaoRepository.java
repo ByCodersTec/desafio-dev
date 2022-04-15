@@ -12,4 +12,5 @@ public class TipoTransacaoRepository implements PanacheRepository<TipoTransacao>
     public TipoTransacao findByTipoTransacaoID(Integer tipoId){
         return find("tipo", tipoId).firstResult();
     }
+
 }
