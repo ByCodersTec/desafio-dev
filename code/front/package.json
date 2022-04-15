@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~9.1.13",
     "@angular/platform-browser-dynamic": "~9.1.13",
     "@angular/router": "~9.1.13",
-    "@angular/http": "5.2.11",
+    "@angular/http": "~10.2.5",
     "angular-file-upload": "^2.6.1",
     "ngx-toastr": "^12.1.0",
     "rsjs": "^0.1.2",
