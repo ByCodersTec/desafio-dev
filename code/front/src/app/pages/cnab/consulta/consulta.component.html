@@ -1,15 +1,18 @@
 <mat-grid-list cols="12" >
-    <mat-grid-tile colspan="12" rowspan="3">
-        <mat-card class="example-card" *ngFor="let cnab of cnabs;">
-            <mat-card-title>Consulta dados CNAB</mat-card-title>
-            <mat-card-subtitle>Consulta por Nome de Loja</mat-card-subtitle>
+    <mat-grid-tile colspan="6" rowspan="3">
+        <mat-card class="example-card" >
+            <mat-card-title>Alguem</mat-card-title>
+            <mat-card-subtitle>de alguem</mat-card-subtitle>
             <mat-card-content>
-                <strong>Tipo da Transação:</strong> {{cnab.tipo.descricao}}
-                <strong>Data e Hora da Transação: </strong>{{cnab.dataHoraTransacao}}
-                <strong>Valor: </strong>{{cnab.valor}}
-                <strong>Número do Cartão: </strong>{{cnab.numeroCartao}}
-                <strong>Representante da Loja: </strong>{{cnab.representanteLoja}}
-                <strong>Nome da Loja: </strong>{{cnab.nomeLoja}}
+                <strong>Tipo da Transação:</strong> testes
+                <!-- {{cnab.tipo.descricao}} -->
+                <strong>Data e Hora da Transação: </strong>2011-05-01
+                <!-- {{cnab.dataHoraTransacao}} -->
+                <strong>Valor: </strong>10.00
+                <!-- {{cnab.valor}} -->
+                <strong>Número do Cartão: </strong> 54654
+                <!-- {{cnab.numeroCartao}} -->
+                
 
             </mat-card-content>
             <mat-card-actions align="end">
