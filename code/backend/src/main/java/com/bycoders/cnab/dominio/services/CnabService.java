@@ -4,14 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import com.bycoders.cnab.application.controllers.dto.CnabDTO;
+import com.bycoders.cnab.application.controllers.dto.TipoTransacaoDTO;
 import com.bycoders.cnab.dominio.entidades.Cnab;
+import com.bycoders.cnab.dominio.entidades.TipoTransacao;
 import com.bycoders.cnab.dominio.repositories.CnabRepository;
+import com.bycoders.cnab.dominio.repositories.TipoTransacaoRepository;
+import com.bycoders.cnab.infraestrutura.utils.DataUtil;
 
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -19,11 +26,11 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @ApplicationScoped
 public class CnabService {
     @Inject CnabRepository repository;
+    @Inject TipoTransacaoRepository tipoTransacaoRepositorio;
     
     @Transactional
-    public StringBuilder uploadArquivo(final MultipartFormDataInput input){
+    public void uploadArquivo(final MultipartFormDataInput input){
 
-        final StringBuilder content = new StringBuilder();
         try {
 
             final InputPart file = input.getFormDataMap().get("file").get(0);
@@ -32,25 +39,49 @@ public class CnabService {
             String line;
             
             while ((line = br.readLine()) != null) {
-                String tipoTransacao = line.substring(0,1);
-                String dataOcorrencia =  line.substring(1,9);
-                String valorMovimentacao = line.substring(9,19);
-                String cpf = line.substring(19, 30);
-                String cartao = line.substring(30, 42);
-                String hora = line.substring(42, 48);
-                String nomeRepresentante = line.substring(48, 62);
-                String nomeLoja = line.substring(62);
+                final BigDecimal valor = new BigDecimal(line.substring(9,19)).movePointLeft(1);
+                final BigDecimal valorDivido = valor.divide(new BigDecimal("100"));
+                // final Long tipoTransacaoID = Long.parseLong(line.substring(0,1));
+                // final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findById(tipoTransacaoID);
+                
+                repository.persist(Cnab.builder()
+                .tipo(Integer.parseInt(line.substring(0,1)))
+                .dataHoraTransacao(DataUtil.converterStringParaLocalDateTimeWithFormato(line.substring(1,9)
+                                                .concat(" ")
+                                                .concat(line.substring(42, 48)), "yyyyMMdd HHmmss"))
+                .valor(valorDivido)
+                .cpf(line.substring(19, 30)) 
+                .numeroCartao(line.substring(30, 42))
+                .representanteLoja(line.substring(48, 62))
+                .nomeLoja(line.substring(62))
+                .build());
 
-                content.append(line);
             }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
 
-        return content;
     }
 
-    public List<Cnab> obterTodosRegistros(){
-        return repository.findAll().list();
+    public List<CnabDTO> obterTodosRegistros(){
+        final List<CnabDTO> registrosCnabsDTO = new ArrayList<>();
+
+        final List<Cnab> cnabs = repository.findAll().list();
+        cnabs.stream().forEach(cnab -> {
+            final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
+            final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
+            
+            registrosCnabsDTO.add(CnabDTO.builder()
+                    .numeroCartao(cnab.getNumeroCartao())
+                    .cpf(cnab.getCpf())
+                    .dataHoraTransacao(cnab.getDataHoraTransacao())
+                    .nomeLoja(cnab.getNomeLoja())
+                    .representanteLoja(cnab.getRepresentanteLoja())
+                    .valor(cnab.getValor())
+                    .tipo(tipoTransacaoDTO)
+                    .build());
+                });
+
+        return registrosCnabsDTO;
     }
 }

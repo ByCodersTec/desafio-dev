@@ -1,4 +1,4 @@
-package com.bycoders.cnab.application.resources;
+package com.bycoders.cnab.application.controllers;
 
 
 import javax.inject.Inject;
@@ -27,8 +27,8 @@ public class CnabResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Response upload(@MultipartForm final MultipartFormDataInput input) {
         
-        final StringBuilder content = cnabService.uploadArquivo(input);
-        return Response.ok(content).build();
+        cnabService.uploadArquivo(input);
+        return Response.ok("Leitura Efetuada com Sucesso!").build();
         
     }
 

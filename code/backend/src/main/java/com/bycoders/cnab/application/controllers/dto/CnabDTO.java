@@ -1,11 +1,8 @@
-package com.bycoders.cnab.dominio.entidades;
+package com.bycoders.cnab.application.controllers.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,17 +17,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper=false)
-@Entity
-public class Cnab extends PanacheEntity{
-
-    private Integer tipo;
+@EqualsAndHashCode
+public class CnabDTO {
+    private TipoTransacaoDTO tipo;
     private LocalDateTime dataHoraTransacao;
     private BigDecimal valor;
     private String cpf;
     private String numeroCartao;
     private String representanteLoja;
     private String nomeLoja;
-
-
 }
