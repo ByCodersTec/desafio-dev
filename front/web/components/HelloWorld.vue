@@ -4,28 +4,57 @@
 
     <div>
       <h2> Adicione seu arquivo aqui</h2>
-      <input type="file" id="upload">
-      <button @click="submitCNAB"> Submit </button>
+      <input type="file" id="upload" ref="file" @change="changeInputFile">
+      <button @click="submitCNAB" :disabled="!uploadFile"> Submit </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import byCoderService from '@/services/bycoders';
+import ResponseData from '@/types/ResponseData';
+import Cnab from '@/types/Cnab';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
-  private stores: Array<object> = []
+  private uploadFile: null | File = null;
 
-  submitCNAB = () => {
-    console.log('Submit...');
+  private stores: Array<Cnab> = [];
+
+  changeInputFile(e: any) {
+    const file = e.target.files || e.dataTransfer.files;
+
+    // eslint-disable-next-line prefer-destructuring
+    this.uploadFile = file[0];
+  }
+
+  submitCNAB(): Promise<any> {
+    if (!this.uploadFile) {
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return Promise.reject(false);
+    }
+
+    return byCoderService.upload(this.uploadFile).then(() => {
+      console.log('Submit...');
+      return true;
+    });
+  }
+
+  listEntries() {
+    return byCoderService.listEntries().then((response: ResponseData) => {
+      this.stores = response.data;
+    });
   }
 
   mounted() {
-    this.stores = [];
-    alert('Mounted...');
+    this.listEntries().then(() => {
+      alert('Mounted...');
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
 </script>

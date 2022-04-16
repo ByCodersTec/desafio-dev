@@ -31,3 +31,15 @@ class Cnab(db.Model):
     def __repr__(self):
         return '<{0} - {1}>'.format(self.__tablename__, self.id)
 
+    @property
+    def serialize_cnab_item(self):
+        return {
+            'id': self.id,
+            'transactionType': self.transaction_type,
+            'occurrenceAt': self.occurrence_at,
+            'value': self.value,
+            'cpf': self.cpf,
+            'card': self.card,
+            'storeOwner': self.store_owner,
+            'storeName': self.store_name
+        }

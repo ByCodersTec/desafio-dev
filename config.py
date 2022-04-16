@@ -37,7 +37,7 @@ class DevConfig(BaseConfig):
     load_dotenv(os.path.join(basedir, '.env'))
     # Global COnfigurations
     DEBUG = _str_to_bool(os.getenv('DEBUG', False))
-    APP_NAME = os.getenv("BDS3D")
+    APP_NAME = os.getenv("Interview")
     APP_LONG_NAME = os.getenv('APP_LONG_NAME')
     # SERVER_NAME = os.getenv('SERVER_NAME', "localhost:5000")
 
@@ -59,3 +59,15 @@ class DevConfig(BaseConfig):
         "title": "Interview bycoders",
         "uiversion": 3,
     }
+
+    #CORS
+    CORS_SUPPORTS_ORIGIN = os.getenv('CORS_SUPPORTS_ORIGIN', '*')
+
+    #Cache
+    CACHE_TYPE = os.getenv('CACHE_TYPE') or 'SimpleCache'
+    CACHE_DEFAULT_TIMEOUT = int(os.getenv('CACHE_DEFAULT_TIMEOUT', 360))
+    CACHE_SOURCE_CHECK = True
+    if CACHE_TYPE == 'RedisCache':
+        CACHE_REDIS_HOST = os.getenv('CACHE_REDIS_HOST')
+        CACHE_REDIS_PORT = os.getenv('CACHE_REDIS_PORT')
+        CACHE_REDIS_PASSWORD = os.getenv('CACHE_REDIS_PASSWORD')
