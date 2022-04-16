@@ -17,5 +17,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'class-methods-use-this': 'off',
     'no-extra-semi': 'off',
+    'max-len': [2, {"code": 160, "tabWidth": 4, "ignoreUrls": true}],
   }
 };

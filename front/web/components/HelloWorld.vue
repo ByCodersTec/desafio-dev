@@ -4,8 +4,24 @@
 
     <div>
       <h2> Adicione seu arquivo aqui</h2>
-      <input type="file" id="upload" ref="file" @change="changeInputFile">
-      <button @click="submitCNAB" :disabled="!uploadFile"> Submit </button>
+      <div class="upload_box">
+        <span @click="$refs.file.click()" v-if="!uploadFile"> click here to upload</span>
+        <div v-else>
+          <span @click="uploadFile=null" class="x-button"> X </span>
+          <span> File name: {{ uploadFile.name }} </span>
+        </div>
+
+        <input type="file" id="upload" ref="file" @input="changeInputFile" accept="text/plain" style="display: none">
+        <button @click="submitCNAB" :disabled="!uploadFile"> Submit </button>
+      </div>
+
+      <div v-for="item in stores" :key="item.id" style="width: 100%">
+        <div>
+          <span>
+            {{ item.id }} - {{ item.value }} - {{ item.storeOwner }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +37,8 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
   private uploadFile: null | File = null;
+
+  private message?: string = undefined;
 
   private stores: Array<Cnab> = [];
 
@@ -38,8 +56,9 @@ export default class HelloWorld extends Vue {
     }
 
     return byCoderService.upload(this.uploadFile).then(() => {
-      console.log('Submit...');
-      return true;
+      this.uploadFile = null;
+      this.message = 'Successfully uploaded';
+      return this.listEntries();
     });
   }
 
@@ -74,5 +93,29 @@ export default class HelloWorld extends Vue {
   }
   a {
     color: #42b983;
+  }
+  .upload_box {
+    width: 32rem;
+    height: 3rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: darkgrey;
+    cursor: pointer;
+  }
+
+  .x-button {
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+
+    &:hover {
+      background-color: red;
+      border-color: darkgrey;
+    }
   }
 </style>
