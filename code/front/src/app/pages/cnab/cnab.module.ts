@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadComponent } from './upload/upload.component';
 import { ConsultaComponent } from './consulta/consulta.component';
@@ -22,6 +22,7 @@ import { CnabService } from 'src/app/services/cnab.service';
     MatIconModule,
     MatSnackBarModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CnabService]
 })
 export class CnabModule { }

@@ -36,12 +36,7 @@ import { CnabService } from './services/cnab.service';
   providers: [
     CnabService,
     ToastrService,
-    {provide: LOCALE_ID, useValue: 'pt'},
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpSuccessInterceptor,
-      multi: true
-    }
+    {provide: LOCALE_ID, useValue: 'pt'}
   ],
   bootstrap: [AppComponent]
 })
