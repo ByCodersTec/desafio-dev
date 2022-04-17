@@ -108,7 +108,7 @@ export default class HelloWorld extends Vue {
 
   mounted() {
     this.listEntries().catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
   }
 }
@@ -199,13 +199,13 @@ export default class HelloWorld extends Vue {
     .store-name {
       width: 50%;
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     .value {
       width: 30%;
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     .actions {

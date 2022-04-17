@@ -1,0 +1,62 @@
+
+services:
+  db:
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backnet
+    environment:
+      - MYSQL_DATABASE=example
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 3306
+      - 33060
+  backend:
+    build: interview
+    restart: always
+    secrets:
+      - db-password
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env
+    environment:
+      - FLASK_SERVER_PORT=5000
+    volumes:
+      - ./interview:/src
+    networks:
+      - backnet
+    depends_on:
+      db:
+        condition: service_healthy
+  proxy:
+    build: front
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    networks:
+      - frontnet
+      - backnet
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  backnet:
+  frontnet:

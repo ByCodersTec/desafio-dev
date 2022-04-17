@@ -28,6 +28,20 @@ TRANSACTION_KIND_PLUS = [1, 4, 5, 6, 7, 8]
 TRANSACTION_KIND_MINUS = [2, 3, 9]
 
 
+def _convert_to_date(date_str: str, date_format: str='%Y%m%d%H%M%S') -> datetime:
+    """
+    Function will convert a str date with date_format
+
+    :param date_str: the date str
+    :param date_format: date format on @date_str. default value is '%Y%m%d%H%M%S'
+
+    :return: the datetime object
+    """
+    date_format = datetime.strptime(date_str, date_format)
+    loc_sp = sao_paulo.localize(date_format)
+    return loc_sp.astimezone(utc)
+
+
 def _import_entry(line: bytes):
     """
     Function will parse the whole line and extract data by each namedTuple configuration's offset
@@ -55,11 +69,7 @@ def _import_entry(line: bytes):
     date = line[CNAB_DATA.start:CNAB_DATA.end].decode("utf-8")
     hour = line[CNAB_HORA.start:CNAB_HORA.end].decode("utf-8")
     str_date = f'{date}{hour}'
-
-    #localize the date, and store as UTC for globalization
-    date_format = datetime.strptime(str_date, '%Y%m%d%H%M%S')
-    loc_sp = sao_paulo.localize(date_format)
-    _cnab_entry.occurrence_at = loc_sp.astimezone(utc)
+    _cnab_entry.occurrence_at = _convert_to_date(str_date)
 
     #To help to look per store
     store_model = Store.query.filter_by(store_name=_cnab_entry.store_name).one_or_none()
