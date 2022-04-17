@@ -15,7 +15,19 @@ class User(db.Model):
     deleted_at = db.Column(db.DateTime, default=None)
 
 
-class Cnab(db.Model):
+class Store(db.Model):
+    __tablename__ = 'stores'
+
+    id = db.Column(db.Integer, primary_key=True)
+    store_name = db.Column(db.String(19), nullable=False)
+
+    transactions = db.relationship("TransactionEntry", back_populates="store", primaryjoin="and_(Store.id==TransactionEntry.store_id)")
+
+    def __repr__(self):
+        return '<{0} - {1}>'.format(self.__tablename__, self.id)
+
+
+class TransactionEntry(db.Model):
     __tablename__ = 'cnabs'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +39,9 @@ class Cnab(db.Model):
     card = db.Column(db.String(12), nullable=False)
     store_owner = db.Column(db.String(14), nullable=False)
     store_name = db.Column(db.String(19), nullable=False)
+
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False, index=True)
+    store = db.relationship(Store, back_populates="transactions")
 
     def __repr__(self):
         return '<{0} - {1}>'.format(self.__tablename__, self.id)

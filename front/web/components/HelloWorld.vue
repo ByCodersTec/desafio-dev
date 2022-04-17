@@ -1,8 +1,8 @@
 <template>
-  <div class="hello">
+  <div class="content-box">
     <h1>{{ msg }}</h1>
 
-    <div>
+    <div class="content-area">
       <h2> Adicione seu arquivo aqui</h2>
       <div class="upload_box">
         <span @click="$refs.file.click()" v-if="!uploadFile"> click here to upload</span>
@@ -15,11 +15,32 @@
         <button @click="submitCNAB" :disabled="!uploadFile"> Submit </button>
       </div>
 
-      <div v-for="item in stores" :key="item.id" style="width: 100%">
-        <div>
+      <h2> Lista de Lojas e saldo</h2>
+
+      <div v-if="storeId" @click="listEntries">
+        Loja - {{ storeId }} - Value = {{ totalValue }}
+      </div>
+
+      <div class="store-header">
+        <span> Store Name </span>
+        <span> Value </span>
+      </div>
+
+      <div v-for="item in stores" :key="item.id" class="store-body">
+        <div class="store-name">
           <span>
-            {{ item.id }} - {{ item.value }} - {{ item.storeOwner }}
+            # {{ item.id }} - {{ item.storeName }}
           </span>
+        </div>
+
+        <div class="value">
+          <span>
+            R$ {{ item.value }}
+          </span>
+        </div>
+
+        <div class="actions" @click="openStore(item.id)">
+          Button
         </div>
       </div>
     </div>
@@ -42,6 +63,13 @@ export default class HelloWorld extends Vue {
 
   private stores: Array<Cnab> = [];
 
+  private storeId = 0;
+
+  get totalValue() {
+    const valueSum = this.stores.reduce((sum, item) => sum + item.value, 0);
+    return valueSum;
+  }
+
   changeInputFile(e: any) {
     const file = e.target.files || e.dataTransfer.files;
 
@@ -62,16 +90,24 @@ export default class HelloWorld extends Vue {
     });
   }
 
-  listEntries() {
+  listEntries(): Promise<any> {
     return byCoderService.listEntries().then((response: ResponseData) => {
       this.stores = response.data;
+      this.storeId = 0;
+      return true;
+    });
+  }
+
+  openStore(storeId: number): Promise<any> {
+    this.storeId = storeId;
+    return byCoderService.listStoreTransactions(storeId).then((response: ResponseData) => {
+      this.stores = response.data;
+      return true;
     });
   }
 
   mounted() {
-    this.listEntries().then(() => {
-      alert('Mounted...');
-    }).catch((error) => {
+    this.listEntries().catch((error) => {
       console.log(error);
     });
   }
@@ -94,6 +130,23 @@ export default class HelloWorld extends Vue {
   a {
     color: #42b983;
   }
+
+  .content-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.content-area {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   .upload_box {
     width: 32rem;
     height: 3rem;
@@ -116,6 +169,49 @@ export default class HelloWorld extends Vue {
     &:hover {
       background-color: red;
       border-color: darkgrey;
+    }
+  }
+
+  .store-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: darkgrey;
+  }
+
+  .store-body {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: darkgrey;
+
+    //background-color: lightgrey;
+    &:nth-child(even) {
+      background-color: antiquewhite;
+    }
+
+    .store-name {
+      width: 50%;
+      display: flex;
+      justify-content: start;
+    }
+
+    .value {
+      width: 30%;
+      display: flex;
+      justify-content: start;
+    }
+
+    .actions {
+      width: 20%;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>

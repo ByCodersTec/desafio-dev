@@ -2,7 +2,13 @@ import http from '@/services/http';
 
 class ByCoderService {
   listEntries(): Promise<any> {
-    return http.get('/byCoders/list').then((response) => {
+    return http.get('/byCoders/list/all').then((response) => {
+      return response;
+    });
+  }
+
+  listStoreTransactions(storeId: number): Promise<any> {
+    return http.get(`/byCoders/list/${storeId}`).then((response) => {
       return response;
     });
   }

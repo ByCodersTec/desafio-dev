@@ -4,11 +4,13 @@ from interview.by_coders import coders_bp as bp
 from flask_jwt_extended import (jwt_required)
 from interview import db
 
-from interview.models import Cnab
+from interview.models import TransactionEntry, Store
 
 from datetime import datetime
 from pytz import timezone, utc
 from collections import namedtuple
+
+from sqlalchemy import func
 
 sao_paulo = timezone('Brazil/East')
 
@@ -22,15 +24,29 @@ CNAB_HORA = CNAB(42, 48)
 CNAB_LOJA_DONO = CNAB(48, 62)
 CNAB_LOJA_NOME = CNAB(62, 81)
 
+TRANSACTION_KIND_PLUS = [1, 4, 5, 6, 7, 8]
+TRANSACTION_KIND_MINUS = [2, 3, 9]
+
 
 def _import_entry(line: bytes):
+    """
+    Function will parse the whole line and extract data by each namedTuple configuration's offset
+    Algo it will create an transaction entry on database.
+    If has no entry for store, it will add to database too.
+
+    :param line: Str Byte with data line
+    :return:
+    """
     if len(line) < 1:
         raise Exception('No data on line')
 
-    _cnab_entry = Cnab()
+    _cnab_entry = TransactionEntry()
 
     _cnab_entry.transaction_type = int(line[CNAB_TIPO.start:CNAB_TIPO.end])
     _cnab_entry.value = float(line[CNAB_VALOR.start:CNAB_VALOR.end]) / 100
+    if _cnab_entry.transaction_type in TRANSACTION_KIND_MINUS:
+        _cnab_entry.value *= -1 #To help on group_by(sum)
+
     _cnab_entry.cpf = line[CNAB_CPF.start:CNAB_CPF.end].decode("utf-8")
     _cnab_entry.card = line[CNAB_CARTAO.start:CNAB_CARTAO.end].decode("utf-8")
     _cnab_entry.store_owner = line[CNAB_LOJA_DONO.start:CNAB_LOJA_DONO.end].decode("utf-8").strip()
@@ -40,14 +56,24 @@ def _import_entry(line: bytes):
     hour = line[CNAB_HORA.start:CNAB_HORA.end].decode("utf-8")
     str_date = f'{date}{hour}'
 
+    #localize the date, and store as UTC for globalization
     date_format = datetime.strptime(str_date, '%Y%m%d%H%M%S')
     loc_sp = sao_paulo.localize(date_format)
     _cnab_entry.occurrence_at = loc_sp.astimezone(utc)
+
+    #To help to look per store
+    store_model = Store.query.filter_by(store_name=_cnab_entry.store_name).one_or_none()
+    if store_model is None:
+        store_model = Store()
+        db.session.add(store_model)
+        store_model.store_name = _cnab_entry.store_name
+
+    _cnab_entry.store = store_model
     db.session.add(_cnab_entry)
 
 
-@bp.route('/list')
-def cnab_home():
+@bp.route('/list/all', methods=['GET'])
+def list_all():
     """
     Will route to cnab home
     ---
@@ -68,7 +94,31 @@ def cnab_home():
         description: User login failed.
     """
 
-    cnab_list = Cnab.query.all()
+    transaction_query = TransactionEntry.query.with_entities(TransactionEntry.store_id, TransactionEntry.store_name, func.sum(TransactionEntry.value).label('value'))
+    transactions = transaction_query.group_by(TransactionEntry.store_name).all()
+    serialized_object = [{ 'id': _t.store_id , 'storeName': _t.store_name, 'value': round(_t.value, 2) } for _t in transactions]
+    return jsonify(serialized_object), 200
+
+
+@bp.route('/list/<int:store_id>', methods=['GET'])
+def list_per_store(store_id):
+    """
+    Will route to cnab home
+    ---
+    description: Will route to cnab home page, to upload and filter entries.
+    parameters:
+      - name: password
+        in: formData
+        type: string
+        required: true
+    responses:
+      200:
+        description: User successfully logged in.
+      400:
+        description: User login failed.
+    """
+
+    cnab_list = TransactionEntry.query.filter_by(store_id=store_id).all()
     serialized_object = [_c.serialize_cnab_item for _c in cnab_list]
     return jsonify(serialized_object), 200
 

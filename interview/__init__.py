@@ -10,7 +10,7 @@ from werkzeug.utils import import_string
 from interview.init_routes import init_routes
 
 
-db = SQLAlchemy(session_options={"autoflush": False, 'expire_on_commit': False})
+db = SQLAlchemy(session_options={"autoflush": True, 'expire_on_commit': False})
 migrate = Migrate()
 cache = Cache()
 
@@ -43,7 +43,7 @@ def create_app(config_class='DevConfig'):
         "static_url_path": "/flasgger_static",
         # "static_folder": "static",  # must be set by user
         "swagger_ui": True,
-        "specs_route": "/apidocs/"
+        "specs_route": "/api/apidocs/"
     }
 
     swag = Swagger(app, config=swagger_config)
