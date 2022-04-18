@@ -1,27 +1,34 @@
-<mat-grid-list cols="12" >
-    <mat-grid-tile colspan="6" rowspan="3">
-        <mat-card class="example-card" >
-            <mat-card-title>Alguem</mat-card-title>
-            <mat-card-subtitle>de alguem</mat-card-subtitle>
-            <mat-card-content>
-                <strong>Tipo da Transação:</strong> testes
-                <!-- {{cnab.tipo.descricao}} -->
-                <strong>Data e Hora da Transação: </strong>2011-05-01
-                <!-- {{cnab.dataHoraTransacao}} -->
-                <strong>Valor: </strong>10.00
-                <!-- {{cnab.valor}} -->
-                <strong>Número do Cartão: </strong> 54654
-                <!-- {{cnab.numeroCartao}} -->
+<mat-accordion class="example-headers-align" multi *ngFor="let cnab of cnabs">
+    <mat-expansion-panel (opened)="calcularSaldo(cnab.nomeLoja)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{cnab.nomeLoja}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{cnab.representanteLoja}}
                 
+            </mat-panel-description>
+            Saldo: <p>{{valorTotal}}</p>
+        </mat-expansion-panel-header>
+        <mat-grid-list cols="2" rowHeight="2:1" *ngFor="let cnabDetalhe of cnabs">
+            <mat-grid-tile *ngIf="cnabDetalhe.nomeLoja === cnab.nomeLoja" >
 
-            </mat-card-content>
-            <mat-card-actions align="end">
-                <!-- <button type="submit" mat-flat-buttoncolor="accent" class="upload-btn distance-button-send"
-                    (click)="enviarArquivo()">
-                    <mat-icon>send</mat-icon>
-                    Enviar
-                </button> -->
-            </mat-card-actions>
-        </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>
+                <mat-card >
+                    <mat-card-subtitle>{{cnabDetalhe.cpf}}</mat-card-subtitle>
+                    <p><strong>Tipo da Transação:</strong>{{cnabDetalhe.tipo.descricao}}</p>
+                    <p><strong>Data e Hora da Transação: </strong>{{cnabDetalhe.dataHoraTransacao}}</p>
+                    <p><strong>Valor: </strong>{{cnab.valor}} </p>
+                    <p><strong>Número do Cartão: </strong>{{cnab.numeroCartao}}</p>
+        
+                    <mat-card-actions align="end">
+                        <!-- <button type="submit" mat-flat-buttoncolor="accent" class="upload-btn distance-button-send"
+                            (click)="enviarArquivo()">
+                            <mat-icon>send</mat-icon>
+                            Enviar
+                        </button> -->
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>    
+    </mat-expansion-panel>
+</mat-accordion>

@@ -7,6 +7,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 const LIB_MODULES = [
     MatMenuModule,
@@ -14,6 +16,8 @@ const LIB_MODULES = [
     MatButtonModule,
     MatCardModule,
     MatGridListModule,
+    MatExpansionModule,
+    MatFormFieldModule
 ]
 
 @NgModule({

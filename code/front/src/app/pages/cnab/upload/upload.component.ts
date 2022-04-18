@@ -1,3 +1,4 @@
+import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -5,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { CnabService } from 'src/app/services/cnab.service';
 import { SnackBarNoFileComponent } from './snack-bar/snack-bar-no-file.component';
+import { SnackBarTypeFileErrorComponent } from './snack-bar/snack-bar-type-file-error.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 @Component({
