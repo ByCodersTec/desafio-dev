@@ -18,5 +18,8 @@ public class CnabRepository implements PanacheRepository<Cnab> {
     public List<Cnab> findOrdered(){
         return find("order by nomeLoja").list();
     }
+    public List<Cnab> findGroupBy(){
+        return find("select distinct(c.nomeLoja), c.representanteLoja, c.tipo from cnab c").list();
+    }
     
 }

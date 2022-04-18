@@ -56,7 +56,7 @@
 			Execute os seguintes comandos na ordem:
 				- docker build -t bycoders-dev .   ;
 				- docker network create --driver bridge my_network_bycoders; ATENÇÃO (caso de erro, trocar o driver por ics)
-				- docker run --rm --name teste-docker-postgres --network=my_network_bycoders -e "POSTGRES_PASSWORD=admin" -p 5433:5433 -d bycoders-dev
+				- docker run --rm --name teste-docker-postgres --network=my_network_bycoders -e "POSTGRES_PASSWORD=admin" -p 5432:5432 -d bycoders-dev
 				
 				
 		
@@ -64,7 +64,7 @@
 			Dentro da basta backend, execute os seguintes comandos:
 				- ./mvnw package; 
 				- docker build -f src/main/docker/Dockerfile.jvm -t quarkus/desafio-dev-java-jvm . ;
-				- docker run -i --rm -p --name java-quarkus 8080:8080 -d quarkus/desafio-dev-java-jvm 
+				- docker run -i --rm --network=my_network_bycoders -p 8080:8080 -d quarkus/desafio-dev-java-jvm 
 				
 		Documentação API da aplicação
 			Utilizado o OpenApi: 

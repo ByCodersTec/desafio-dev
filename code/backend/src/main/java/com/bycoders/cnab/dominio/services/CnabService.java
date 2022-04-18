@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import com.bycoders.cnab.application.controllers.dto.CnabDTO;
+import com.bycoders.cnab.application.controllers.dto.CnabResumoDTO;
 import com.bycoders.cnab.application.controllers.dto.TipoTransacaoDTO;
 import com.bycoders.cnab.dominio.entidades.Cnab;
 import com.bycoders.cnab.dominio.entidades.TipoTransacao;
@@ -79,6 +80,25 @@ public class CnabService {
                     .representanteLoja(cnab.getRepresentanteLoja())
                     .valor(cnab.getValor())
                     .tipo(tipoTransacaoDTO)
+                    .build());
+                });
+
+        return registrosCnabsDTO;
+    }
+    public List<CnabResumoDTO> obterResumos(){
+        final List<CnabResumoDTO> registrosCnabsDTO = new ArrayList<>();
+
+        final List<Cnab> cnabs = repository.findGroupBy();
+        
+        cnabs.stream().forEach(cnab -> {
+            final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
+            final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
+            
+            registrosCnabsDTO.add(CnabResumoDTO.builder()
+                    .nomeLoja(cnab.getNomeLoja())
+                    .representanteLoja(cnab.getRepresentanteLoja())
+                    .valor(cnab.getValor())
+                    .sinal(tipoTransacaoDTO.getSinal())
                     .build());
                 });
 
