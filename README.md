@@ -58,22 +58,17 @@
 				- docker network create --driver bridge my_network_bycoders; ATENÇÃO (caso de erro, trocar o driver por ics)
 				- docker run --rm --name teste-docker-postgres --network=my_network_bycoders -e "POSTGRES_PASSWORD=admin" -p 5432:5432 -d bycoders-dev
 				
-				
-		
 		Docker Quarkus
 			Dentro da basta backend, execute os seguintes comandos:
 				- ./mvnw package; 
 				- docker build -f src/main/docker/Dockerfile.jvm -t quarkus/desafio-dev-java-jvm . ;
 				- docker run -i --rm --network=my_network_bycoders -p 8080:8080 -d quarkus/desafio-dev-java-jvm 
+					
+		Docker FRONTEND
+			Na pasta front, execute o comando abaixo:
+				- docker-compose -f "docker-compose.yml" up -d --build;
 				
 		Documentação API da aplicação
 			Utilizado o OpenApi: 
 				http://localhost:8080/swagger-ui/index.html 
 			
-	**FRONTEND**
-		Pre-requisitos 
-			https://angular.io/guide/setup-local
-			
-		Entrar na pasta front e instalar realizar o comando npm install para baixar as dependências do projeto;
-		Após o comando executado com sucesso, favor executar ng s para execução do front no endereço localhost:4200;
-		
