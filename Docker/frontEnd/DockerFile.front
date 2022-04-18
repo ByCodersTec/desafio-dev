@@ -1,0 +1,8 @@
+FROM node:alpine AS front-bycoders
+WORKDIR ..\..\code\front\
+COPY . . 
+RUN npm ci && npm run build
+
+FROM nginx:alpine
+COPY --from=front-bycoders /app/dist/desafio-by-coders /usr/share/nginx/html
+EXPOSE 80

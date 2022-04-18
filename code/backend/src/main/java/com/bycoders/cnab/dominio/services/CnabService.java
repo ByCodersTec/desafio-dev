@@ -44,7 +44,7 @@ public class CnabService {
                 final BigDecimal valorDivido = valor.divide(new BigDecimal("100"));
                 // final Long tipoTransacaoID = Long.parseLong(line.substring(0,1));
                 // final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findById(tipoTransacaoID);
-                
+               
                 repository.persist(Cnab.builder()
                 .tipo(Integer.parseInt(line.substring(0,1)))
                 .dataHoraTransacao(DataUtil.converterStringParaLocalDateTimeWithFormato(line.substring(1,9)
