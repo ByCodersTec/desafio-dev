@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +17,7 @@ import javax.transaction.Transactional;
 
 import com.bycoders.cnab.application.controllers.dto.CnabDTO;
 import com.bycoders.cnab.application.controllers.dto.CnabResumoDTO;
+import com.bycoders.cnab.application.controllers.dto.CnabConsultaDTO;
 import com.bycoders.cnab.application.controllers.dto.TipoTransacaoDTO;
 import com.bycoders.cnab.dominio.entidades.Cnab;
 import com.bycoders.cnab.dominio.entidades.TipoTransacao;
@@ -64,32 +68,45 @@ public class CnabService {
 
     }
 
-    public List<CnabDTO> obterTodosRegistros(){
-        final List<CnabDTO> registrosCnabsDTO = new ArrayList<>();
+    public List<CnabConsultaDTO> obterTodosRegistros(){
+        final List<CnabConsultaDTO> consultas = new ArrayList<>();
 
         final List<Cnab> cnabs = repository.findOrdered();
-        cnabs.stream().forEach(cnab -> {
-            final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
-            final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
-            
-            registrosCnabsDTO.add(CnabDTO.builder()
-                    .numeroCartao(cnab.getNumeroCartao())
-                    .cpf(cnab.getCpf())
-                    .dataHoraTransacao(DataUtil.converterLocalDateTimeForStringWithFormatter(cnab.getDataHoraTransacao(), "yyyy-MM-dd HH:mm:ss"))
-                    .nomeLoja(cnab.getNomeLoja())
-                    .representanteLoja(cnab.getRepresentanteLoja())
-                    .valor(cnab.getValor())
-                    .tipo(tipoTransacaoDTO)
-                    .build());
-                });
 
-        return registrosCnabsDTO;
+        final Map<String, List<Cnab>> newCnabs = cnabs.stream().collect(Collectors.groupingBy(Cnab::getNomeLoja));
+        
+        final Set<String> labels = newCnabs.keySet();
+
+        labels.forEach(label -> {
+            final List<CnabDTO> registrosCnabsDTO = new ArrayList<>();
+
+            newCnabs.get(label).stream().forEach(cnab -> {
+                if(label.equals(cnab.getNomeLoja())){
+                    final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
+                    final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
+                    registrosCnabsDTO.add(CnabDTO.builder()
+                        .numeroCartao(cnab.getNumeroCartao())
+                        .cpf(cnab.getCpf())
+                        .dataHoraTransacao(DataUtil.converterLocalDateTimeForStringWithFormatter(cnab.getDataHoraTransacao(), "yyyy-MM-dd HH:mm:ss"))
+                        .nomeLoja(cnab.getNomeLoja())
+                        .representanteLoja(cnab.getRepresentanteLoja())
+                        .valor(cnab.getValor())
+                        .tipo(tipoTransacaoDTO)
+                        .build());
+                }
+            });
+            consultas.add(CnabConsultaDTO.builder().nomeLoja(label).cnabsDetalhamento(registrosCnabsDTO).build());
+        });
+
+        return consultas;
+
     }
+    
     public List<CnabResumoDTO> obterResumos(){
         final List<CnabResumoDTO> registrosCnabsDTO = new ArrayList<>();
 
         final List<Cnab> cnabs = repository.findGroupBy();
-        
+        registrosCnabsDTO.clear();
         cnabs.stream().forEach(cnab -> {
             final TipoTransacao tipoTransacao = tipoTransacaoRepositorio.findByTipoTransacaoID(cnab.getTipo());
             final TipoTransacaoDTO tipoTransacaoDTO = TipoTransacaoDTO.buildDTO(tipoTransacao);
@@ -100,7 +117,7 @@ public class CnabService {
                     .valor(cnab.getValor())
                     .sinal(tipoTransacaoDTO.getSinal())
                     .build());
-                });
+            });
 
         return registrosCnabsDTO;
     }

@@ -9,6 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTableModule} from '@angular/material/table';
 
 const LIB_MODULES = [
     MatMenuModule,
@@ -17,7 +18,8 @@ const LIB_MODULES = [
     MatCardModule,
     MatGridListModule,
     MatExpansionModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTableModule
 ]
 
 @NgModule({

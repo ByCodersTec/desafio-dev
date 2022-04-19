@@ -1,34 +1,44 @@
-<mat-accordion class="example-headers-align" multi *ngFor="let cnab of cnabs">
-    <mat-expansion-panel (opened)="calcularSaldo(cnab.nomeLoja)">
+<mat-accordion class="example-headers-align" multi *ngFor="let cnab of cnabs; let i = index">
+    <mat-expansion-panel >
         <mat-expansion-panel-header>
             <mat-panel-title>
                 {{cnab.nomeLoja}}
             </mat-panel-title>
             <mat-panel-description>
-                {{cnab.representanteLoja}}
+                {{cnab.cnabsDetalhamento[0].representanteLoja}}
                 
             </mat-panel-description>
-            Saldo: <p>{{valorTotal}}</p>
+            Saldo: <p>{{getCalculoValores(cnab.cnabsDetalhamento) | currency}} </p>
         </mat-expansion-panel-header>
-        <mat-grid-list cols="2" rowHeight="2:1" *ngFor="let cnabDetalhe of cnabs">
-            <mat-grid-tile *ngIf="cnabDetalhe.nomeLoja === cnab.nomeLoja" >
+        <mat-card >
+            <mat-card-subtitle>CPF: {{cnab.cnabsDetalhamento[0].cpf}} Saldo: {{getCalculoValores(cnab.cnabsDetalhamento) | currency}}</mat-card-subtitle>
+            
+            <table mat-table [dataSource]="cnab.cnabsDetalhamento" class="mat-elevation-z8">
 
-                <mat-card >
-                    <mat-card-subtitle>{{cnabDetalhe.cpf}}</mat-card-subtitle>
-                    <p><strong>Tipo da Transação:</strong>{{cnabDetalhe.tipo.descricao}}</p>
-                    <p><strong>Data e Hora da Transação: </strong>{{cnabDetalhe.dataHoraTransacao}}</p>
-                    <p><strong>Valor: </strong>{{cnab.valor}} </p>
-                    <p><strong>Número do Cartão: </strong>{{cnab.numeroCartao}}</p>
-        
-                    <mat-card-actions align="end">
-                        <!-- <button type="submit" mat-flat-buttoncolor="accent" class="upload-btn distance-button-send"
-                            (click)="enviarArquivo()">
-                            <mat-icon>send</mat-icon>
-                            Enviar
-                        </button> -->
-                    </mat-card-actions>
-                </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>    
+                <ng-container matColumnDef="data">
+                  <th mat-header-cell *matHeaderCellDef> Data/Hora </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dataHoraTransacao | date:'dd/MM/yyyy HH:mm:ss'}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="descricao">
+                  <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                  <td mat-cell *matCellDef="let element"> {{element.tipo.descricao}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="valor">
+                  <th mat-header-cell *matHeaderCellDef> Valor </th>
+                  <td mat-cell *matCellDef="let element"> {{element.valor | currency}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="numeroCartao">
+                  <th mat-header-cell *matHeaderCellDef> Número do Cartão </th>
+                  <td mat-cell *matCellDef="let element"> {{element.numeroCartao}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              
+        </mat-card>  
     </mat-expansion-panel>
 </mat-accordion>

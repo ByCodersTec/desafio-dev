@@ -6,6 +6,7 @@ import { environment } from "src/environments/environment";
 import { SnackBarComponent } from "../pages/cnab/upload/snack-bar/snack-bar.component";
 import { CnabDTO } from "../models/cnab-dto";
 import { HttpClient } from "@angular/common/http";
+import { CnabRetornoConsultaDTO } from "../models/cnab-retorno-consulta-dto";
 
 @Injectable()
 export class CnabService {
@@ -18,8 +19,8 @@ export class CnabService {
     return this.http.get<CnabDTO[]>(`${environment.baseURL}/cnab/${nomeLoja}`);
   }
 
-  buscarTodosRegistosCNAB():Observable<CnabDTO[]>{
-    return this.http.get<CnabDTO[]>(`${environment.baseURL}/cnab`);
+  buscarTodosRegistosCNAB():Observable<CnabRetornoConsultaDTO>{
+    return this.http.get<CnabRetornoConsultaDTO>(`${environment.baseURL}/cnab`);
   }
 
   uploadArquivoCNAB(formData: FormData){

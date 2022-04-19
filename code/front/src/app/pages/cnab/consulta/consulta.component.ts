@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CnabConsultaDTO } from 'src/app/models/cnab-consulta-dto';
 import { CnabDTO } from 'src/app/models/cnab-dto';
 import { CnabResumoDTO } from 'src/app/models/cnab-resumo-dto';
+import { CnabRetornoConsultaDTO } from 'src/app/models/cnab-retorno-consulta-dto';
 import { CnabService } from 'src/app/services/cnab.service';
 
 @Component({
@@ -9,16 +11,23 @@ import { CnabService } from 'src/app/services/cnab.service';
   styleUrls: ['./consulta.component.scss']
 })
 export class ConsultaComponent implements OnInit {
-  cnabs:CnabDTO[] = [];
-  cnabsResumo:CnabResumoDTO[] = [];
+  cnabs:CnabRetornoConsultaDTO = new CnabRetornoConsultaDTO();
+  cnabsResumo:CnabDTO[] = [];
   valorTotal:number = 0;
   invalidEntries = 0;
+
+  displayedColumns: string[] = ['data', 'descricao', 'valor', 'numeroCartao'];
+
   constructor(private cnabService: CnabService) { }
 
   ngOnInit(){
     this.cnabService.buscarTodosRegistosCNAB()
       .subscribe(retorno => {
         this.cnabs = retorno;
+        // this.cnabs.consultas.forEach(detalhe => {
+          
+        //   this.cnabsResumo.push(detalhe.cnabsDetalhamento);
+        // })
         
     }, (error) => {
       console.log(error)
@@ -26,16 +35,17 @@ export class ConsultaComponent implements OnInit {
 
   }
 
-
-  calcularSaldo(nomeLoja:string){
-    const cnabsFilter = this.cnabs.filter(c => c.nomeLoja == nomeLoja);
-    this.valorTotal = 0;
-    cnabsFilter.forEach(cnab => {
+  getCalculoValores(cnabs:CnabDTO[]){
+    let valorTotal = 0;
+    console.log(cnabs);
+    cnabs.forEach(cnab => {
       if(cnab.tipo.sinal == '+'){
-        this.valorTotal =+ cnab.valor;
+        valorTotal =+ cnab.valor;
       }else{
-        this.valorTotal =- cnab.valor;
+        valorTotal =- cnab.valor;
       }
     });
+    console.log(valorTotal);
+    return valorTotal;
   }
 }
