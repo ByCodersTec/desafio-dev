@@ -1,0 +1,35 @@
+
+<header style="text-align: center;
+background-color: black;
+color: cornsilk;" >
+<mat-grid-list cols="12" rows="1">
+  <mat-grid-tile colspan="1" rowspan="1">
+    <button mat-icon-button style="color: white" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="pages">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item routerLink="pages/cnab/upload">
+          <mat-icon>dialpad</mat-icon>
+          <span>Upload</span>
+        </button>
+        <button mat-menu-item routerLink="pages/cnab/consulta">
+          <mat-icon>dialpad</mat-icon>
+          <span>Consulta</span>
+        </button>
+      </mat-menu>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="8" rowspan="1">
+    <h2>ByCoders</h2>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="1">
+    <h5>Desafio Desenvolvedor JAVA - Ednezer Rezende</h5>
+  </mat-grid-tile>
+</mat-grid-list>
+
+</header>
+<router-outlet></router-outlet>
+

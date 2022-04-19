@@ -1,0 +1,47 @@
+<form [formGroup]="formulario">
+    <mat-grid-list cols="12" >
+        <mat-grid-tile colspan="12" rowspan="3">
+            <mat-card class="example-card">
+                <mat-card-title>UPLOAD CNAB</mat-card-title>
+                <mat-card-subtitle>Envio de arquivos</mat-card-subtitle>
+                <mat-card-content>
+                    <input type="file" class="file-input" requiredFileType="text/plain"  
+                (change)="onFileSelected($event)" #fileUpload formControlName="file">
+
+                
+                    <div class="file-upload">
+
+                        {{fileName || "Selecione um arquivo CNAB."}}
+                    
+                        <button mat-mini-fab color="primary" class="upload-btn"
+                            (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn"  class="upload-btn distance-button"
+                            (click)="cleanInputArquivo()">
+                            <mat-icon>delete_sweep</mat-icon>
+                        </button>
+                    </div>
+                    <div class="progress">
+
+                        <mat-progress-bar class="progress-bar" mode="determinate"
+                                        [value]="uploadProgress" *ngIf="uploadProgress">
+                    
+                        </mat-progress-bar>
+                    
+                        <mat-icon class="cancel-upload" (click)="cancelUpload()" 
+                                *ngIf="uploadProgress">delete_forever</mat-icon>
+                    
+                    </div>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button type="submit" mat-flat-buttoncolor="accent" [disabled]="!formulario.valid"  class="upload-btn distance-button-send"
+                        (click)="enviarArquivo()">
+                        <mat-icon>send</mat-icon>
+                        Enviar
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

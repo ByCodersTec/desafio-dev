@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  desafiobycoders:
+    image: desafiobycoders
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 4200:4200
+      - 9229:9229
+    command: ["node", "--inspect=0.0.0.0:9229", "index.js"]
