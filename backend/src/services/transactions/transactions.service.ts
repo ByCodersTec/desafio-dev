@@ -37,7 +37,7 @@ export class TransactionsService {
 
     const parsedTransactions = await Promise.all(
       rawTransactions
-        .filter((line) => !line)
+        .filter((line) => !!line)
         .map<Promise<ParsedTransaction>>(async (rawTransaction) => {
           const transactionTypeId = Number(
             rawTransaction[CNAB_TRANSACTIONS_SPEC.TYPE],
