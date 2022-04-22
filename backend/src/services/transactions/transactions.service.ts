@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, Transaction } from '@prisma/client';
 import { addHours, parse } from 'date-fns';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-
-const RAW_TRANSACTIONS_TIME_OFFSET = 3; // Transactions Time in Txt File are in UTC-3, check README
+import { CNAB_TRANSACTIONS_SPEC, RAW_TRANSACTIONS_TIME_OFFSET } from './transactions.service.constants';
 
 @Injectable()
 export class TransactionsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async transactionsTypes(params?: {
     skip?: number;
@@ -26,21 +25,23 @@ export class TransactionsService {
         async (rawTransaction) => {
           if (!rawTransaction) return [];
 
-          const rawDate = `${rawTransaction.slice(1, 9)}${rawTransaction.slice(
-            42,
-            48,
-          )}`;
-          const parsedDate = parse(rawDate, 'yyyyMMddHHmmss', new Date());
+          const transactionTypeId = Number(rawTransaction[CNAB_TRANSACTIONS_SPEC.TYPE]);
+
+          const rawDate = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.DATE_START, CNAB_TRANSACTIONS_SPEC.DATE_END);
+          const rawTime = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.TIME_START, CNAB_TRANSACTIONS_SPEC.TIME_END);
+
+          const rawDateTime = `${rawDate}${rawTime}`;
+          const parsedDate = parse(rawDateTime, 'yyyyMMddHHmmss', new Date());
           const dateOffsetAdjusted = addHours(
             parsedDate,
             RAW_TRANSACTIONS_TIME_OFFSET,
           );
 
-          const value = Number(rawTransaction.slice(9, 19));
-          const CPF = rawTransaction.slice(19, 30);
-          const card = rawTransaction.slice(30, 42);
-          const storeOwner = rawTransaction.slice(48, 62).trim();
-          const storeName = rawTransaction.slice(62, 81).trim();
+          const value = Number(rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.VALUE_START, CNAB_TRANSACTIONS_SPEC.VALUE_END));
+          const CPF = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.CPF_START, CNAB_TRANSACTIONS_SPEC.CPF_END);
+          const card = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.CARD_START, CNAB_TRANSACTIONS_SPEC.CARD_END);
+          const storeOwner = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.STORE_OWNER_START, CNAB_TRANSACTIONS_SPEC.STORE_OWNER_END).trim();
+          const storeName = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.STORE_NAME_START, CNAB_TRANSACTIONS_SPEC.STORE_NAME_END).trim();
 
           const store = await this.prisma.store.upsert({
             where: { name: storeName },
@@ -53,7 +54,7 @@ export class TransactionsService {
 
           return this.prisma.transaction.create({
             data: {
-              transactionTypeId: Number(rawTransaction[0]),
+              transactionTypeId,
               date: dateOffsetAdjusted,
               value,
               CPF,
