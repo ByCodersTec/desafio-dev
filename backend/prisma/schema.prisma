@@ -25,7 +25,7 @@ model Transaction {
 model Store {
   id          Int           @id @default(autoincrement())
   createdAt   DateTime      @default(now())
-  name        String
+  name        String        @unique
   owner       String
   Transaction Transaction[]
 }
@@ -44,11 +44,12 @@ enum EntryNature {
 
 enum TransactionDescription {
   DEBIT_PAYMENT
+  BOLETO_PAYMENT
+  FINANCING
   CREDIT_PAYMENT
+  LOAN_PAYMENT
+  SALES
   TED_PAYMENT
   DOC_PAYMENT
-  LOAN_PAYMENT
-  BOLETO_PAYMENT
-  SALES
-  FINANCING
+  RENT
 }

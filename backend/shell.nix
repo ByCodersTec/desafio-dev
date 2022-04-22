@@ -39,5 +39,7 @@ mkShell {
       createdb $PGDATABASE
       psql -c "CREATE ROLE $USER WITH LOGIN SUPERUSER PASSWORD '$PASSWORD';"
     }
+
+    alias dev='npm run start:dev'
   '';
 }

@@ -6,6 +6,6 @@ import { TransactionsController } from './transactions/transactions.controller';
 @Module({
   imports: [DatabaseModule],
   controllers: [TransactionsController],
-  providers: [TransactionsService]
+  providers: [TransactionsService],
 })
-export class HttpModule { }
+export class HttpModule {}
