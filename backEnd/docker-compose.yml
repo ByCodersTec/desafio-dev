@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  mysql-development:
+    image: mysql:8.0.17
+    environment:
+      MYSQL_ROOT_PASSWORD: 100senha
+      MYSQL_DATABASE: desafio_byCoders
+    ports:
+      - "3308:3306"
+
+  admin:    
+    image: adminer    
+    ports:      
+      - "8080:8080"

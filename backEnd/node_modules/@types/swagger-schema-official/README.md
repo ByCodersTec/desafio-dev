@@ -1,0 +1,16 @@
+# Installation
+> `npm install --save @types/swagger-schema-official`
+
+# Summary
+This package contains type definitions for swagger-schema-official (https://swagger.io/specification/).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/swagger-schema-official.
+
+### Additional Details
+ * Last updated: Fri, 02 Jul 2021 22:33:16 GMT
+ * Dependencies: none
+ * Global values: none
+
+# Credits
+These definitions were written by [Mohsen Azimi](https://github.com/mohsen1), [Ben Southgate](https://github.com/bsouthga), [Nicholas Merritt](https://github.com/nimerritt), [Mauri Edo](https://github.com/mauriedo), and [Vincenzo Chianese](https://github.com/XVincentX).
