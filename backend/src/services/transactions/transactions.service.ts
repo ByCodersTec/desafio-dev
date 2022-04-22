@@ -8,6 +8,16 @@ import { CNAB_TRANSACTIONS_SPEC, RAW_TRANSACTIONS_TIME_OFFSET } from './transact
 export class TransactionsService {
   constructor(private prisma: PrismaService) { }
 
+  async transactions(params?: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.TransactionWhereUniqueInput;
+    where?: Prisma.TransactionWhereInput;
+    orderBy?: Prisma.TransactionOrderByWithRelationInput;
+  }): Promise<Transaction[]> {
+    return this.prisma.transaction.findMany(params)
+  }
+
   async transactionsTypes(params?: {
     skip?: number;
     take?: number;
@@ -17,14 +27,12 @@ export class TransactionsService {
     return this.prisma.transactionType.findMany({ ...params });
   }
 
-  async processTransactionsFile(file: Express.Multer.File): Promise<any> {
+  async processCNABFile(file: Express.Multer.File): Promise<Transaction[]> {
     const rawTransactions = file.buffer.toString().split(/(?:\r\n|\r|\n)/g);
 
     const parsedTransactions = Promise.all(
-      rawTransactions.flatMap<Promise<Transaction | Transaction[]>>(
+      rawTransactions.filter((line) => !line).map<Promise<Transaction>>(
         async (rawTransaction) => {
-          if (!rawTransaction) return [];
-
           const transactionTypeId = Number(rawTransaction[CNAB_TRANSACTIONS_SPEC.TYPE]);
 
           const rawDate = rawTransaction.slice(CNAB_TRANSACTIONS_SPEC.DATE_START, CNAB_TRANSACTIONS_SPEC.DATE_END);

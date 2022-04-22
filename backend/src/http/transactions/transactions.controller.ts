@@ -7,12 +7,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { TransactionType } from '@prisma/client';
+import { Transaction, TransactionType } from '@prisma/client';
 import { TransactionsService } from 'src/services/transactions/transactions.service';
 
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
+
+  @Get('')
+  async getTransactions(): Promise<Transaction[]> {
+    return this.transactionsService.transactions();
+  }
 
   @Get('types')
   async getTransactionsTypes(): Promise<TransactionType[]> {
@@ -23,8 +28,8 @@ export class TransactionsController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadTransactionsFile(
     @UploadedFile() file: Express.Multer.File,
-    @Body('data') bodyData?: any,
   ): Promise<any> {
-    return this.transactionsService.processTransactionsFile(file);
+    return this.transactionsService.processCNABFile(file);
   }
+
 }
