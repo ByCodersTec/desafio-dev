@@ -31,5 +31,4 @@ export class TransactionsController {
   ): Promise<any> {
     return this.transactionsService.processCNABFile(file);
   }
-
 }
