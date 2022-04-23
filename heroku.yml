@@ -2,12 +2,12 @@ setup:
   addons:
   - plan: heroku-postgresql
     as: DATABASE
-  build:
-    docker:
-      server: backend/Dockerfile
-  release:
-    command:
-      - npx prisma migrate deploy && npx prisma db seed
-    image: server
-  run:
-    server: npm run start
+build:
+  docker:
+    server: backend/Dockerfile
+release:
+  command:
+    - npx prisma migrate deploy && npx prisma db seed
+  image: server
+run:
+  server: npm run start
