@@ -11,7 +11,7 @@
     "db:rollback": "sequelize-cli db:migrate:undo",
     "db:rollback:all": "sequelize-cli db:migrate:undo:all",
     "db:drop": "sequelize-cli db:drop",
-    "db:start":"npm run db:create && npm run db:migrate && npm run db:seed ",
+    "db:start": "npm run db:create && npm run db:migrate && npm run db:seed ",
     "dev": "node ./node_modules/nodemon/bin/nodemon.js --require esm ./App.js"
   },
   "author": "guilhermeDev",
@@ -23,7 +23,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.3",
     "express-fileupload": "^1.3.1",
-    "express-swagger-delta": "^1.4.0",
+    "express-swagger-delta": "^0.0.1",
     "moment": "^2.29.3",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",

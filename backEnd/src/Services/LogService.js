@@ -32,13 +32,14 @@ class LogService
     let stack = error.stack.split('\n');
 
     let response = new Return(400, msg, stack);
-
-    LogRepository.addLog({
-      metodo: req.method,
-      url: req.url,
-      parametro: req.params || req.body,
-      retorno: response,
-    });
+    
+    console.log(response)
+    //LogRepository.addLog({
+    //  metodo: req.method,
+    //  url: req.url,
+    //  parametro: req.params || req.body,
+    //  retorno: response,
+    //});
 
     return res
       .status(response.statusCode)

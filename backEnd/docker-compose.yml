@@ -4,6 +4,8 @@ services:
 
   mysql-development:
     image: mysql:8.0.17
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     environment:
       MYSQL_ROOT_PASSWORD: 100senha
       MYSQL_DATABASE: desafio_byCoders

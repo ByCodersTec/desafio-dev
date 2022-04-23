@@ -23,11 +23,12 @@ class Server {
 
 		ExpressSwagger.Server.setSwaggerProps({ layout: layout, specification: specification });
 
-		ExpressSwagger.Server.app.use(cors());
-		ExpressSwagger.Server.app.use(fileupload())
-		ExpressSwagger.Server.app.use(express.static("files"))
-		ExpressSwagger.Server.app.use(bodyParser.urlencoded({ extended: true }));
-		ExpressSwagger.Server.app.use(bodyParser.json());
+		ExpressSwagger.Server.serverApp.use(cors());
+		ExpressSwagger.Server.serverApp.use(fileupload())
+		ExpressSwagger.Server.serverApp.use(express.static("files"))
+		ExpressSwagger.Server.serverApp.use(bodyParser.urlencoded({ extended: true }));
+		ExpressSwagger.Server.serverApp.use(bodyParser.json());
+		
 		ExpressSwagger.Server.serverMiddleware = this.serverMiddleware;
 
 		Controller.Upload.setRoutes();
