@@ -15,4 +15,8 @@ export class StoresService {
   }) {
     return this.prisma.store.findMany(params);
   }
+
+  async store(params?: Prisma.StoreWhereUniqueInput) {
+    return this.prisma.store.findUnique({ where: params})
+  }
 }
