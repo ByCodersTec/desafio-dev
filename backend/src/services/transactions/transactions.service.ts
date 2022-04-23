@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Transaction } from '@prisma/client';
 import { addHours, parse } from 'date-fns';
+import { Promise as BBPromise } from 'bluebird';
+
 import { PrismaService } from 'src/database/prisma/prisma.service';
 import {
   CNAB_TRANSACTIONS_SPEC,
@@ -33,12 +35,15 @@ export class TransactionsService {
   }
 
   async processCNABFile(file: Express.Multer.File): Promise<Transaction[]> {
-    const rawTransactions = file.buffer.toString().split(/(?:\r\n|\r|\n)/g);
+    const rawTransactions = file.buffer
+      .toString()
+      .split(/(?:\r\n|\r|\n)/g)
+      .filter((line) => !!line);
 
-    const parsedTransactions = await Promise.all(
-      rawTransactions
-        .filter((line) => !!line)
-        .map<Promise<ParsedTransaction>>(async (rawTransaction) => {
+    const parsedTransactions: Array<ParsedTransaction> =
+      await BBPromise.mapSeries(
+        rawTransactions,
+        async (rawTransaction: string) => {
           const transactionTypeId = Number(
             rawTransaction[CNAB_TRANSACTIONS_SPEC.TYPE],
           );
@@ -103,8 +108,8 @@ export class TransactionsService {
             card,
             storeId: store.id,
           };
-        }),
-    );
+        },
+      );
 
     return this.prisma.$transaction(
       parsedTransactions.map((transaction: ParsedTransaction) =>
