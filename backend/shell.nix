@@ -11,10 +11,12 @@ mkShell {
 
     export PGDATA=$PWD/db
     export PGHOST=$PWD/postgres
-    export PGDATABASE=postgres
+    export PGDATABASE=stores-transactions
     export PGPORT=5433
+    export USER=prisma
+    export PASSWORD=prisma
 
-    export DATABASE_URL="postgresql:///$PGDATABASE?host=$PGHOST&port=$PGPORT"
+    export DATABASE_URL="postgresql://$USER:$PASSWORD@localhost:$PGPORT/$PGDATABASE"
     export LOG_PATH=$PWD/postgres/LOG
 
     if [ ! -d $PGHOST ]; then
@@ -31,5 +33,13 @@ mkShell {
         pg_ctl start -l $LOG_PATH -o "-c unix_socket_directories='$PGHOST'"
       fi
     }
+
+    postgres_setup() {
+      postgres_start
+      createdb $PGDATABASE
+      psql -c "CREATE ROLE $USER WITH LOGIN SUPERUSER PASSWORD '$PASSWORD';"
+    }
+
+    alias dev='npm run start:dev'
   '';
 }

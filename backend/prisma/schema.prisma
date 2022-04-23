@@ -9,3 +9,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Transaction {
+  id                Int             @id @default(autoincrement())
+  transactionType   TransactionType @relation(fields: [transactionTypeId], references: [id])
+  transactionTypeId Int
+  date              DateTime
+  value             Int
+  CPF               String
+  card              String
+  store             Store           @relation(fields: [storeId], references: [id])
+  storeId           Int
+}
+
+model Store {
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  name        String        @unique
+  owner       String
+  Transaction Transaction[]
+}
+
+model TransactionType {
+  id          Int                    @id @default(autoincrement())
+  description TransactionDescription
+  entryNature EntryNature
+  Transaction Transaction[]
+}
+
+enum EntryNature {
+  DEBIT
+  CREDIT
+}
+
+enum TransactionDescription {
+  DEBIT_PAYMENT
+  BOLETO_PAYMENT
+  FINANCING
+  CREDIT_PAYMENT
+  LOAN_PAYMENT
+  SALES
+  TED_PAYMENT
+  DOC_PAYMENT
+  RENT
+}
