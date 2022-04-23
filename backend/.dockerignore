@@ -1,0 +1,13 @@
+# compiled output
+node_modules
+
+# Development Database with Nix
+db/
+postgres/
+
+
+# Env Files
+.env
+
+.git
+.gitignore

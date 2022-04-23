@@ -51,6 +51,7 @@ async function main() {
         entryNature: 'CREDIT',
       },
     ],
+    skipDuplicates: true,
   });
 }
 
