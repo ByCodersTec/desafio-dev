@@ -8,6 +8,7 @@ RUN chmod +w /app/wait-for-it.sh
 
 RUN npm install --silent
 RUN npx prisma generate
+
 RUN apk add --no-cache bash
 
 EXPOSE 5500

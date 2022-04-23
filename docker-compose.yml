@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  ##############
+  ## POSTGRES ##
+  postgres_db:
+    image: postgres
+    networks:
+      - database
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=stores-transactions
+    volumes:
+      - ./backend/database/data/prod:/var/lib/postgresql/data/
+    restart: always
+    container_name: postgres_db
+  #############
+  ## SERVER ##
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - webapp
+      - database
+    ports:
+      - 5500:5500
+    depends_on:
+      - postgres_db
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@postgres_db:5432/stores-transactions
+    restart: always
+    command: >
+        bash -c "./wait-for-it.sh postgres_db:5432 -- npx prisma migrate deploy
+        && npx prisma db seed && npm run start"
+    container_name: server
+
+networks:
+  webapp:
+    driver: bridge
+  database:
+    driver: bridge

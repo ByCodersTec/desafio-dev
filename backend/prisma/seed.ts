@@ -1,58 +1,78 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import {
+    EntryNature,
+    PrismaClient,
+    TransactionDescription
+} from '.prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.transactionType.createMany({
-    data: [
-      {
-        id: 1,
-        description: 'DEBIT_PAYMENT',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 2,
-        description: 'BOLETO_PAYMENT',
-        entryNature: 'CREDIT',
-      },
-      {
-        id: 3,
-        description: 'FINANCING',
-        entryNature: 'CREDIT',
-      },
-      {
-        id: 4,
-        description: 'CREDIT_PAYMENT',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 5,
-        description: 'LOAN_PAYMENT',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 6,
-        description: 'SALES',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 7,
-        description: 'TED_PAYMENT',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 8,
-        description: 'DOC_PAYMENT',
-        entryNature: 'DEBIT',
-      },
-      {
-        id: 9,
-        description: 'RENT',
-        entryNature: 'CREDIT',
-      },
-    ],
-    skipDuplicates: true,
-  });
+  const transactionTypes = [
+    {
+      id: 1,
+      description: TransactionDescription.DEBIT_PAYMENT,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 2,
+      description: TransactionDescription.BOLETO_PAYMENT,
+      entryNature: EntryNature.CREDIT,
+    },
+    {
+      id: 3,
+      description: TransactionDescription.FINANCING,
+      entryNature: EntryNature.CREDIT,
+    },
+    {
+      id: 4,
+      description: TransactionDescription.CREDIT_PAYMENT,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 5,
+      description: TransactionDescription.LOAN_PAYMENT,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 6,
+      description: TransactionDescription.SALES,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 7,
+      description: TransactionDescription.TED_PAYMENT,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 8,
+      description: TransactionDescription.DOC_PAYMENT,
+      entryNature: EntryNature.DEBIT,
+    },
+    {
+      id: 9,
+      description: TransactionDescription.RENT,
+      entryNature: EntryNature.CREDIT,
+    },
+  ];
+
+  await Promise.all(
+    transactionTypes.map(
+      async ({
+        id,
+        description,
+        entryNature,
+      }) =>
+        prisma.transactionType.upsert({
+          where: { id },
+          update: {},
+          create: {
+            id,
+            description,
+            entryNature,
+          },
+        }),
+    ),
+  );
 }
 
 main()
