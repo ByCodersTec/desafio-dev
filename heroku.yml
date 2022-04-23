@@ -9,4 +9,4 @@ release:
     - npm run migrate:deploy && npm run prisma:seed
   image: server
 run:
-  server: npm run start
+  server: bash -c "npm run start"
