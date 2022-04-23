@@ -7,7 +7,7 @@ build:
     server: backend/Dockerfile
 release:
   command:
-    - npx prisma migrate deploy && npx prisma db seed
+    - npm run migrate:deploy && npm run prisma:seed
   image: server
 run:
   server: npm run start
