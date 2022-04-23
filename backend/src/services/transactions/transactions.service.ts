@@ -7,6 +7,8 @@ import {
   RAW_TRANSACTIONS_TIME_OFFSET,
 } from './transactions.service.constants';
 
+type ParsedTransaction = Omit<Transaction, 'id'>;
+
 @Injectable()
 export class TransactionsService {
   constructor(private prisma: PrismaService) {}
@@ -32,8 +34,6 @@ export class TransactionsService {
 
   async processCNABFile(file: Express.Multer.File): Promise<Transaction[]> {
     const rawTransactions = file.buffer.toString().split(/(?:\r\n|\r|\n)/g);
-
-    type ParsedTransaction = Omit<Transaction, 'id'>;
 
     const parsedTransactions = await Promise.all(
       rawTransactions
@@ -87,12 +87,12 @@ export class TransactionsService {
             .trim();
 
           const store = await this.prisma.store.upsert({
-            where: { name: storeName },
+            where: { name: storeName } as Prisma.StoreWhereUniqueInput,
             update: {},
             create: {
               name: storeName,
               owner: storeOwner,
-            },
+            } as Prisma.StoreCreateInput,
           });
 
           return {
