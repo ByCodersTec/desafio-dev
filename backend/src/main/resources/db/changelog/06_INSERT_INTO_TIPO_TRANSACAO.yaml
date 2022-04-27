@@ -1,0 +1,149 @@
+databaseChangeLog:
+  - changeSet:
+      id: INSERT_INTO_TIPO_TRANSACAO-06
+      author: ysmaelmarinho
+      changes:
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 1
+          - column:
+              name: descricao
+              value: Débito
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 2
+          - column:
+              name: descricao
+              value: Boleto
+          - column:
+              name: natureza
+              value: Saída
+          - column:
+              name: sinal  
+              value: '-'
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 3
+          - column:
+              name: descricao
+              value: Financiamento
+          - column:
+              name: natureza
+              value: Saída
+          - column:
+              name: sinal  
+              value: '-'
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 4
+          - column:
+              name: descricao
+              value: Crédito
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 5
+          - column:
+              name: descricao
+              value: Recebimento Empréstimo
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 6
+          - column:
+              name: descricao
+              value: Vendas
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 7
+          - column:
+              name: descricao
+              value: Recebimento TED
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 8
+          - column:
+              name: descricao
+              value: Recebimento DOC
+          - column:
+              name: natureza
+              value: Entrada
+          - column:
+              name: sinal  
+              value: +
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao
+      - insert:
+          columns:
+          - column:
+              name: id
+              value: 9
+          - column:
+              name: descricao
+              value: Aluguel
+          - column:
+              name: natureza
+              value: Saída
+          - column:
+              name: sinal  
+              value: '-'
+          dbms: 'postgresql'  
+          tableName:  tipo_transacao

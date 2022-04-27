@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_pk_id_on_tipo_transacao-04
+      author: ysmaelmarinho
+      changes:
+      - addPrimaryKey:
+          clustered:  true  
+          columnNames:  id  
+          constraintName:  pk_id_tipo_transacao
+          schemaName:  public  
+          tableName:  tipo_transacao  
+          validate:  true

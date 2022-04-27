@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: CREATE_TABLE_MOVIMENTACAO-03
+      author: ysmaelmarinho
+      changes:
+      - createTable:
+          tableName:  tipo_transacao  
+          columns:
+          - column:
+              name: id
+              type: bigint
+          - column:
+              name: descricao
+              type: varchar(100)
+          - column:
+              name: natureza
+              type: varchar(7)
+          - column:
+              name: sinal
+              type: varchar(1)
+    

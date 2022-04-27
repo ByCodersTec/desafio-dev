@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_pk_id_on_movimentacao-02
+      author: ysmaelmarinho
+      changes:
+      - addPrimaryKey:
+          clustered:  true  
+          columnNames:  id  
+          constraintName:  pk_id_movimentacao  
+          tableName:  movimentacao  
+          validate:  true
+      - addAutoIncrement:
+          columnDataType: bigint
+          columnName: id
+          defaultOnNull: false
+          generationType: ALWAYS
+          incrementBy: 1
+          startWith: 1
+          tableName: movimentacao

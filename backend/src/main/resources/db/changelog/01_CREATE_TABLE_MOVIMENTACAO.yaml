@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: CREATE_TABLE_MOVIMENTACAO-01
+      author: ysmaelmarinho
+      changes:
+      - createTable:
+          tableName:  movimentacao  
+          columns:
+          - column:
+              name: id
+              type: bigint
+          - column:
+              name: tipo_id
+              type: bigint
+          - column:
+              name: data
+              type: date
+          - column:
+              name: valor
+              type: double
+          - column:
+              name: cpf
+              type: varchar(11)
+          - column:
+              name: cartao
+              type: varchar(12)
+          - column:
+              name: hora
+              type: varchar(6)
+          - column:
+              name: dono_loja
+              type: varchar(14)
+          - column:
+              name: nome_loja
+              type: varchar(19)
+    
