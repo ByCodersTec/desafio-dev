@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: CREATE_TABLE_MOVIMENTACAO-01
+      id: create_table_movimentacao-01
       author: ysmaelmarinho
       changes:
       - createTable:

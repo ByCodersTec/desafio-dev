@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: INSERT_INTO_TIPO_TRANSACAO-06
+      id: insert_into_tipo_transacao-06
       author: ysmaelmarinho
       changes:
       - insert:

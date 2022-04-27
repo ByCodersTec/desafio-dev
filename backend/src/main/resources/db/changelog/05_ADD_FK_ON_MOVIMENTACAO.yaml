@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: add_pk_id_on_tipo_transacao-04
+      id: add_pk_id_on_tipo_transacao-05
       author: ysmaelmarinho
       changes:
       - addForeignKeyConstraint:

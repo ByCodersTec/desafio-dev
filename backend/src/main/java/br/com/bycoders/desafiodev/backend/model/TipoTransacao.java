@@ -1,4 +1,4 @@
-package br.com.bycoders.desafiodev.backend.modelo;
+package br.com.bycoders.desafiodev.backend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
