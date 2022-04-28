@@ -22,7 +22,7 @@ import lombok.Setter;
 public class TipoTransacao {
     
     @Id
-    private int id;
+    private Integer id;
 
     @Column
     private String descricao;

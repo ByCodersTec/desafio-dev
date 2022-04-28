@@ -1,0 +1,24 @@
+
+server:
+    port: 8080
+    servlet:
+        context-path: /movimentacao
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: postgres
+        
+    jpa:
+        database: POSTGRESQL
+        show-sql: false
+        properties:
+            hibernate:
+                default_schema: public
+    liquibase:
+        enabled: false
+
+springdoc:
+    swagger-ui:
+        path: /doc

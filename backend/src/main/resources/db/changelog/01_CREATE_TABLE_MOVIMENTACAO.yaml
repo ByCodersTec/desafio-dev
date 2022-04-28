@@ -14,7 +14,7 @@ databaseChangeLog:
               type: bigint
           - column:
               name: data
-              type: date
+              type: datetime
           - column:
               name: valor
               type: double
@@ -26,7 +26,7 @@ databaseChangeLog:
               type: varchar(12)
           - column:
               name: hora
-              type: varchar(6)
+              type: time
           - column:
               name: dono_loja
               type: varchar(14)

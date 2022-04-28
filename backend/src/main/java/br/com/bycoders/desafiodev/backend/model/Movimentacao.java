@@ -1,5 +1,9 @@
 package br.com.bycoders.desafiodev.backend.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -29,17 +33,17 @@ public class Movimentacao {
     
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "tipo_id")
     private TipoTransacao tipo;
 
     @Column
-    private Date data;
+    private LocalDate data;
 
     @Column
-    private double valor;
+    private BigDecimal valor;
 
     @Column
     private String cpf;
@@ -48,7 +52,7 @@ public class Movimentacao {
     private String cartao;
 
     @Column
-    private String hora;
+    private LocalTime hora;
 
     @Column
     private String donoLoja;
