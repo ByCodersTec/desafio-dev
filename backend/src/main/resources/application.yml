@@ -2,7 +2,7 @@
 server:
     port: 8080
     servlet:
-        context-path: /movimentacao
+        context-path: /movimentacao-api
 
 spring:
     datasource:

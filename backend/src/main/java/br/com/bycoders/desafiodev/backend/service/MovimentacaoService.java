@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,11 +40,15 @@ public class MovimentacaoService {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
-    public List<Movimentacao> salvarMovimentacoes(MultipartFile arquivoCnab) throws IOException{
+    public List<Movimentacao> salvar(MultipartFile arquivoCnab) throws IOException{
         return movimentacaoRepository.saveAll(extrairDados(arquivoCnab));
     }
 
+    public Page<Movimentacao> listar(Pageable paginacao){
 
+        return movimentacaoRepository.findAll(paginacao);
+
+    }
 
     public List<Movimentacao> extrairDados(MultipartFile arquivoCnab) throws IOException{
         
@@ -74,11 +80,9 @@ public class MovimentacaoService {
         String hora = this.recuperarDado(linha, 43, 6);
         String donoLoja = this.recuperarDado(linha, 49, 14).strip();
         String nomeLoja = this.recuperarDado(linha, 63, 19).strip();
-        
 
         TipoTransacao tipoTransacao = null;
 
-        
         Optional<TipoTransacao> tipoTransacaoOptional = listaTipoTransacoes.stream().filter(t -> t.getId().equals(Integer.parseInt(tipoTransacaoId))).findFirst();
 
         if(tipoTransacaoOptional.isPresent()){
@@ -95,8 +99,6 @@ public class MovimentacaoService {
             .donoLoja(donoLoja)
             .nomeLoja(nomeLoja)
             .build();
-
-
     }
 
     private String recuperarDado(String linha, int inicio, int tamanho){
@@ -104,6 +106,7 @@ public class MovimentacaoService {
         if (inicio > linha.length()) {
             return "";
         }
+        
         return linha.substring(inicio - 1, Math.min(inicio - 1 + tamanho, linha.length()));
     }
 }
