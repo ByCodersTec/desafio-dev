@@ -50,9 +50,7 @@ public class MovimentacaoService {
 
         List<String> linhas = obterLinhas(arquivoCnab);
 
-        List<Movimentacao> lista = linhas.stream().map(linha -> this.converterLinhaEmMovimentacao(linha, listaTipoTransacoes)).collect(Collectors.toList());
-
-        return lista;
+        return linhas.stream().map(linha -> this.converterLinhaEmMovimentacao(linha, listaTipoTransacoes)).collect(Collectors.toList());
     }
 
     public List<String> obterLinhas(MultipartFile arquivoCnab) throws IOException{

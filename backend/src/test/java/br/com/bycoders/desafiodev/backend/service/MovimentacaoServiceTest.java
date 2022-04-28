@@ -56,4 +56,9 @@ public class MovimentacaoServiceTest {
         assertEquals(21, lista.size());
     }
 
+    @Test
+    public void deveSalvarRegistrosNoBanco() throws IOException{
+        movimentacaoService.salvarMovimentacoes(multipartFile);
+
+    }
 }
