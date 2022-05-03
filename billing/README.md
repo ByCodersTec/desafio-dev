@@ -1,24 +1,45 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+💻 **Stack**
 
-Things you may want to cover:
+- Ruby 3.1.1
 
-* Ruby version
+- Rails 7.0.2
 
-* System dependencies
+- Host machine dependencies
+    - [Docker (CE)](https://docs.docker.com/engine/installation/)
+    - [Docker Compose](https://docs.docker.com/compose/install/)
 
-* Configuration
+🚀 **To start the Rails app, run:**
 
-* Database creation
+- ⚠️ Is it your first time? ⚠️
 
-* Database initialization
+  - Create a external volume to share gems across containers:
+      ```bash
+        docker-compose build
+      ```
+    Note: If your docker commands only work using sudo before, run the following command in the console to fix it:
+    - ```bash
+        sudo groupadd docker
+      ``` 
+    - ```bash
+        sudo usermod -aG docker $USER
+      ``` 
+    - ```bash
+        sudo service docker restart
+      ```
 
-* How to run the test suite
+🛠 **Useful commands:**
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Start Rails console:
+  ```bash
+    docker-compose up
+  ```
+- Execute migration:
+  ```bash
+    docker-compose run --rm app bundle exec rails db:create db:migrate
+  ```
+- Execute Webpack:
+  ```bash
+    docker-compose run --rm app bundle exec rails webpacker:install
+  ```
