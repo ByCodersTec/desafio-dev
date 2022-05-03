@@ -27,17 +27,40 @@
     - ```bash
         sudo service docker restart
       ```
+  - Load all needed gems into `gems_ops` external volume:
+    ```bash
+      docker-compose run --rm app bundle install
+    ```
+- Starting all stack (_add `-d` flag to run in background_):
+
+  - Follow the `Starting all stack` section
+  ```bash
+    docker-compose up
+  ```
 🛠 **Useful commands:**
 
 - Start Rails console:
   ```bash
-    docker-compose up
+    docker-compose run --rm app bundle exec rails c
   ```
+- Execute create DB:
+  ```bash
+      docker-compose run --rm app bundle exec rails db:create
+    ```
 - Execute migration:
   ```bash
-    docker-compose run --rm app bundle exec rails db:create db:migrate
+    docker-compose run --rm app bundle exec rails db:migrate
   ```
 - Execute Webpack:
   ```bash
     docker-compose run --rm app bundle exec rails webpacker:install
+  ```
+- Access database console:
+  ```bash
+      docker-compose run --rm app bundle exec rails dbconsole
+    ```
+- Test a specific file
+
+  ```bash
+    docker-compose run --rm app bundle exec rspec ./spec/services/name_file.rb'
   ```
