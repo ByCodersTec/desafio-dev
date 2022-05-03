@@ -1,5 +1,4 @@
 # README
-
 💻 **Stack**
 
 - Ruby 3.1.1
@@ -28,7 +27,6 @@
     - ```bash
         sudo service docker restart
       ```
-
 🛠 **Useful commands:**
 
 - Start Rails console:
