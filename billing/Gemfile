@@ -42,6 +42,9 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+#validate CPF
+gem 'cpf_cnpj'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -57,6 +60,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 4.0'
   gem 'ffaker'
   gem 'pry'
+  gem 'cpf_faker'
 end
 
 group :development do

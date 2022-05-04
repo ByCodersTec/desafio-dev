@@ -7,12 +7,12 @@ class Transaction < ApplicationRecord
   belongs_to :customer
   belongs_to :provider
 
-  enum transaction_type: i%[debit credit ticket financing  receivable sales ted doc rent]
+  enum transaction_type: %i[debit credit ticket financing  receivable sales ted doc rent]
  
 
   def set_transaction_nature_and_signal
     signal = !TRANSACTION_TYPES_DEBITS.include?(self.transaction_type)
-    nature = signal ? 'Entrada' : 'Saída'
+    nature = signal ? 'Entrada' : 'Saída'/
     self.signal = signal
     self.nature = nature
   end
