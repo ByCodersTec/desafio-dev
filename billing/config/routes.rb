@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :importer, only: [:index] do
+    collection { post :import_file, via: :options }
+  end
+  
+  resources :transactions, only: [:index]
 end
