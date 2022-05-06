@@ -1,1 +1,7 @@
 .env
+
+__pycache__/
+
+*.pyc
+
+.devcontainer
