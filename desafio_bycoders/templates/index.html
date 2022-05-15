@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="item">
+        <h1>Desafio Dev Bycoders</h1>
+    </div>
+    <form action="/" method="POST" enctype="multipart/form-data" id="form-id">
+        <div class="item text-center">
+            {% csrf_token %}
+            <label for="id_cnab_file" class="button1 text-center">Clique para enviar o arquivo CNAB</label>
+            {{ form }}
+        </div>
+    </form>
+    <script>
+    document.getElementById('id_cnab_file').onchange = function() {
+        document.getElementById('form-id').submit();
+    };
+    </script>
+{% endblock content %}
