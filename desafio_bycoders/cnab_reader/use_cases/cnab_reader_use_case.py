@@ -1,5 +1,5 @@
-from .formatter import CnabFormatter
-from .repository import CnabRepository
+from ..formatter import CnabFormatter
+from ..repository import CnabRepository
 
 class CnabReaderUseCase():
     def __init__(self, cnab_reader_repository = None):

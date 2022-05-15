@@ -10,3 +10,10 @@ class cnabModel(models.Model):
     hora_transacao = models.TimeField()
     nome_dono_loja = models.CharField(max_length=50)
     nome_loja = models.CharField(max_length=50)
+
+
+    def __str__(self):
+        return self.nome_loja
+
+    def __repr__(self):
+        return self.nome_loja

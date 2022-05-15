@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="item">
+    <h1>Desafio Dev Bycoders</h1>
+</div>
+<div class="item">
+    <form action="/operations_list/" method="POST" enctype="multipart/form-data" id="form-id">
+    {% csrf_token %}
+        {{ form }}
+    </form>
+</div>
+<table>
+    <tr>
+      <th>Transação</th>
+      <th>Data</th>
+      <th>Valor</th>
+      <th>CPF</th>
+      <th>Cartão</th>
+      <th>Hora</th>
+      <th>Dono da loja</th>
+      <th>Nome loja</th>
+    </tr>
+    {% for operation in operations %}
+        <tr>
+            <td>{{ operation.tipo_transacao }}</td>
+            <td>{{ operation.data }}</td>
+            <td>{{ operation.valor }}</td>
+            <td>{{ operation.cpf }}</td>
+            <td>{{ operation.cartao }}</td>
+            <td>{{ operation.hora_transacao }}</td>
+            <td>{{ operation.nome_dono_loja }}</td>
+            <td>{{ operation.nome_loja }}</td>
+          </tr>
+    {% endfor %}
+        </table>
+        {% if total %}
+            <div class="item">
+                <table>
+                    {% for operation in operations %}
+                
+                    {% ifchanged %}  <tr><td>{{ operation.nome_loja }}</td> <td>R$ {{ total }}</td></tr> {% endifchanged %}  
+                
+                    {% endfor %}
+                
+                </table>
+            </div>
+        {% endif %}
+        <script>
+            document.getElementById('id_store').onchange = function() {
+                document.getElementById('form-id').submit();
+            };
+            </script>
+{% endblock %}

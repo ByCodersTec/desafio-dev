@@ -24,13 +24,15 @@ body {
     text-align: center;
   }
 
+  .text-left {
+    text-align: left;
+  }
+
 
   input[type="file"] {
     display: none;
 }
 
-
-/* CSS */
 .button1 {
   background-color: #fff000;
   border-radius: 12px;
@@ -60,4 +62,25 @@ body {
   filter: saturate(0.2) opacity(0.5);
   -webkit-filter: saturate(0.2) opacity(0.5);
   cursor: not-allowed;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+select {
+  font-size: 18px;
 }
