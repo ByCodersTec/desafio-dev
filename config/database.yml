@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: password
+  host: mysql
+
+development:
+  <<: *default
+  database: finance_report_development
+
+test:
+  <<: *default
+  database: finance_report_test
+
+production:
+  <<: *default
+  database: finance_report_production
+  username: finance_report
+  password: <%= ENV['FINANCE_REPORT_DATABASE_PASSWORD'] %>
