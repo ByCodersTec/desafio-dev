@@ -1,0 +1,2 @@
+class FinanceReport < ApplicationRecord
+end
