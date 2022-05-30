@@ -32,7 +32,7 @@
       <% @finance_report_movement.each do |movement| %>
         <tr>
           <td><%= movement.type_code %></td>
-          <td><%= movement.transcation_type %></td>
+          <td><%= movement.transcation_type[:message] %></td>
           <td><%= movement.register_date.strftime('%Y-%m-%d') %></td>
           <td><%= movement.cpf %></td>
           <td><%= movement.card %></td>
@@ -41,7 +41,7 @@
           <% if !@filtered_store.present? %>
             <td><%= movement.store_name %></td>
           <% end %>
-          <td>R<%= number_to_currency(movement.value) %></td>
+          <td class="<%= movement.transcation_type[:class] %>"><%= movement.transcation_type[:signal] %> <%= number_to_currency(movement.value, unit: "R$") %></td>
         </tr>
       <% end %>
     </tbody>
@@ -49,7 +49,7 @@
       <tr>
         <th colspan="<%= !@filtered_store.present? ? "7" : "6" %>"></th>
         <th id="total">Total :</th>
-        <td>R<%=number_to_currency(@finance_report_movement.sum(:value)) %></td>
+        <td><%=number_to_currency(final_balance(@finance_report_movement), unit: "R$") %></td>
       </tr>
    </tfoot>
   </table>

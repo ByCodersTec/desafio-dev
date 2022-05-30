@@ -17,4 +17,16 @@ module FinanceReportsHelper
   def time_constructor(date, time)
     datetime = DateTime.new(date[0..3].to_i, date[4..5].to_i, date[6..7].to_i, time[0..1].to_i, time[2..3].to_i, time[4..5].to_i, '-03:00')
   end
+
+  def final_balance(finance_movements)
+    balance = 0
+    finance_movements.each do |finance|
+      if [1, 4, 5, 6, 8].include? finance.type_code
+        balance += finance.value
+      else
+        balance -= finance.value
+      end
+    end
+    balance
+  end
 end

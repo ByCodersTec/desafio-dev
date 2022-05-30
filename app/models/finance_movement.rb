@@ -4,23 +4,23 @@ class FinanceMovement < ApplicationRecord
   def transcation_type
     case type_code
     when 1
-      "Débito"
+      {message: "Débito", class: "positive-value", signal: "+"}
     when 2
-      "Boleto"
+      {message: "Boleto", class: "negative-value", signal: "-"}
     when 3
-      "Financiamento"
+      {message: "Financiamento", class: "negative-value", signal: "-"}
     when 4
-      "Crédito"
+      {message: "Crédito", class: "positive-value", signal: "+"}
     when 5
-      "Recebimento Empréstimo"
+      {message: "Recebimento Empréstimo", class: "positive-value", signal: "+"}
     when 6
-      "Vendas"
+      {message: "Vendas", class: "positive-value", signal: "+"}
     when 7
-      "Recebimento TED"
+      {message: "Recebimento TED", class: "positive-value", signal: "+"}
     when 8
-      "Recebimento DOC"
+      {message: "Recebimento DOC", class: "positive-value", signal: "+"}
     when 9
-      "Aluguel"
+      {message: "Aluguel", class: "negative-value", signal: "-"}
     end
   end
 end
