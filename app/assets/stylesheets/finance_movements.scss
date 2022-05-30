@@ -2,10 +2,19 @@
   margin: 3vh 8vw 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   #filter-container {
     label {
       display: block;
     }
+  }
+  #store_filter {
+    padding: 5px 10px;
+    background-color: white;
+  }
+
+  #clean-filter {
+    float: right;
   }
 }

@@ -26,7 +26,7 @@
   }
 }
 
-#finance_file_label, #send-button {
+#finance_file_label, .send-button {
   color: white;
   text-decoration: none;
   margin-top: 5px;
@@ -44,7 +44,7 @@
   font-size: 16px;
   font-weight: 600;
 }
-#finance_file_label:hover, #send-button:hover {
+#finance_file_label:hover, .send-button:hover {
   transform: translateY(-1px);
 }
 
