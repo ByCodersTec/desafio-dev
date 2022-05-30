@@ -5,11 +5,10 @@ function setActive() {
   let url = window.location.href;
   console.log(menuItems)
   menuItems.forEach(el => {
-    if (el.href === url){
-      el.closest('.menu-item').classList.add('active');
-    };
-    if (window.location.pathname === "/"){
+    if (window.location.pathname.includes("/finance_reports/new")){
       document.querySelector(".link-import").classList.add('active');
+    }else {
+      document.querySelector(".link-reports").classList.add('active');
     };
   });
 }
