@@ -1,0 +1,53 @@
+<div id="finances-header">
+  <div>
+    <%= link_to 'Voltar', finance_reports_path, class:""%>
+  </div>
+  <div id="filter-container">
+      <label for="finance_title">Titulo do Relatório (opcional)</label>
+      <%= select_tag 'finance_title'%>
+      <%= link_to 'Filtrar', new_finance_report_path, id: "send-button" %>
+  </div>
+</div>
+<div id="finance-report-container">
+  <table class="table-content">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Tipo de transação</th>
+        <th>Data</th>
+        <th>CPF</th>
+        <th>Cartão</th>
+        <th>Hora</th>
+        <th>Dono da Loja</th>
+        <% if !@filtered_store.present? %>
+          <th>Nome da Loja</th>
+        <% end %>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @finance_report_movement.each do |movement| %>
+        <tr>
+          <td><%= movement.type_code %></td>
+          <td><%= movement.transcation_type %></td>
+          <td><%= movement.register_date.strftime('%Y-%m-%d') %></td>
+          <td><%= movement.cpf %></td>
+          <td><%= movement.card %></td>
+          <td><%= movement.register_date.strftime('%H:%M:%S') %></td>
+          <td><%= movement.store_owner %></td>
+          <% if !@filtered_store.present? %>
+            <td><%= movement.store_name %></td>
+          <% end %>
+          <td>R<%= number_to_currency(movement.value) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="6"></th>
+        <th id="total">Total :</th>
+        <td>R<%=number_to_currency(@finance_report_movement.sum(:value)) %></td>
+      </tr>
+   </tfoot>
+  </table>
+</div>

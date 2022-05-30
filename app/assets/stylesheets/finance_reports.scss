@@ -1,3 +1,98 @@
-// Place all the styles related to the FinanceReport controller here.
+// Place all the styles related to the Finances controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+#import-form-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5vh;
+}
+#drag-zone {
+  border: 2px dashed black;
+  height: 200px;
+  width: 350px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+#finance_file_label, #send-button {
+  color: white;
+  text-decoration: none;
+  margin-top: 5px;
+  padding: 5px 10px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 5px;
+  background-color: #009879;
+  cursor: pointer;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+#finance_file_label:hover, #send-button:hover {
+  transform: translateY(-1px);
+}
+
+#drag-zone.active {
+  border: 2px solid black;
+}
+
+#submit-form {
+  height: 100px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#finance-report-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5vh;
+  align-items: center;
+
+  table {
+    min-width: 40vw;
+  }
+}
+
+.table-content {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+
+  th, tr, td {
+    padding: 12px 15px;
+  }
+
+  tbody, tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  td {
+    text-align: center;
+  }
+}
+
+.table-content thead tr {
+  background-color: #009879;
+  text-align: center;
+  font-weight: bold;
+}

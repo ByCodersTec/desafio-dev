@@ -14,7 +14,7 @@
     'menu content';
   grid-template-columns: 1fr 6fr;
   height: 100%;
-  background-color: orangered;
+  background-color: #009879;
 }
 
 #inner-content {
@@ -30,7 +30,7 @@
   margin-top: 10vh;
   padding-left: 1rem;
   .active {
-    background-color: rgba(255, 129, 56, 0.89);
+    background-color: #1e6d5d;
   }
 }
 
