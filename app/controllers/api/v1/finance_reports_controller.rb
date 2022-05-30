@@ -13,7 +13,7 @@ class Api::V1::FinanceReportsController < Api::V1::ApiController
 
   def destroy
     @finance_report.destroy
-    render json: {message: "Relatório financeiro excluido com sucesso"}, status: :ok
+    render json: {message: "Relatório financeiro excluido com sucesso"}.to_json, status: :ok
   end
 
   private
