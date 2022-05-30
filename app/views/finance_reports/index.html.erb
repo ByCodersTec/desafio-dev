@@ -12,13 +12,13 @@
         <tr>
           <td><%= report.title %></td>
           <td><%= report.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-          <td><%= link_to 'Movimentação', finance_report_path(report), class:"action-button" %></td>
-          <td><%= link_to 'Deletar', report, method: :delete, data: { confirm: 'Are you sure?' }, class:"action-button"  %></td>
+          <td><%= link_to 'Movimentação', finance_report_path(report), class:"send-button" %></td>
+          <td><%= link_to 'Deletar', report, method: :delete, data: { confirm: 'Are you sure?' }, class:"send-button", style: "background-color: red"  %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
   <div>
-    <%= link_to 'Importar novo relatório', new_finance_report_path, class:"action-button"%>
+    <%= link_to 'Novo relatório', new_finance_report_path, class:"send-button"%>
   </div>
 </div>
