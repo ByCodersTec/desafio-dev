@@ -1,6 +1,7 @@
 class Api::V1::FinanceReportsController < Api::V1::ApiController
 
   before_action :set_finance_report, only: [:show, :destroy]
+  before_action :recalculate_store_balance, only: [:destroy]
 
   def index 
     @finance_reports = FinanceReport.all
@@ -17,6 +18,10 @@ class Api::V1::FinanceReportsController < Api::V1::ApiController
   end
 
   private
+
+  def recalculate_store_balance
+    helpers.recalculate_store_balance
+  end
 
   def set_finance_report
     @finance_report = FinanceReport.find(params[:id])

@@ -11,11 +11,6 @@ class Api::V1::FinanceMovementsController < Api::V1::ApiController
     render json: @finance_movement
   end
 
-  def destroy
-    @finance_movement.destroy
-    render json: {message: "Registro excluido com sucesso"}.to_json, status: :ok
-  end
-
   private
 
   def set_finance_movement

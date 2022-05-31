@@ -57,7 +57,7 @@ module FinanceReportsHelper
         else
           current_store.balance += movement.value
         end
-      current_store.save
+      current_store.balance.round == 0 ? current_store.destroy : current_store.save
       end
     end
   end
