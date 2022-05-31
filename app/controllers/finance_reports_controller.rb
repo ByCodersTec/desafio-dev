@@ -1,10 +1,12 @@
 class FinanceReportsController < ApplicationController
-
+  respond_to :html, :json
   before_action :set_finance_report, only: [:show, :destroy]
   before_action :recalculate_store_balance, only: [:destroy]
 
   def index
     @finance_reports = FinanceReport.all
+
+    respond_with(@finance_reports)
   end
 
   def show
@@ -16,10 +18,12 @@ class FinanceReportsController < ApplicationController
     else
       @filtered_store = ""
     end
+    respond_with(@finance_report)
   end
 
   def new
     @finance_report = FinanceReport.new
+    respond_with(@finance_report)
   end
 
   def create
@@ -36,23 +40,16 @@ class FinanceReportsController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      if errors.empty?
-        format.html { redirect_to finance_reports_path, notice: 'Relatório Criado com sucesso' }
-        format.json { render json: @finance_report, status: :created, location: @finance_report }
-      else
-        format.html { render action: "new" }
-        format.json { render json: errors, status: :unprocessable_entity }
-      end
+    if errors.empty?
+      respond_with(@finance_report, location: finance_reports_path, status: :created , notice: 'Relatório Criado com sucesso')
+    else
+      respond_with(errors, location: new_finance_report_finance_movement_path, status: :unprocessable_entity, notice: 'Linhas com erro no relatório')
     end
   end
 
   def destroy
     @finance_report.destroy
-    respond_to do |format|
-      format.html { redirect_to finance_reports_url, notice: "Relatório excluido com sucesso" }
-      format.json { head :no_content }
-    end
+    respond_with(location: finance_reports_url, notice: "Relatório excluido com sucesso")
   end
 
   private
