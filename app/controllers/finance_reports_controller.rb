@@ -43,7 +43,7 @@ class FinanceReportsController < ApplicationController
     if errors.empty?
       respond_with(@finance_report, location: finance_reports_path, status: :created , notice: 'Relatório Criado com sucesso')
     else
-      respond_with(errors, location: new_finance_report_finance_movement_path, status: :unprocessable_entity, notice: 'Linhas com erro no relatório')
+      respond_with(errors, location: new_finance_report_path, status: :unprocessable_entity, notice: 'Linhas com erro no relatório')
     end
   end
 
