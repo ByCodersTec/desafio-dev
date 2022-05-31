@@ -39,7 +39,7 @@ class FinanceReportsController < ApplicationController
 
     respond_to do |format|
       if errors.empty?
-        format.html { redirect_to @finance_report, notice: 'Relatório Criado com sucesso' }
+        format.html { redirect_to finance_reports_path, notice: 'Relatório Criado com sucesso' }
         format.json { render json: @finance_report, status: :created, location: @finance_report }
       else
         format.html { render action: "new" }

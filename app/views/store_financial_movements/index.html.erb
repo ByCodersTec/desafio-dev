@@ -1,0 +1,23 @@
+<div class="finance-report-container">
+  <table class="table-content">
+    <thead>
+      <tr>
+        <th>Nome da Loja</th>
+        <th>Saldo da Loja</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store_movements.each do |store| %>
+        <tr>
+          <td><%= store.store_name %></td>
+          <td class="<%= store.balance > 0 ? "positive-value" : "negative-value" %>"><%=number_to_currency(store.balance, unit: "R$") %></td>
+          <td><%= link_to 'Movimentação', store_financial_movement_path(store), class:"send-button" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div>
+    <%= link_to 'Voltar', finance_reports_path, class:"send-button"%>
+  </div>
+</div>

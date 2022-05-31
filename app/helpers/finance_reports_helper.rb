@@ -11,7 +11,10 @@ module FinanceReportsHelper
     store_name = line[62..80].strip().chomp()
     datetime = time_constructor(date, time)
     finance_report_id = @finance_report.id
-    {type_code: type, value: value, cpf: cpf, card: card, store_owner: owner_name, store_name: store_name, register_date: datetime, finance_report_id: finance_report_id}
+    store_financial_constructor(store_name)
+    calculate_store_balance(type, value)
+    store_financial_movements_id = @store.id
+    {type_code: type, value: value, cpf: cpf, card: card, store_owner: owner_name, store_name: store_name, register_date: datetime, finance_report_id: finance_report_id, store_financial_movement_id: store_financial_movements_id}
   end
 
   def time_constructor(date, time)
@@ -28,5 +31,19 @@ module FinanceReportsHelper
       end
     end
     balance
+  end
+  
+  def calculate_store_balance(type, value)
+    @store.balance = 0 if @store.balance == nil
+    if [1, 4, 5, 6, 8].include? type
+      @store.balance += value
+    else
+      @store.balance -= value
+    end
+    @store.save
+  end
+
+  def store_financial_constructor(store_name)
+    @store = StoreFinancialMovement.find_or_create_by(store_name: store_name)
   end
 end

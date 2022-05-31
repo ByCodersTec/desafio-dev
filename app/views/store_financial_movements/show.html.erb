@@ -1,14 +1,6 @@
-<div id="finances-header">
+<div id="store-header">
   <div>
-    <%= link_to 'Voltar', finance_reports_path, class:"send-button"%>
-  </div>
-  <div id="filter-container">
-    <%= form_for(@finance_report, method: :get) do %>
-      <label for="finance_title">Filtre por Nome da Loja</label>
-      <%= select_tag 'store_filter', options_for_select(@stores_for_select.push(@filtered_store).uniq, @filtered_store)%>
-      <%= submit_tag 'Filtrar', class: "send-button" %>
-    <% end %>
-    <%= link_to 'Limpar', finance_report_path(@finance_report), id: "clean-filter", class:"send-button"%>
+    <%= link_to 'Voltar', store_financial_movements_path, class:"send-button"%>
   </div>
 </div>
 <div class="finance-report-container">
