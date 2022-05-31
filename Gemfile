@@ -8,6 +8,7 @@ gem 'rails', '~> 6.1.6'
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5'
 
+gem 'responders'
 gem 'rack-attack'
 gem 'rack-cors'
 # Use Puma as the app server
@@ -57,6 +58,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
