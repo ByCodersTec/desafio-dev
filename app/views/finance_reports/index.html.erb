@@ -18,7 +18,12 @@
       <% end %>
     </tbody>
   </table>
+</div>
+<div id="reports-actions">
   <div>
     <%= link_to 'Novo relatório', new_finance_report_path, class:"send-button"%>
+  </div>
+  <div>
+    <%= link_to 'Consultar por loja', store_financial_movements_path, class:"send-button"%>
   </div>
 </div>

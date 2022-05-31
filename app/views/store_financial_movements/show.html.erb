@@ -14,14 +14,11 @@
         <th>Cartão</th>
         <th>Hora</th>
         <th>Dono da Loja</th>
-        <% if !@filtered_store.present? %>
-          <th>Nome da Loja</th>
-        <% end %>
         <th>Valor</th>
       </tr>
     </thead>
     <tbody>
-      <% @finance_report_movement.each do |movement| %>
+      <% @store_finance_movements.each do |movement| %>
         <tr>
           <td><%= movement.type_code %></td>
           <td><%= movement.transcation_type[:message] %></td>
@@ -30,18 +27,15 @@
           <td><%= movement.card %></td>
           <td><%= movement.register_date.strftime('%H:%M:%S') %></td>
           <td><%= movement.store_owner %></td>
-          <% if !@filtered_store.present? %>
-            <td><%= movement.store_name %></td>
-          <% end %>
           <td class="<%= movement.transcation_type[:class] %>"><%= movement.transcation_type[:signal] %> <%= number_to_currency(movement.value, unit: "R$") %></td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="<%= !@filtered_store.present? ? "7" : "6" %>"></th>
-        <th id="total">Total :</th>
-        <td><%=number_to_currency(final_balance(@finance_report_movement), unit: "R$") %></td>
+        <th colspan="6"></th>
+        <th>Total :</th>
+        <td><%=number_to_currency(final_balance(@store_finance_movements), unit: "R$") %></td>
       </tr>
    </tfoot>
   </table>
