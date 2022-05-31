@@ -1,11 +1,13 @@
 class FinanceReportsController < ApplicationController
 
+  before_action :set_finance_report, only: [:show, :destroy]
+  before_action :recalculate_store_balance, only: [:destroy]
+
   def index
     @finance_reports = FinanceReport.all
   end
 
   def show
-    @finance_report = FinanceReport.find(params[:id])
     @finance_report_movement = @finance_report.finance_movements
     @stores_for_select = @finance_report_movement.pluck(:store_name).uniq
     if params[:store_filter]
@@ -14,9 +16,6 @@ class FinanceReportsController < ApplicationController
     else
       @filtered_store = ""
     end
-  end
-
-  def filter
   end
 
   def new
@@ -49,11 +48,20 @@ class FinanceReportsController < ApplicationController
   end
 
   def destroy
-    @finance_report = FinanceReport.find(params[:id])
     @finance_report.destroy
     respond_to do |format|
       format.html { redirect_to finance_reports_url, notice: "Relatório excluido com sucesso" }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def recalculate_store_balance
+    helpers.recalculate_store_balance
+  end
+
+  def set_finance_report
+    @finance_report = FinanceReport.find(params[:id])
   end
 end

@@ -46,4 +46,19 @@ module FinanceReportsHelper
   def store_financial_constructor(store_name)
     @store = StoreFinancialMovement.find_or_create_by(store_name: store_name)
   end
+
+  def recalculate_store_balance
+    store_from_report = @finance_report.finance_movements.group_by(&:store_financial_movement_id)
+    store_from_report.each do |id, movements|
+      current_store = StoreFinancialMovement.find(id)
+      movements.each do |movement|
+        if [1, 4, 5, 6, 8].include? movement.type_code
+          current_store.balance -= movement.value
+        else
+          current_store.balance += movement.value
+        end
+      current_store.save
+      end
+    end
+  end
 end
