@@ -33,7 +33,7 @@ class FinanceReportsController < ApplicationController
     File.foreach(finance_file_params) do |line|
       begin
         attributes = helpers.finance_movement_constructor(line)
-        finance_movement = FinanceMovement.new(attributes)
+        finance_movement = FinanceMovement.create(attributes)
       rescue
         errors << line
       end
@@ -54,7 +54,7 @@ class FinanceReportsController < ApplicationController
   private
 
   def recalculate_store_balance
-    helpers.recalculate_store_balance
+    helpers.recalculate_store_balance(@finance_report.id)
   end
 
   def finance_file_params
