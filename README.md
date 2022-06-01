@@ -6,6 +6,12 @@ O projeto tem por objeto fornecer uma plataforma para que o usuário importe arq
 Na aba de importação é possível utilizar o campo de importação de arquivo através do botão de "Procure" ou arrastando o arquivo até o campo demarcado. Também é possível definir um titulo para o relatório, por exemplo, "Relatório de Maio/2022". Após a importação, o usuário pode acessar a aba de relatório onde apresenta a listagem de relatório importados. Cada relatório listado disponibiliza as movimentações financeiras importadas naquele relatório. Na página por relatório é possível filtrar o saldo por loja através do filtro superior. 
 Ainda na página de listagem de relatórios, é possível utilizar o botão "Consultar por Lojas", onde a tela lista as lojas importadas e o Saldo total historico da loja. Também é possível consultas todas as movimentações dessa loja em especifico.
 
+Ao utilizar um arquivo em um formato que não seja txt, uma mensagem avisará que o usuário pode apenas utilizar arquivos de texto. Caso o arquivo tenha linhas não válidas, o sistema irá importar apenas as linhas válidas e ignorará linhas com erro. (Tratamento das linhas com erros em tela não implementado)
+
+A tela no navegador não utiliza de bootstrap, a estrutura foi realizada em display flex e em css grids. Responsividade para mobile não implementada.
+
+Na API, utilizei o método do rack attack para limitar 5 requests a cada 5 segundos.
+
 ## Dependências necessárias para rodar
 <li>Docker
 <li>docker-compose
@@ -31,11 +37,11 @@ Para acessar o bash, utilizar o comando:
 docker exec -it finance-report /bin/bash
 
 ```
-Dentro do bash, é possível utilizar os comando de rails db:"etc" mas pode-se utilizar o comando abaixo para realizar as tarefas de DB:
+Dentro do bash, é possível utilizar os comando de database para criação do banco de dados de desenvolvimento e de teste
 
 ```sh
-bin/setup
-
+rails db:create
+rails db:migrate
 ```
 
 Para rodar os testes automatizados, utilizar o comando abaixo dentro do bash:
@@ -58,7 +64,7 @@ Para exemplos e rotas, consulta a [Documentação da API](https://documenter.get
 <li>Docker
 <li>docker-compose
 
-Principais gem de teste
+<b>Principais gem de teste</b>
 <li>Gem: <a href="https://github.com/thoughtbot/shoulda-matchers" >Shoulda Matchers</a>
 <li>Gem: <a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a>
 <li>Gem: <a href="https://github.com/thoughtbot/factory_bot">Factory Bot</a>
