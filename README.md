@@ -57,10 +57,11 @@ Para exemplos e rotas, consulta a [Documentação da API](https://documenter.get
 <li>Mysql
 <li>Docker
 <li>docker-compose
-<ul> Principais gem de teste
-  <li>Gem: <a href="https://github.com/thoughtbot/shoulda-matchers" >Shoulda Matchers</a>
-  <li>Gem: <a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a>
-  <li>Gem: <a href="https://github.com/thoughtbot/factory_bot">Factory Bot</a>
+
+Principais gem de teste
+<li>Gem: <a href="https://github.com/thoughtbot/shoulda-matchers" >Shoulda Matchers</a>
+<li>Gem: <a href="https://github.com/simplecov-ruby/simplecov">SimpleCov</a>
+<li>Gem: <a href="https://github.com/thoughtbot/factory_bot">Factory Bot</a>
 
 ## Informações do desenvolvedor
 
