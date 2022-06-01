@@ -1,6 +1,7 @@
 class FinanceMovement < ApplicationRecord
   belongs_to :finance_report
   belongs_to :store_financial_movement
+  validates_presence_of :type_code, :register_date, :value, :cpf, :card, :store_owner, :store_name, :store_financial_movement_id, :finance_report_id
 
   def transcation_type
     case type_code
