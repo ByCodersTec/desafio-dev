@@ -1,0 +1,56 @@
+<div id="finances-header">
+  <div>
+    <%= link_to 'Voltar', finance_reports_path, class:"send-button"%>
+  </div>
+  <div id="filter-container">
+    <%= form_for(@finance_report, method: :get) do %>
+      <label for="finance_title">Filtre por Nome da Loja</label>
+      <%= select_tag 'store_filter', options_for_select(@stores_for_select.push(@filtered_store).uniq, @filtered_store)%>
+      <%= submit_tag 'Filtrar', class: "send-button" %>
+    <% end %>
+    <%= link_to 'Limpar', finance_report_path(@finance_report), id: "clean-filter", class:"send-button"%>
+  </div>
+</div>
+<div class="finance-report-container">
+  <table class="table-content">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Tipo de transação</th>
+        <th>Data</th>
+        <th>CPF</th>
+        <th>Cartão</th>
+        <th>Hora</th>
+        <th>Dono da Loja</th>
+        <% if !@filtered_store.present? %>
+          <th>Nome da Loja</th>
+        <% end %>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @finance_report_movement.each do |movement| %>
+        <tr>
+          <td><%= movement.type_code %></td>
+          <td><%= movement.transcation_type[:message] %></td>
+          <td><%= movement.register_date.strftime('%Y-%m-%d') %></td>
+          <td><%= movement.cpf %></td>
+          <td><%= movement.card %></td>
+          <td><%= movement.register_date.strftime('%H:%M:%S') %></td>
+          <td><%= movement.store_owner %></td>
+          <% if !@filtered_store.present? %>
+            <td><%= movement.store_name %></td>
+          <% end %>
+          <td class="<%= movement.transcation_type[:class] %>"><%= movement.transcation_type[:signal] %> <%= number_to_currency(movement.value, unit: "R$") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="<%= !@filtered_store.present? ? "7" : "6" %>"></th>
+        <th id="total">Total :</th>
+        <td><%=number_to_currency(final_balance(@finance_report_movement), unit: "R$") %></td>
+      </tr>
+   </tfoot>
+  </table>
+</div>

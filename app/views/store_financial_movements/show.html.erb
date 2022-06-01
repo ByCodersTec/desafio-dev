@@ -1,0 +1,42 @@
+<div id="store-header">
+  <div>
+    <%= link_to 'Voltar', store_financial_movements_path, class:"send-button"%>
+  </div>
+</div>
+<div class="finance-report-container">
+  <table class="table-content">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Tipo de transação</th>
+        <th>Data</th>
+        <th>CPF</th>
+        <th>Cartão</th>
+        <th>Hora</th>
+        <th>Dono da Loja</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store_finance_movements.each do |movement| %>
+        <tr>
+          <td><%= movement.type_code %></td>
+          <td><%= movement.transcation_type[:message] %></td>
+          <td><%= movement.register_date.strftime('%Y-%m-%d') %></td>
+          <td><%= movement.cpf %></td>
+          <td><%= movement.card %></td>
+          <td><%= movement.register_date.strftime('%H:%M:%S') %></td>
+          <td><%= movement.store_owner %></td>
+          <td class="<%= movement.transcation_type[:class] %>"><%= movement.transcation_type[:signal] %> <%= number_to_currency(movement.value, unit: "R$") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="6"></th>
+        <th>Total :</th>
+        <td><%=number_to_currency(final_balance(@store_finance_movements), unit: "R$") %></td>
+      </tr>
+   </tfoot>
+  </table>
+</div>

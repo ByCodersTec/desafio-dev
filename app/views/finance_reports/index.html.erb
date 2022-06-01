@@ -1,0 +1,29 @@
+<div class="finance-report-container">
+  <table class="table-content">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Importado em</th>
+        <th colspan="2">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @finance_reports.each do |report| %>
+        <tr>
+          <td><%= report.title %></td>
+          <td><%= report.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <td><%= link_to 'Movimentação', finance_report_path(report), class:"send-button" %></td>
+          <td><%= link_to 'Deletar', report, method: :delete, data: { confirm: 'Are you sure?' }, class:"send-button", style: "background-color: red"  %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div id="reports-actions">
+  <div>
+    <%= link_to 'Novo relatório', new_finance_report_path, class:"send-button"%>
+  </div>
+  <div>
+    <%= link_to 'Consultar por loja', store_financial_movements_path, class:"send-button"%>
+  </div>
+</div>
