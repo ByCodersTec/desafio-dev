@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StoreFinancialMovementsController < ApplicationController
   def index
     @store_movements = StoreFinancialMovement.all

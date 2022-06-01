@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinanceMovement < ApplicationRecord
   belongs_to :finance_report
   belongs_to :store_financial_movement

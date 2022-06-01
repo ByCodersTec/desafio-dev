@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinanceReportsController < ApplicationController
   respond_to :html, :json
   before_action :set_finance_report, only: %i[show destroy]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FinanceReportsHelper
   def finance_movement_constructor(line)
     type = line[0].to_i
@@ -59,7 +61,7 @@ module FinanceReportsHelper
         else
           current_store.balance += movement.value
         end
-        current_store.balance.round == 0 ? current_store.destroy : current_store.save
+        current_store.balance.round.zero? ? current_store.destroy : current_store.save
       end
     end
   end

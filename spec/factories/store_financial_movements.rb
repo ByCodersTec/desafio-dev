@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :store_financial_movement do
     store_name { 'LOJA DO CASSIO' }

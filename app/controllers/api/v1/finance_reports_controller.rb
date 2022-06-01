@@ -1,28 +1,34 @@
-class Api::V1::FinanceReportsController < Api::V1::ApiController
-  before_action :set_finance_report, only: %i[show destroy]
-  before_action :recalculate_store_balance, only: [:destroy]
+# frozen_string_literal: true
 
-  def index
-    @finance_reports = FinanceReport.all
-    render json: @finance_reports
-  end
+module Api
+  module V1
+    class FinanceReportsController < Api::V1::ApiController
+      before_action :set_finance_report, only: %i[show destroy]
+      before_action :recalculate_store_balance, only: [:destroy]
 
-  def show
-    render json: @finance_report
-  end
+      def index
+        @finance_reports = FinanceReport.all
+        render json: @finance_reports
+      end
 
-  def destroy
-    @finance_report.destroy
-    render json: { message: 'Relatório financeiro excluido com sucesso' }.to_json, status: :ok
-  end
+      def show
+        render json: @finance_report
+      end
 
-  private
+      def destroy
+        @finance_report.destroy
+        render json: { message: 'Relatório financeiro excluido com sucesso' }.to_json, status: :ok
+      end
 
-  def recalculate_store_balance
-    helpers.recalculate_store_balance(@finance_report.id)
-  end
+      private
 
-  def set_finance_report
-    @finance_report = FinanceReport.find(params[:id])
+      def recalculate_store_balance
+        helpers.recalculate_store_balance(@finance_report.id)
+      end
+
+      def set_finance_report
+        @finance_report = FinanceReport.find(params[:id])
+      end
+    end
   end
 end
