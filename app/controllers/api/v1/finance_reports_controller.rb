@@ -20,7 +20,7 @@ class Api::V1::FinanceReportsController < Api::V1::ApiController
   private
 
   def recalculate_store_balance
-    helpers.recalculate_store_balance
+    helpers.recalculate_store_balance(@finance_report.id)
   end
 
   def set_finance_report
