@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :store_financial_movements do
     resources :finance_movements
   end
-
   namespace :api do
     namespace :v1 do
       resources :finance_reports do
@@ -20,4 +19,5 @@ Rails.application.routes.draw do
       match '*unmatched', to: 'api#route_not_found', via: :all
     end
   end
+  match '*unmatched', to: 'application#route_not_found', via: :all
 end
