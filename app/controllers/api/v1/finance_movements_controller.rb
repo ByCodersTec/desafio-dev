@@ -1,13 +1,12 @@
 class Api::V1::FinanceMovementsController < Api::V1::ApiController
-  
-  before_action :set_finance_movement, only: [:show, :destroy]
+  before_action :set_finance_movement, only: %i[show destroy]
 
   def index
-    if params[:store_financial_movement_id].present?
-      @finance_movements = FinanceMovement.where(store_financial_movement_id: params[:store_financial_movement_id])
-    else
-      @finance_movements = FinanceMovement.where(finance_report_id: params[:finance_report_id])
-    end
+    @finance_movements = if params[:store_financial_movement_id].present?
+                           FinanceMovement.where(store_financial_movement_id: params[:store_financial_movement_id])
+                         else
+                           FinanceMovement.where(finance_report_id: params[:finance_report_id])
+                         end
     render json: @finance_movements
   end
 

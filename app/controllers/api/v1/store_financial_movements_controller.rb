@@ -1,8 +1,7 @@
 class Api::V1::StoreFinancialMovementsController < Api::V1::ApiController
+  before_action :set_store_report, only: %i[show destroy]
 
-  before_action :set_store_report, only: [:show, :destroy]
-
-  def index 
+  def index
     @store_reports = StoreFinancialMovement.all
     render json: @store_reports
   end

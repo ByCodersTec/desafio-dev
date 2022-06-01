@@ -1,6 +1,6 @@
 class FinanceReportsController < ApplicationController
   respond_to :html, :json
-  before_action :set_finance_report, only: [:show, :destroy]
+  before_action :set_finance_report, only: %i[show destroy]
   before_action :recalculate_store_balance, only: [:destroy]
 
   def index
@@ -13,10 +13,12 @@ class FinanceReportsController < ApplicationController
     @finance_report_movement = @finance_report.finance_movements
     @stores_for_select = @finance_report_movement.pluck(:store_name).uniq
     if params[:store_filter]
-      @finance_report_movement = @finance_report_movement.where(store_name: params[:store_filter] ) unless params[:store_filter] == ""
+      unless params[:store_filter] == ''
+        @finance_report_movement = @finance_report_movement.where(store_name: params[:store_filter])
+      end
       @filtered_store = params[:store_filter]
     else
-      @filtered_store = ""
+      @filtered_store = ''
     end
     respond_with(@finance_report)
   end
@@ -31,24 +33,23 @@ class FinanceReportsController < ApplicationController
 
     errors = []
     File.foreach(finance_file_params) do |line|
-      begin
-        attributes = helpers.finance_movement_constructor(line)
-        finance_movement = FinanceMovement.create(attributes)
-      rescue
-        errors << line
-      end
+      attributes = helpers.finance_movement_constructor(line)
+      finance_movement = FinanceMovement.create(attributes)
+    rescue StandardError
+      errors << line
     end
 
     if errors.empty?
-      respond_with(@finance_report, status: :created , notice: 'Relatório Criado com sucesso')
+      respond_with(@finance_report, status: :created, notice: 'Relatório Criado com sucesso')
     else
-      respond_with(errors, location: new_finance_report_path, status: :unprocessable_entity, notice: 'Linhas com erro no relatório')
+      respond_with(errors, location: new_finance_report_path, status: :unprocessable_entity,
+                           notice: 'Linhas com erro no relatório')
     end
   end
 
   def destroy
     @finance_report.destroy
-    redirect_to finance_reports_path, notice: "Relatório excluido com sucesso"
+    redirect_to finance_reports_path, notice: 'Relatório excluido com sucesso'
   end
 
   private

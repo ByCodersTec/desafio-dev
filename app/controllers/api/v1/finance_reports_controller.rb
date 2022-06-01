@@ -1,9 +1,8 @@
 class Api::V1::FinanceReportsController < Api::V1::ApiController
-
-  before_action :set_finance_report, only: [:show, :destroy]
+  before_action :set_finance_report, only: %i[show destroy]
   before_action :recalculate_store_balance, only: [:destroy]
 
-  def index 
+  def index
     @finance_reports = FinanceReport.all
     render json: @finance_reports
   end
@@ -14,7 +13,7 @@ class Api::V1::FinanceReportsController < Api::V1::ApiController
 
   def destroy
     @finance_report.destroy
-    render json: {message: "Relatório financeiro excluido com sucesso"}.to_json, status: :ok
+    render json: { message: 'Relatório financeiro excluido com sucesso' }.to_json, status: :ok
   end
 
   private
