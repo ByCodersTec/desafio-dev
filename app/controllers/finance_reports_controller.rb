@@ -30,18 +30,17 @@ class FinanceReportsController < ApplicationController
     @finance_report = FinanceReport.create(title: params[:finance_title])
 
     errors = []
-    File.foreach(params[:finance_file]) do |line|
-      attributes = helpers.finance_movement_constructor(line)
-      finance_movement = FinanceMovement.new(attributes)
-      if finance_movement.save
-        next
-      else
-        errors << finance_movement
+    File.foreach(finance_file_params) do |line|
+      begin
+        attributes = helpers.finance_movement_constructor(line)
+        finance_movement = FinanceMovement.new(attributes)
+      rescue
+        errors << line
       end
     end
 
     if errors.empty?
-      respond_with(@finance_report, location: finance_reports_path, status: :created , notice: 'Relatório Criado com sucesso')
+      respond_with(@finance_report, status: :created , notice: 'Relatório Criado com sucesso')
     else
       respond_with(errors, location: new_finance_report_path, status: :unprocessable_entity, notice: 'Linhas com erro no relatório')
     end
@@ -49,13 +48,17 @@ class FinanceReportsController < ApplicationController
 
   def destroy
     @finance_report.destroy
-    respond_with(location: finance_reports_url, notice: "Relatório excluido com sucesso")
+    redirect_to finance_reports_path, notice: "Relatório excluido com sucesso"
   end
 
   private
 
   def recalculate_store_balance
     helpers.recalculate_store_balance
+  end
+
+  def finance_file_params
+    params.permit(:finance_file).require(:finance_file)
   end
 
   def set_finance_report
