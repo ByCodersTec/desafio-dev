@@ -1,0 +1,16 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 24px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.mainBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}

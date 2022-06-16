@@ -1,0 +1,37 @@
+.form {
+    height: 48px;
+    width: 120px;
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+    margin-top: 48px;
+  }
+  
+.inputFile {
+    display: none;
+  }
+  
+.label {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-radius: 16px;
+    border-style: dashed;
+    border-color: grey;
+    background-color: lightgray;
+  }
+  
+.uploadButton {
+    cursor: pointer;
+    padding: 4px;
+    font-size: 16px;
+    border: none;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: transparent;
+  }
+  
+.uploadButton:hover {
+    text-decoration-line: underline;
+  }
