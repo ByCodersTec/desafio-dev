@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -23,7 +24,7 @@ public class CNAB {
     private Date data;
 
     @Column(name = "valor")
-    private Float valor;
+    private Integer valor;
 
     @Column(name = "cpf")
     private String cpf;
@@ -32,7 +33,7 @@ public class CNAB {
     private String cartao;
 
     @Column(name = "hora")
-    private Date hora;
+    private LocalTime hora;
 
     @Column(name = "dono_loja")
     private String donoLoja;
@@ -44,8 +45,7 @@ public class CNAB {
 
     }
 
-    public CNAB(long id, String tipo, Date data, Float valor, String cpf, String cartao, Date hora, String donoLoja, String nomeLoja) {
-        this.id = id;
+    public CNAB(String tipo, Date data, Integer valor, String cpf, String cartao, LocalTime hora, String donoLoja, String nomeLoja) {
         this.tipo = tipo;
         this.data = data;
         this.valor = valor;
@@ -80,11 +80,11 @@ public class CNAB {
         this.data = data;
     }
 
-    public Float getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(Float valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 
@@ -104,11 +104,11 @@ public class CNAB {
         this.cartao = cartao;
     }
 
-    public Date getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
