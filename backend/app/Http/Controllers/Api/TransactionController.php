@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ImportHistory;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use App\Traits\ApiResponserTrait;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -75,17 +78,43 @@ class TransactionController extends Controller
         //
     }
 
+    /**
+     * Import the file and save its data in storage
+     *
+     * @param Request $request
+     * @return void
+     */
     public function import(Request $request)
     {
         try {
 
+            DB::beginTransaction();
+            
             $path = $this->transactionService->uploadFile($request->file('file'));
-            $linesData = $this->transactionService->readFile($path);
 
-            // dd($linesData);
-            return $this->successResponse($request, 200);
+            $importHistory = new ImportHistory();
+            $importHistory->date = date("Y-m-d H:i:s");
+            $importHistory->file = $path;
+            $importHistory->status = 'importado';
+            $importHistory->save();
+
+            $linesData = $this->transactionService->readFile($path);
+            $transactions = $this->transactionService->parserData($linesData, $importHistory->id);
+
+            Transaction::insert($transactions);
+            
+            DB::commit();
+
+            $return = [
+                'transaction_history_id'    => $importHistory->id,
+                'transactions_imported'     => count($transactions)
+            ];
+
+            return $this->successResponse($return);
+
         } catch (\Throwable $th) {
-            return $this->errorResponse($th->getMessage(), 500);
+            DB::rollback();
+            return $this->errorResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
