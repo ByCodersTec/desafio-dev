@@ -12,6 +12,13 @@ class TransactionController extends Controller
 {
     use ApiResponserTrait;
 
+    protected TransactionService $transactionService;
+
+    public function __construct()
+    {
+        $this->transactionService = new TransactionService();
+    }
+
     /**
      * Display a listing of the resource.
      *
