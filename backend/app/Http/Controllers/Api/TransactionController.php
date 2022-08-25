@@ -19,7 +19,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::with('typeTransaction')->get();
-        return response()->json($transactions);
+        return $this->successResponse($transactions->toArray(), 200);
     }
 
     /**
