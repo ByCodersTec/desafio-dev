@@ -33,7 +33,7 @@ class Transaction extends Model
      */
     public function importHistory()
     {
-        return $this->belongsTo(\App\Models\ImportHistory::class, 'import_history_id');
+        return $this->belongsTo(ImportHistory::class);
     }
 
     /**
@@ -42,7 +42,7 @@ class Transaction extends Model
      */
     public function typeTransaction()
     {
-        return $this->belongsTo(\App\Models\TypeTransaction::class, 'type_transaction_id');
+        return $this->belongsTo(TypeTransaction::class);
     }
 
 
