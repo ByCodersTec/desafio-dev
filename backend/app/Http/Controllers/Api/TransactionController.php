@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    use ApiResponserTrait;
+
     /**
      * Display a listing of the resource.
      *
