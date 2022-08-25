@@ -33,4 +33,24 @@ class TransactionService
             throw $th;
         }
     }
+
+    public function readFile(string $pathFile)
+    {
+        try {
+            
+            $data = null;
+            $fp = fopen(Storage::path($pathFile), "r");
+
+            while (!feof($fp)) {
+                $data[] = fgets($fp);
+            }
+
+            fclose($fp);
+            return $data;
+
+        } catch (\Throwable $th) {
+            Log::error('TransactionService - readFile error: ' . $th->getMessage());
+            throw $th;
+        }
+    }
 }
