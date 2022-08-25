@@ -10,6 +10,13 @@ class TransactionService
 {
 
     /**
+     * Patch File to Upload
+     *
+     * @var string
+     */
+    protected $pathFileUpload = 'uploads/imports';
+
+    /**
      * Process upload file
      *
      * @param UploadedFile $file
