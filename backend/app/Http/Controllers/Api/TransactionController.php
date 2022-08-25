@@ -63,4 +63,13 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public function import(Request $request)
+    {
+        try {
+            return response()->json(['status' => 1]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 0]);
+        }
+    }
 }
