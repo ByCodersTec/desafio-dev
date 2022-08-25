@@ -78,6 +78,11 @@ class TransactionController extends Controller
     public function import(Request $request)
     {
         try {
+
+            $path = $this->transactionService->uploadFile($request->file('file'));
+            
+
+
             return $this->successResponse($request, 200);
         } catch (\Throwable $th) {
             return $this->errorResponse($th->getMessage(), 500);
