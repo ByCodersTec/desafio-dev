@@ -26,7 +26,7 @@ class TransactionService
     {
         try {
             
-            return Storage::putFile('uploads/imports', $file);
+            return Storage::putFile($this->pathFileUpload, $file);
 
         } catch (\Throwable $th) {
             Log::error('TransactionService - uploadFile error: ' . $th->getMessage());
