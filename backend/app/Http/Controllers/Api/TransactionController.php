@@ -80,9 +80,9 @@ class TransactionController extends Controller
         try {
 
             $path = $this->transactionService->uploadFile($request->file('file'));
-            
+            $linesData = $this->transactionService->readFile($path);
 
-
+            // dd($linesData);
             return $this->successResponse($request, 200);
         } catch (\Throwable $th) {
             return $this->errorResponse($th->getMessage(), 500);
