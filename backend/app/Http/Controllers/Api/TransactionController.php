@@ -19,7 +19,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::with('typeTransaction')->get();
-        return $this->successResponse($transactions->toArray(), 200);
+        return $this->successResponse($transactions);
     }
 
     /**
@@ -70,7 +70,7 @@ class TransactionController extends Controller
     public function import(Request $request)
     {
         try {
-            return $this->successResponse([], 200);
+            return $this->successResponse($request, 200);
         } catch (\Throwable $th) {
             return $this->errorResponse($th->getMessage(), 500);
         }
