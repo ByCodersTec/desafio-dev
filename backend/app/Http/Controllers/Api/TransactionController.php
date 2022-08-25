@@ -70,7 +70,7 @@ class TransactionController extends Controller
     public function import(Request $request)
     {
         try {
-            return response()->json(['status' => 1]);
+            return $this->successResponse([], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 0]);
         }
