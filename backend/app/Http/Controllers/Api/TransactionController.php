@@ -72,7 +72,7 @@ class TransactionController extends Controller
         try {
             return $this->successResponse([], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 0]);
+            return $this->errorResponse($th->getMessage(), 500);
         }
     }
 }
