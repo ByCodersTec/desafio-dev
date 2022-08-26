@@ -10,6 +10,7 @@ use App\Traits\ApiResponserTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -31,6 +32,23 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::with('typeTransaction')->get();
         return $this->successResponse($transactions);
+    }
+
+    /**
+     * Display a summary of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function summary()
+    {   
+        try {
+            
+            return $this->successResponse($this->transactionService->getSummary());
+            
+        } catch (\Throwable $th) {
+            Log::error("TransactionController - summary - " . $th->getMessage());
+            return $this->errorResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -114,6 +132,7 @@ class TransactionController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
+            Log::error("TransactionController - import - " . $th->getMessage());
             return $this->errorResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
