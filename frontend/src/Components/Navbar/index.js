@@ -8,9 +8,8 @@ const Navigation = () => {
 
             <div className='navbar_left'>
                 <Link to="/"> Home </Link>
-                <Link to="/transaction"> Transações </Link>
-                <Link to="/import"> Importar </Link>
-                
+                <Link to="/transacao"> Transações </Link>
+                <Link to="/importacao"> Importar </Link>
             </div>
 
             <div className='navbar_right'>
