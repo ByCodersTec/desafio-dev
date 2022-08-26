@@ -39,10 +39,12 @@ p {
 
 table {
   border: 1px solid rgb(180, 180, 180);
+  background: #ffffff;
 }
 
 table td {
   padding: 3px;
+  background: #ffffff;
   border-right: 1px solid rgb(180, 180, 180);
   border-bottom: 1px solid rgb(180, 180, 180);
 }
