@@ -9,6 +9,7 @@ const Navigation = () => {
             <div className='navbar_left'>
                 <Link to="/"> Home </Link>
                 <Link to="/transacao"> Transações </Link>
+                <Link to="/transacao/loja"> Transações por Lojas </Link>
                 <Link to="/importacao"> Importar </Link>
             </div>
 
