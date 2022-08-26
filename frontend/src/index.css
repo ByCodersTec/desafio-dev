@@ -48,3 +48,12 @@ table td {
   border-right: 1px solid rgb(180, 180, 180);
   border-bottom: 1px solid rgb(180, 180, 180);
 }
+
+button {
+  -webkit-appearance: button;
+  text-transform: none;
+  width: fit-content;
+  padding: 5px 15px;
+  font-weight: 500;
+  margin: 10px 0;
+}
