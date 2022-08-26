@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\ImportHistory;
+use App\Models\Transaction;
 use App\Templates\DataImportsTemplate;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -94,5 +96,21 @@ class TransactionService
             Log::error('TransactionService - parserData error: ' . $th->getMessage());
             throw $th;
         }
+    }
+
+    public function getSummary():array
+    {
+        $return['totImports'] = ImportHistory::get('id')->count();
+        $return['totTransactions']  = Transaction::get('id')->count();
+        $return['totStores']  = Transaction::groupBy('store_name')->get('store_name')->count();
+        $return['totCredit']  = Transaction::select('transactions.*', 'type_transactions.type')
+                                        ->join('type_transactions', 'type_transactions.id', '=', 'transactions.type_transaction_id')
+                                        ->where('type_transactions.type', '=', 'entrada')->get()->sum('value');
+        $return['totDebit']  = Transaction::select('transactions.*', 'type_transactions.type')
+                                        ->join('type_transactions', 'type_transactions.id', '=', 'transactions.type_transaction_id')
+                                        ->where('type_transactions.type', '=', 'saida')->get()->sum('value');
+        $return['totBalance'] = $return['totCredit'] - $return['totDebit'];
+
+        return $return;
     }
 }
