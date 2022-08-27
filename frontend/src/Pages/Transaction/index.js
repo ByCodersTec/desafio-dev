@@ -66,6 +66,8 @@ const Transaction = () => {
                                             <NumberFormat 
                                                 thousandSeparator={"."}
                                                 decimalSeparator={","}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
                                                 value={transaction.value}
                                                 prefix={"R$ "}
                                                 displayType={"text"}
