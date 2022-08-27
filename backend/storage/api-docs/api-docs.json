@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API para Importação de Arquivo CNAB",
+        "description": "A API tem o objetivo de possiblitar a importação de arquivo CNAB com os dados das movimentações finanaceira de várias lojas e exibir os lançamentos",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/transaction": {
+            "get": {
+                "tags": [
+                    "Transações"
+                ],
+                "summary": "Lista as Transações",
+                "description": "Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+                "operationId": "listTransacoes",
+                "responses": {
+                    "200": {
+                        "description": "Importação efetuada com sucesso",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transaction/import": {
+            "get": {
+                "tags": [
+                    "Transações"
+                ],
+                "summary": "Importação das Transações",
+                "description": "Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+                "operationId": "importTransacoes",
+                "responses": {
+                    "200": {
+                        "description": "Importação efetuada com sucesso",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
