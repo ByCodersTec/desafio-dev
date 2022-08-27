@@ -113,4 +113,22 @@ class TransactionService
 
         return $return;
     }
+
+    public function getStoreTransactions(): array
+    {
+        
+        $data = Transaction::with('typeTransaction')->orderBy('store_name','asc')->orderBy('date','asc')->get();
+        $stores = $storeTransactions = [];
+        foreach ($data as $transaction) {
+            
+            $stores[$transaction->store_name] = $transaction->store_name;
+            $storeTransactions[$transaction->store_name][$transaction->id] = $transaction;
+            $storeTransactions[$transaction->store_name][$transaction->id]['type_name'] = $transaction->typeTransaction->type;
+        }
+
+        return [
+            'stores' => $stores,
+            'storeTransactions' => $storeTransactions
+        ];
+    }
 }
