@@ -126,9 +126,8 @@ class TransactionService
             $storeTransactions[$transaction->store_name][$transaction->id]['type_name'] = $transaction->typeTransaction->type;
         }
 
-        return [
-            'stores' => $stores,
-            'storeTransactions' => $storeTransactions
-        ];
+    public function getStores()
+    {
+        return Transaction::groupBy('store_name')->orderBy('store_name','asc')->get('store_name');
     }
 }
