@@ -12,13 +12,48 @@
                     "Transações"
                 ],
                 "summary": "Lista as Transações",
-                "description": "Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+                "description": "Endpoint destinado a listagem das Transações",
                 "operationId": "listTransacoes",
                 "responses": {
                     "200": {
-                        "description": "Importação efetuada com sucesso",
+                        "description": "Lista de transações",
                         "content": {
                             "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/summary": {
+            "get": {
+                "tags": [
+                    "Transações"
+                ],
+                "summary": "Lista as Transações",
+                "description": "Endpoint destinado a prover informações gerais de dados importados",
+                "operationId": "summaryTransacoes",
+                "responses": {
+                    "200": {
+                        "description": "Agrupamento de infomrações já importadas",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "Resultado será um objeto",
+                                        "value": {
+                                            "data": {
+                                                "totImports": 4,
+                                                "totTransactions": 64,
+                                                "totStores": 6,
+                                                "totCredit": 6387.11,
+                                                "totDebit": 24906,
+                                                "totBalance": -18518.89
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

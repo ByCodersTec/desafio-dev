@@ -29,12 +29,12 @@ class TransactionController extends Controller
      *     path="/api/transaction",
      *     tags={"Transações"},
      *     summary="Lista as Transações",
-     *     description="Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+     *     description="Endpoint destinado a listagem das Transações",
      *     operationId="listTransacoes",
      *     
      *     @OA\Response(
      *         response="200", 
-     *         description="Importação efetuada com sucesso",
+     *         description="Lista de transações",
      *         @OA\MediaType(mediaType="application/json"),
      *     ),
      * )
@@ -46,9 +46,21 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display a summary of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/summary",
+     *     tags={"Transações"},
+     *     summary="Lista as Transações",
+     *     description="Endpoint destinado a prover informações gerais de dados importados",
+     *     operationId="summaryTransacoes",
+     *     
+     *     @OA\Response(
+     *         response="200", 
+     *         description="Agrupamento de infomrações já importadas",
+     *          @OA\JsonContent(
+    *             @OA\Examples(example="result", value={"data": {"totImports": 4, "totTransactions": 64, "totStores": 6, "totCredit": 6387.11, "totDebit": 24906, "totBalance": -18518.89}}, summary="Resultado será um objeto")
+    *         )
+     *     ),
+     * )
      */
     public function summary()
     {   
