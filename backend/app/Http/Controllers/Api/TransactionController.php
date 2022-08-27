@@ -55,7 +55,7 @@ class TransactionController extends Controller
     {
         try {
             
-            return $this->successResponse($this->transactionService->getStoreTransactions());
+            return $this->successResponse($this->transactionService->getStoreTransactions($request));
 
         } catch (\Throwable $th) {
             Log::error("TransactionController - transactionStores - " . $th->getMessage());
