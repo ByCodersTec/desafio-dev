@@ -1,0 +1,18 @@
+.select-store {
+    padding: 7px;
+    font-size: 14px;
+    font-weight: 300;
+    max-width: 50vh;
+}
+
+.mt {
+    margin-top: 5px;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-center{
+    text-align: center;
+}
