@@ -25,16 +25,36 @@
             }
         },
         "/api/transaction/import": {
-            "get": {
+            "post": {
                 "tags": [
                     "Transações"
                 ],
                 "summary": "Importação das Transações",
-                "description": "Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+                "description": "Endpoint destinado a importação do arquivo CNAB com as transações das lojas",
                 "operationId": "importTransacoes",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "arquivo CNAB"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Importação efetuada com sucesso",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Parametros esperados não foram encontrados",
                         "content": {
                             "application/json": {}
                         }
