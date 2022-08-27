@@ -68,6 +68,8 @@ const Home = () => {
                                         <NumberFormat 
                                             thousandSeparator={"."}
                                             decimalSeparator={","}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}
                                             value={items.totCredit}
                                             prefix={"R$ "}
                                             displayType={"text"}
@@ -80,6 +82,8 @@ const Home = () => {
                                         <NumberFormat 
                                             thousandSeparator={"."}
                                             decimalSeparator={","}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}
                                             value={items.totDebit}
                                             prefix={"R$ "}
                                             displayType={"text"}
@@ -90,6 +94,8 @@ const Home = () => {
                                         <NumberFormat 
                                             thousandSeparator={"."}
                                             decimalSeparator={","}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}
                                             value={items.totBalance}
                                             prefix={"R$ "}
                                             displayType={"text"}
