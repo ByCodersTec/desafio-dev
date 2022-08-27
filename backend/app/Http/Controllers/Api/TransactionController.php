@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
 {
@@ -24,9 +25,19 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/transaction",
+     *     tags={"Transações"},
+     *     summary="Lista as Transações",
+     *     description="Este endpoint se destina a importação do arquivo CNAB com as transações das lojas",
+     *     operationId="listTransacoes",
+     *     
+     *     @OA\Response(
+     *         response="200", 
+     *         description="Importação efetuada com sucesso",
+     *         @OA\MediaType(mediaType="application/json"),
+     *     ),
+     * )
      */
     public function index()
     {
@@ -77,14 +88,51 @@ class TransactionController extends Controller
 
 
     /**
-     * Import the file and save its data in storage
-     *
-     * @param Request $request
-     * @return void
+     * @OA\Post(
+     *     path="/api/transaction/import",
+     *     tags={"Transações"},
+     *     summary="Importação das Transações",
+     *     description="Endpoint destinado a importação do arquivo CNAB com as transações das lojas",
+     *     operationId="importTransacoes",
+     *     @OA\MediaType(mediaType="multipart/form-data"),
+     *     @OA\Response(
+     *         response="200", 
+     *         description="Importação efetuada com sucesso",
+     *         @OA\MediaType(mediaType="application/json"),
+     *     ),
+     *     @OA\Response(
+     *         response="422", 
+     *         description="Parametros esperados não foram encontrados",
+     *         @OA\MediaType(mediaType="application/json"),
+     *     ),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                     description="arquivo CNAB",
+     *                     property="file",
+     *                  ),
+     *              ),
+     *           ),
+     *      ),
+     * )
      */
     public function import(Request $request)
     {
         try {
+            
+            $messages  = [
+                'file.required' => 'O arquivo é obrigatório',
+            ];
+    
+            $validator = Validator::make($request->all(), [
+                'file' => 'required',
+            ], $messages);
+    
+            if ($validator->fails()) 
+                return $this->errorResponse(['type'=>'validator', 'messages'=>$validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
 
             DB::beginTransaction();
             
