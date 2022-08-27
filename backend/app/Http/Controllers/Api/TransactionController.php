@@ -51,6 +51,18 @@ class TransactionController extends Controller
         }
     }
 
+    public function storeTransactions(Request $request)
+    {
+        try {
+            
+            return $this->successResponse($this->transactionService->getStoreTransactions());
+
+        } catch (\Throwable $th) {
+            Log::error("TransactionController - transactionStores - " . $th->getMessage());
+            return $this->errorResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
