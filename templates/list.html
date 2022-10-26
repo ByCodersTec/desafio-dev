@@ -1,0 +1,35 @@
+{% extends 'template.html' %}
+{% block navbar %}
+
+    {% include 'navbar.html' %}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<main class="container">
+
+    <div class="card m-4">
+        <div class="card-header">
+            Welcome to Data2Base
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Start uploading</h5>
+            <p class="card-text">To start, upload a file in the format supported by the parser, and if the results
+                in <a href="#">list</a> section.</p>
+        </div>
+        <div class="p-1 m-1">
+            <form action="/upload/" enctype="multipart/form-data" method="post">
+                <input name="file" type="file" multiple class="btn">
+                <button type="submit" class="btn btn-dark text-white">Submit</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock content %}
