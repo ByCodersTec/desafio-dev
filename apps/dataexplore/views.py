@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
+import os 
 
 from .forms import DataForm
 
@@ -9,11 +10,11 @@ from .forms import DataForm
 TODO: Create the view to handle with divisions informations
 """
 
-@api_view(['POST'])
+# @api_view(['POST'])
 def upload_files(request):  # pylint: disable=unused-argument
     """This view make the upload files."""
     context = {}
-    form = DataForm(request.POST or None)
+    form = DataForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
     context['form'] = form
@@ -28,5 +29,4 @@ def data_transform():
 def dashboard():
     """This views brings informations about the transactions."""
     pass
-
 

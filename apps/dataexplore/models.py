@@ -1,11 +1,10 @@
 from django.db import models
-from datetime import datetime
 
 class DataModel(models.Model):
     """This class define the data model."""
-    filename = models.CharField(max_length=255)
-    date_created = models.DateTimeField(default=datetime.now)
-    last_update = models.DateTimeField(default=datetime.now, blank=True)
+    description = models.CharField(max_length=255, blank=True)
+    filename = models.FileField(upload_to='files/', unique=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return str(self.filename)

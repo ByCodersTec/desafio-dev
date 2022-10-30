@@ -6,5 +6,6 @@ class DataForm(forms.ModelForm):
     class Meta:
         model = DataModel
         fields = [
+            "description",
             "filename",
         ]

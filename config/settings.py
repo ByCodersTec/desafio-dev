@@ -1,3 +1,6 @@
+
+""" In this module the project settings are registreds."""
+
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -5,10 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = os.getenv('SECRET_KEY', 'MY_SECRET_KEY')
 DEVELOP_LOCAL = True
 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -23,7 +26,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
     'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
@@ -32,10 +34,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'dj_rest_auth.registration',
     'allauth.socialaccount',
+    'drf_yasg',
     'corsheaders',
-    'apps.dataexplore',
     'apps.users',
+    'apps.dataexplore',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,9 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-
-
-if DEVELOP_LOCAL == True:
+if DEVELOP_LOCAL:
     DATABASES = {
         'default': {
             'ENGINE': os.getenv('Engine'),
@@ -101,9 +104,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.ScryptPasswordHasher',
 ]
 
-
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -120,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -130,15 +129,20 @@ USE_I18N = True
 USE_TZ = True
 
 
-
 STATIC_URL = 'static/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+REST_SESSION_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'auth'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -149,18 +153,15 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
+# SWAGGER_SETTINGS = {
+#     'LOGIN_URL': 'login',
+#     'LOGOUT_URL': 'logout',
+# }
 
+# For demo purposes only. Use a white list in the real world.
 CORS_ORIGIN_ALLOW_ALL = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
-    },
-}
-
-REDOC_SETTINGS = {
-   'LAZY_RENDERING': False,
-}
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

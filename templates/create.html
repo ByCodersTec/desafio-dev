@@ -1,11 +1,11 @@
+{% extends 'rest_framework/base.html' %}
 
-<form method="POST" enctype="multipart/form-data">
- 
-    <!-- Security token -->
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
- 
-    <!-- Using the formset -->
     {{ form.as_p }}
-     
-    <input type="submit" value="Submit">
-</form>
+    <button type="submit">Upload</button>
+  </form>
+
+  <p><a href="{% url 'home' %}">Return to home</a></p>
+{% endblock %}
