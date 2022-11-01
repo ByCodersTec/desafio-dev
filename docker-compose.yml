@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: Store_manager
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - production-network
+    expose:
+      - 5432
+
+  api:
+    build:
+      dockerfile: docker/api.dockerfile
+      context: .
+    container_name: api_store_manager
+    command: >
+      sh -c " python manage.py makemigrations
+              python manage.py migrate
+              python manage.py loaddata transactions
+              python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+    networks:
+      - production-network
+    restart: on-failure:20
+
+networks:
+  production-network:
+    driver: bridge
