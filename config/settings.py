@@ -14,7 +14,7 @@ DEVELOP_LOCAL = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '0.0.0.0']
 
 
 # Application definition
@@ -165,3 +165,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+FIXTURE_DIRS = ['apps.dataexplore.fixtures']

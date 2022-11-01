@@ -6,8 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status, serializers
 
 from apps.users.serializers import UserSerializer
-# from .forms import UsersForm
-
 
 @api_view(['POST'])
 def create_user(request):
@@ -52,13 +50,3 @@ def delete_user(request, user_id):  # pylint: disable=unused-argument
     user = get_object_or_404(User, pk=user_id)
     user.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
-
-
-# def create_view(request):  # pylint: disable=unused-argument
-#     """This view create user by UsersForm."""
-#     context = {}
-#     form = UsersForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#     context['form'] = form
-#     return render(request, "create.html", context)
