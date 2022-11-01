@@ -1,0 +1,24 @@
+{% extends 'rest_framework/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1> Home</h1>
+
+  <p><a href="accounts/logout">Logout</a></p>
+
+  Acesse as informações do PIB
+  <p><a href="dataexplore/upload-files">Upload</a></p>
+
+  Acesse as informações sobre Estabelecimentos
+  <p><a href="dataexplore/dashboard">Dashboard</a></p>
+
+  Acesse a documentação da API no Swagger
+  <p><a href="swagger/">Documentação usando Swagger</a></p>
+
+  Acesse a documentação da API no Redoc
+  <p><a href="redoc/">Documentação Redoc</a></p>
+
+
+
+{% endblock %}

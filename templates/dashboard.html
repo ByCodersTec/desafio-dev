@@ -1,0 +1,25 @@
+{% extends 'rest_framework/base.html' %}
+{% block title %} Stores Manager {% endblock %}
+{% block content %}
+<style>
+    table, th, td { border: 1px solid black;}
+</style>
+<h1>Valor Movimentado por Loja</h1>
+<div style="margin-top:40px">
+  <table  style="width:50%">
+    <tr>
+      <th style="text-align:center">Loja</th>
+      <th style="text-align:center">Transação</th>
+      <th style="text-align:center">Total</th>
+    </tr>
+          {% for stores in results %}
+            <tr>
+                  <td style="text-align:center">{{ stores.store_name }}</td>
+                  <td style="text-align:center">{{ stores.transaction }}</td>
+                  <td style="text-align:center">{{ stores.total_transaction }}</td>
+            </tr>
+          {% endfor %}
+  </table>
+  <p><a href="{% url 'home' %}">Return to home</a></p>
+</div>
+{% endblock %}
