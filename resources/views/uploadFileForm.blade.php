@@ -7,6 +7,12 @@
 	<title>Upload de arquivo</title>
 </head>
 <body>
+	<form action="{{route('upload.cnab.file')}}" method="POST" enctype="multipart/form-data" >
+		@csrf
+		<input type="file" name="cnab_file" id="textFile">
+		<button type="submit">Enviar</button>
+	</form>
+
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CnabFile\UploadCnabFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[UploadCnabFileController::class,'uploadForm']);
+Route::post('/upload/file',[UploadCnabFileController::class,'upload'])->name('upload.cnab.file');
