@@ -21,8 +21,7 @@ class UploadCnabFileController extends Controller
 	public function upload(ParseFileService $service,UploadCnabFileRequest $request)
 	{
 		try {
-			$service->execute($request->file('cnab_file'));
-			return response()->json('Enviado com sucesso');
+			return $service->execute($request->file('cnab_file'));
 		} catch (\Throwable $th) {
 			return response()->json($th->getMessage(), 400);
 		}
