@@ -14,8 +14,13 @@ class CreateCnabFilesTable extends Migration
     public function up()
     {
         Schema::create('cnab_files', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+			$table->date('transaction_date');
+			$table->double('transaction_value',12,2);
+			$table->string('transaction_card',15);
+			$table->time('transaction_hour');
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 
