@@ -13,9 +13,15 @@ class CreateCompanieCnabFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companie_cnab_files', function (Blueprint $table) {
-            $table->id();
+        Schema::create('company_cnab_files', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+			$table->uuid('company_id');
+			$table->uuid('cnab_file_id');
             $table->timestamps();
+			$table->softDeletes();
+
+			$table->foreign('company_id')->references('id')->on('companies');
+			$table->foreign('cnab_file_id')->references('id')->on('cnab_files');
         });
     }
 
@@ -26,6 +32,6 @@ class CreateCompanieCnabFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companie_cnab_files');
+        Schema::dropIfExists('company_cnab_files');
     }
 }
