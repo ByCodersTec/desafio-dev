@@ -16,7 +16,7 @@ class ParseTransactionPersonService
 		$cpfPersonTransaction = implode($cpfPersonTransaction);
 
 		if(!ValidateCpfService::execute($cpfPersonTransaction)){
-			throw new Exception("CPF inválido, tente novamente");
+			throw new Exception("CPF inválido");
 		}
 
 		return $cpfPersonTransaction;
