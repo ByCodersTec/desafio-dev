@@ -13,7 +13,9 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "ramsey/uuid": "^4.2",
+        "spatie/data-transfer-object": "^2.8"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
