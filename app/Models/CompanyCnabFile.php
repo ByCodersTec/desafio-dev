@@ -11,6 +11,12 @@ class CompanyCnabFile extends Pivot
 {
 	use HasFactory, TraitUuid, SoftDeletes;
 
+	public $incrementing = false;
+
+    protected $keyType = 'string';
+
+	public $timestamps = true;
+
 	public $fillable = [
 		'company_id',
 		'cnab_file_id'
