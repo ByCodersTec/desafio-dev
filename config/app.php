@@ -174,6 +174,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+		App\Providers\TypeTransaction\TypeTransactionProvider::class,
+		App\Providers\CnabFile\CnabFileProvider::class,
+		App\Providers\Company\CompanyProvider::class,
 
     ],
 
