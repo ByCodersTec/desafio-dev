@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CnabFile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CnabFile\UploadCnabFileRequest;
 use App\Http\Services\CnabFile\ParseFileService;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class UploadCnabFileController extends Controller
 		}
 	}
 
-	public function upload(ParseFileService $service,Request $request)
+	public function upload(ParseFileService $service,UploadCnabFileRequest $request)
 	{
 		try {
 			$service->execute($request->file('cnab_file'));
