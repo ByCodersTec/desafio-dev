@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Desafio programação
-```
+
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge)
 
 ##### Este projeto foi escrito em PHP utilizando o framework Laravel,tendo como banco de dados do tipo relacional o MySQL. A funcionalidade principal deste projeto é receber um arquivo .txt no padrão CNAB e parsear as informações do arquivo para salva-las em um banco de dados.
