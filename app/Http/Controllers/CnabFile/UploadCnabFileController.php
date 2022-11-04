@@ -23,7 +23,12 @@ class UploadCnabFileController extends Controller
 		try {
 			return $service->execute($request->file('cnab_file'));
 		} catch (\Throwable $th) {
-			return response()->json($th->getMessage(), 400);
+			if ($request->is('api/*')) {
+				return response()->json($th->getMessage(), 400);
+			}else{
+				return redirect()->back()->withErrors($th->getMessage());
+			}
+
 		}
 	}
 }
