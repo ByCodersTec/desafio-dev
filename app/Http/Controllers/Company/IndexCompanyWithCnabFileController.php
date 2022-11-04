@@ -16,4 +16,14 @@ class IndexCompanyWithCnabFileController extends Controller
 			return response()->json($th->getMessage(), 400);
 		}
 	}
+
+	public function indexView(IndexCompanyWithCnabFileService $service)
+	{
+		try {
+			$companies = CompaniesResource::collection($service->execute());
+			return view('listCnabImports',["companies" => $companies]);
+		} catch (\Throwable $th) {
+			return response()->json($th->getMessage(), 400);
+		}
+	}
 }
