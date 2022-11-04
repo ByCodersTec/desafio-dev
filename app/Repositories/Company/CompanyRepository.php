@@ -33,4 +33,22 @@ class CompanyRepository implements CompanyRepositoryInterface
 			throw new Exception('Erro ao buscar empresa');
 		}
 	}
+
+	public function indexCompanyWithCnabFile(): ?Collection
+	{
+		try {
+			return $this->model->with('cnabFiles')->orderBy('legal_person_name')->get();
+		} catch (\Throwable $th) {
+			throw new Exception('Erro ao buscar empresa');
+		}
+	}
+
+	public function showCompanyWithCnabFile(string $id): ?Company
+	{
+		try {
+			return $this->model::with('cnabFiles','cnabFiles.typeTransaction')->find($id);
+		} catch (\Throwable $th) {
+			throw new Exception('Erro ao buscar empresa');
+		}
+	}
 }
