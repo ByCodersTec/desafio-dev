@@ -22,4 +22,9 @@ class TypeTransaction extends Model
 		"operation_type",
 		"transaction_code"
 	];
+
+	public function cnabFile()
+	{
+		return $this->hasMany(CnabFile::class);
+	}
 }
