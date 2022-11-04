@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Desafio programação
 ```
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge)
@@ -36,3 +37,6 @@ docker-compose up -d
 
 
 
+=======
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge)
+>>>>>>> 447ac4b6cd18c884cadb52ea0d49f6a8924f6429
