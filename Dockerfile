@@ -25,6 +25,5 @@ COPY composer.json composer.json
 RUN composer install
 
 WORKDIR /var/www
-
 EXPOSE 9000
 ENTRYPOINT ["php-fpm"]

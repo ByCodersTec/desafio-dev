@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/',[UploadCnabFileController::class,'uploadForm']);
-Route::post('/upload/file',[UploadCnabFileController::class,'upload'])->name('upload.cnab.file.web');
+Route::get('/create',[UploadCnabFileController::class,'uploadForm']);
+Route::post('/upload/file-form',[UploadCnabFileController::class,'upload'])->name('upload.cnab.file.web');
 
 Route::get('/list',[IndexCompanyWithCnabFileController::class,'indexView'])->name("index.companies");
