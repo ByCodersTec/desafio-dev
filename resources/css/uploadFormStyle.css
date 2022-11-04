@@ -1,0 +1,109 @@
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+:root {
+	--main-theme-color: #171616;
+	--main-dark-color:#02be3b;
+  }
+  html,body,* { box-sizing: border-box;}
+  html,body   { height: 100%; text-align: center;}
+  body        { padding: 2rem; background: #89898990;}
+
+div#box{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	padding: 40px;
+	transform: translate(-50%, -50%);
+	background: rgba(0,0,0,.5);
+	box-sizing: border-box;
+	box-shadow: 0 15px 25px rgba(0,0,0,.6);
+	border-radius: 10px;
+}
+
+div#title h1{
+	font-family: "Roboto", sans-serif;
+	font-size: 40px;
+	line-height: 1;
+	color: var(--main-theme-color);
+	margin-bottom: 0;
+}
+
+div#title h2{
+	font-family: "Roboto", sans-serif;
+	font-size: 25px;
+	color: var(--main-dark-color);
+}
+
+input[type="file"]{
+	display: none;
+}
+
+label {
+    padding: 20px 10px;
+	width: 50%;
+    background-color: var(--main-theme-color);
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+	font-size:14px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+	text-align: center;
+	cursor:pointer;
+	transition: .5s;
+	border: none;
+	border-radius: 5px;
+	margin: 0 auto;
+    margin-bottom: 21px;
+}
+
+label:hover{
+	color: #333;
+	translate: 5% 10%;
+	background: var(--main-dark-color);
+	box-shadow: 0 15px 25px rgba(0,0,0,.7);
+}
+
+div#form{
+	margin: 0 auto;
+	padding: 10px;
+	border-color: #333;
+	border-style: solid;
+}
+
+button[type=submit]{
+	font-family: "Roboto", sans-serif;
+	font-weight: 500;
+	background: #898989;
+	border: none;
+	padding: 8px 10px 8px 10px;
+	border-radius: 5px;
+	color: #fff;
+}
+
+button[type=submit]:hover{
+	box-sizing: border-box;
+	box-shadow: 0 15px 25px rgba(0,0,0,.6);
+	background: #394D61;
+}
+
+li.error{
+	color: #981400;
+	list-style: none;
+}
+
+a#indexCompanies{
+	font-family: "Roboto", sans-serif;
+	font-weight: 500;
+	background: #898989;
+	border: none;
+	padding: 8px 10px 8px 10px;
+	border-radius: 5px;
+	color: #fff;
+	text-decoration: none;
+}
+
+
