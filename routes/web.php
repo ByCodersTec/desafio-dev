@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CnabFile\UploadCnabFileController;
+use App\Http\Controllers\Company\IndexCompanyWithCnabFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/',[UploadCnabFileController::class,'uploadForm']);
-Route::post('/upload/file',[UploadCnabFileController::class,'upload'])->name('upload.cnab.file');
+Route::post('/upload/file',[UploadCnabFileController::class,'upload'])->name('upload.cnab.file.web');
+
+Route::get('/list',[IndexCompanyWithCnabFileController::class,'indexView'])->name("index.companies");
