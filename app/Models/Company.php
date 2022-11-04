@@ -23,7 +23,7 @@ class Company extends Model
 		'person_cpf'
 	];
 
-	public function CnabFile()
+	public function cnabFiles()
 	{
 		return $this->belongsToMany(CnabFile::class,'company_cnab_files')
 		->using(CompanyCnabFile::class)
