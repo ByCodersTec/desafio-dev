@@ -6,6 +6,7 @@ use App\Http\Dtos\Company\CreateCompanyDto;
 use App\Models\Company;
 use App\Repositories\Interfaces\Company\CompanyRepositoryInterface;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class CompanyRepository implements CompanyRepositoryInterface
 {
