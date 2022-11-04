@@ -31,4 +31,9 @@ class CnabFile extends Model
 		->using(CompanyCnabFile::class)
 		->withTimestamps();
 	}
+
+	public function typeTransaction()
+	{
+		return $this->belongsTo(TypeTransaction::class,'type_id','id');
+	}
 }
