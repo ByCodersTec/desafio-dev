@@ -39,6 +39,6 @@ localhost:8008/list
 ### Neste link esta a documentação para consumir as API's:
 
 ```
-docker-compose up -d
+http://localhost:8009/swagger/
 ```
 
