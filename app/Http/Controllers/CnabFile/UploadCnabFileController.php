@@ -18,6 +18,41 @@ class UploadCnabFileController extends Controller
 		}
 	}
 
+/**
+ * @OA\Post(
+ *     path="/upload/file",
+ *     description="Upload the CNAB File",
+ *     @OA\Parameter(
+ *         name="cnab_file",
+ *         in="path",
+ *         description="Cnab File",
+ *         required=true,
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="OK",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="id", type="string"),
+ *       @OA\Property(property="transaction_date", type="string"),
+ *       @OA\Property(property="transaction_value", type="float"),
+ *       @OA\Property(property="person_cpf", type="string"),
+ *       @OA\Property(property="transaction_card", type="string"),
+ *       @OA\Property(property="transaction_hour", type="string"),
+ *       @OA\Property(property="person_name", type="string"),
+ *       @OA\Property(property="legal_person_name", type="string")
+ *        )
+ * ),
+ *
+ *     @OA\Response(
+ *         response=422,
+ *         description="The given data was invalid.",
+ *			@OA\JsonContent(
+ *       		@OA\Property(property="message", type="string")
+ *        )
+ *
+ *     )
+ * )
+ */
 	public function upload(ParseFileService $service,UploadCnabFileRequest $request)
 	{
 		try {
