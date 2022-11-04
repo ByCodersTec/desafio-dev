@@ -15,7 +15,8 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "ramsey/uuid": "^4.2",
-        "spatie/data-transfer-object": "^2.8"
+        "spatie/data-transfer-object": "^2.8",
+        "zircote/swagger-php": "^4.5"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

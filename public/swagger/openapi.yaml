@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  title: Desafio-DEV
+  version: '1.0'
+paths:
+  /upload/file:
+    post:
+      description: 'Upload the CNAB File'
+      operationId: d4801a63e9c1e4c5674cc1f36363602c
+      parameters:
+        -
+          name: cnab_file
+          in: path
+          description: 'Cnab File'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { type: string }
+                  transaction_date: { type: string }
+                  transaction_value: { type: number, format: float }
+                  person_cpf: { type: string }
+                  transaction_card: { type: string }
+                  transaction_hour: { type: string }
+                  person_name: { type: string }
+                  legal_person_name: { type: string }
+                type: object
+        '422':
+          description: 'The given data was invalid.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string }
+                type: object
+  /index/companies:
+    get:
+      description: 'Index companies with CNAB files'
+      operationId: 5fc417519f500a3b823137d32e15c841
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { type: string }
+                  legal_person_name: { type: string }
+                  person_name: { type: string }
+                  person_cpf: { type: string }
+                  account_balance: { type: number, format: float }
+                  importations_cnab_files: { type: array, items: { $ref: '#/components/schemas/cnab_files' } }
+                type: object
+  '/show/companies/{company_id}':
+    get:
+      description: 'Index companies with CNAB files'
+      operationId: a67c3c14d2df56b3ebb204ef82ee0b5e
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  id: { type: string }
+                  legal_person_name: { type: string }
+                  person_name: { type: string }
+                  person_cpf: { type: string }
+                  account_balance: { type: number, format: float }
+                  importations_cnab_files: { type: array, items: { $ref: '#/components/schemas/cnab_files' } }
+                type: object
+components:
+  schemas:
+    cnab_files:
+      properties:
+        id:
+          type: string
+        type_id:
+          type: string
+        type_name:
+          type: string
+        type_operation:
+          type: string
+        transaction_date:
+          type: number
+          format: float
+        transaction_value:
+          type: string
+        transaction_card:
+          type: string
+        transaction_hour:
+          type: string
+      type: object
+    cnab_files_show:
+      properties:
+        id:
+          type: string
+        type_id:
+          type: string
+        type_name:
+          type: string
+        type_operation:
+          type: string
+        transaction_date:
+          type: number
+          format: float
+        transaction_value:
+          type: string
+        transaction_card:
+          type: string
+        transaction_hour:
+          type: string
+      type: object
+  responses:
+    '422':
+      description: 'Erro ao buscar empresas'
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+            type: object
