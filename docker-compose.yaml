@@ -1,25 +1,37 @@
 version: "3"
 
 services:
-  web:
-    image: webdevops/php-apache:alpine-php7
-    ports:
-      - "4500:80"
+  webserver:
+    container_name: webserver
+    build: 
+      context: .
+      dockerfile: Dockerfile-php
     volumes:
-      - ./www:/app
+    - "./www:/var/www/html"
+    - "/home:/home"
+    ports:
+    - 80:80
+    - 443:443
+    cap_add:
+      - NET_ADMIN
 
   db:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.0
+    container_name: db
+    cap_add:
+      - SYS_NICE
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yii2basic
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_HOST: '%' 
     ports:
-      - "8080:80"
+      - '3306:3306'
     volumes:
-      - ./uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
+      - db:/var/lib/mysql
+
+volumes:
+  db:
+    driver: local
