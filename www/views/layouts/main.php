@@ -38,6 +38,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'Enviar Arquivo CNAB', 'url' => ['/arquivos-cnab/send-file']],
+            ['label' => 'Registros CNAB', 'url' => ['/arquivos-cnab/index']],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
