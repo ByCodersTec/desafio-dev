@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\ArquivosCnab;
+use app\models\ArquivosCnabForm;
 use app\models\ArquivosCnabSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -108,6 +109,20 @@ class ArquivosCnabController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    /**
+     * Send File CNAB.
+     * If creation is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     */
+    public function actionSendFile()
+    {
+        $model = new ArquivosCnabForm();
+        
+        return $this->render('send-file-form', [
+            'model' => $model,
+        ]);
+    }    
 
     /**
      * Finds the ArquivosCnab model based on its primary key value.
