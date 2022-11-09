@@ -118,6 +118,16 @@ class ArquivosCnabController extends Controller
     public function actionSendFile()
     {
         $model = new ArquivosCnabForm();
+        $post = Yii::$app->getRequest()->post();
+        #TODO: Adicionar ação para ser disparada pelo método validate.
+        if($model->load($post) && $model->validate()){
+            #TODO: Adicionar estrutura de rollback caso um registro não passe pela validação.
+            $cnabArray = $model->parsearFileCNAB();
+            Yii::$app->db->createCommand()
+            ->batchInsert(ArquivosCnab::tableName(), 
+            ['tipo_transacao','data','valor','cpf','cartao','hora','dono_loja','nome_loja'],$cnabArray)
+            ->execute();
+        }
         
         return $this->render('send-file-form', [
             'model' => $model,

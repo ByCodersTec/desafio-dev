@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'file')->fileInput()->label("Arquivo CNAB") ?>
+    <?= $form->field($model, 'filecnab')->fileInput()->label("Arquivo CNAB") ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Salvar'), ['class' => 'btn btn-success']) ?>
