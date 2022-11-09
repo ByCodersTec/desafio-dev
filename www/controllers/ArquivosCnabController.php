@@ -127,6 +127,7 @@ class ArquivosCnabController extends Controller
             ->batchInsert(ArquivosCnab::tableName(), 
             ['tipo_transacao','data','valor','cpf','cartao','hora','dono_loja','nome_loja'],$cnabArray)
             ->execute();
+            return $this->redirect(['index']);
         }
         
         return $this->render('send-file-form', [
