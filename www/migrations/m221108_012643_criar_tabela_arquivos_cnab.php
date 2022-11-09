@@ -18,7 +18,7 @@ class m221108_012643_criar_tabela_arquivos_cnab extends Migration
             'data' => $this->date(),
             'valor' => $this->float(2),
             'cpf' => $this->string(11),
-            'cartao' => $this->string(11),
+            'cartao' => $this->string(12),
             'hora' => $this->string(6),
             'dono_loja' => $this->string(14),
             'nome_loja' => $this->string(19),
