@@ -43,14 +43,24 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*'urlManager' => [
+        'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'showScriptName' => true,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'pluralize' => false,
+                    'controller' => 'api/default'
+                ]
             ],
-        ],*/
+        ],
     ],
     'params' => $params,
+    'modules' => [
+        'api' => [
+            'class' => 'app\modules\api\ApiModule',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
