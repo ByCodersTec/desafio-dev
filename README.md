@@ -25,6 +25,11 @@
 ```
 .env
 ```
+### Instalar as dependências
+
+```
+composer install
+```
 ### Rodar o docker com o comando abaixo:
 
 ```
