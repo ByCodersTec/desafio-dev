@@ -33,8 +33,8 @@ docker-compose up -d
 ### Rotas para formulário e listagem das empresas:
 
 ```
-localhost:8008/create
-localhost:8008/list
+localhost:8009/create
+localhost:8009/list
 ```
 ### Neste link esta a documentação para consumir as API's:
 
