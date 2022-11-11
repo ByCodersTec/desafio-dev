@@ -1,0 +1,46 @@
+version: '3'
+services:
+  desafio-dev:
+    build: .
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - desafio-dev-mysql
+    networks:
+    - laravel
+
+  desafio-dev-mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: cnab_files_soft
+      MYSQL_USER: finances_dev
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      # - "./.docker/dbdata:/var/lib/mysql"
+      - ./.docker/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - laravel
+
+  desafio-dev-nginx:
+    build: ./.docker/nginx
+    restart: always
+    ports:
+      - "8009:80"
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - desafio-dev
+    networks:
+    - laravel
+
+networks:
+  laravel:
+    driver: bridge
