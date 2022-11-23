@@ -36,26 +36,16 @@
 <h1>Fechamento de transações</h1>
 <table>
   <tr>
-    <th>ID</th>
-    <th>TIPO</th>
-    <th>DATA</th>
-    <th>VALOR</th>
-    <th>CPF</th>
-    <th>CARTAO</th>
-    <th>HORA</th>
     <th>DONO</th>
     <th>LOJA</th>
+    <th>VALOR</th>
+    <th>CPF</th>
   </tr>
-  <tr data-th-each="lista: ${lista}">
-    <td data-th-text="${lista.id}"></td>
-    <td data-th-text="${lista.tipo}"></td>
-    <td data-th-text="${lista.data}"></td>
-    <td data-th-text="${lista.valor}"></td>
-    <td data-th-text="${lista.cpf}"></td>
-    <td data-th-text="${lista.cartao}"></td>
-    <td data-th-text="${lista.hora}"></td>
-    <td data-th-text="${lista.donoLoja}"></td>
-    <td data-th-text="${lista.nomeLoja}"></td>
+  <tr data-th-each="listaFinal: ${listaFinal}">
+    <td data-th-text="${listaFinal.donoLoja}"></td>
+    <td data-th-text="${listaFinal.nomeLoja}"></td>
+    <td data-th-text="${listaFinal.valor}"></td>
+    <td data-th-text="${listaFinal.cpf}"></td>
   </tr>
 </table>
 

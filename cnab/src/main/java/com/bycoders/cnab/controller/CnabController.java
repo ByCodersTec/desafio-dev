@@ -1,6 +1,7 @@
 package com.bycoders.cnab.controller;
 
 import com.bycoders.cnab.dto.CnabDTO;
+import com.bycoders.cnab.dto.FaturamentoDTO;
 import com.bycoders.cnab.service.CnabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @Controller
 public class CnabController {
     private List<CnabDTO> lista = new ArrayList<>();
+    private List<FaturamentoDTO> listaFinal = new ArrayList<>();
 
     @Autowired
     private CnabService cnabService;
@@ -31,6 +33,7 @@ public class CnabController {
         try {
             cnabService.salvar(file);
             lista.addAll(cnabService.listar());
+            listaFinal.addAll(cnabService.listarAbatimento());
             return "redirect:/listar";
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,6 +45,7 @@ public class CnabController {
     public ModelAndView listar() {
         ModelAndView modelAndView = new ModelAndView("listar");
         modelAndView.addObject("lista", lista);
+        modelAndView.addObject("listaFinal", listaFinal);
         return modelAndView;
     }
 }

@@ -1,6 +1,7 @@
 package com.bycoders.cnab.service;
 
 import com.bycoders.cnab.dto.CnabDTO;
+import com.bycoders.cnab.dto.FaturamentoDTO;
 import com.bycoders.cnab.entity.Cnab;
 import com.bycoders.cnab.enums.TipoTransacao;
 import com.bycoders.cnab.repository.CnabRepository;
@@ -14,7 +15,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,4 +93,33 @@ public class CnabService {
     }
 
 
+    public List<FaturamentoDTO> listarAbatimento() {
+        List<FaturamentoDTO> res = new ArrayList<>();
+        List<Cnab> all = cnabRepository.findAll();
+        Map<String, List<Cnab>> collect = all.stream().collect(Collectors.groupingBy(Cnab::getCpf));
+
+        for (Map.Entry<String, List<Cnab>> set : collect.entrySet()) {
+            String dono = set.getValue().get(0).getDonoLoja();
+            String nome = set.getValue().get(0).getNomeLoja();
+            String cpf = set.getValue().get(0).getCpf();
+            BigDecimal valor = BigDecimal.ZERO;
+            for (Cnab cnab : set.getValue()) {
+                if (cnab.getTipo().equals(TipoTransacao.DEBITO) ||
+                            cnab.getTipo().equals(TipoTransacao.CREDITO) ||
+                            cnab.getTipo().equals(TipoTransacao.RECEBIMENTO_EMPRESTIMO) ||
+                            cnab.getTipo().equals(TipoTransacao.VENDAS) ||
+                            cnab.getTipo().equals(TipoTransacao.TED) ||
+                            cnab.getTipo().equals(TipoTransacao.DOC)) {
+                    valor = valor.add(cnab.getValor());
+                } else if (cnab.getTipo().equals(TipoTransacao.BOLETO) ||
+                        cnab.getTipo().equals(TipoTransacao.FINANCIAMENTO) ||
+                        cnab.getTipo().equals(TipoTransacao.ALUGUEL)) {
+                    valor = valor.subtract(cnab.getValor());
+                }
+            }
+            res.add(new FaturamentoDTO(valor, cpf, dono, nome));
+
+        }
+        return res;
+    }
 }
