@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listar</title>
+</head>
+<body>
+<h1>Dados completos</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>TIPO</th>
+    <th>DATA</th>
+    <th>VALOR</th>
+    <th>CPF</th>
+    <th>CARTAO</th>
+    <th>HORA</th>
+    <th>DONO</th>
+    <th>LOJA</th>
+  </tr>
+  <tr data-th-each="lista: ${lista}">
+    <td data-th-text="${lista.id}"></td>
+    <td data-th-text="${lista.tipo}"></td>
+    <td data-th-text="${lista.data}"></td>
+    <td data-th-text="${lista.valor}"></td>
+    <td data-th-text="${lista.cpf}"></td>
+    <td data-th-text="${lista.cartao}"></td>
+    <td data-th-text="${lista.hora}"></td>
+    <td data-th-text="${lista.donoLoja}"></td>
+    <td data-th-text="${lista.nomeLoja}"></td>
+  </tr>
+</table>
+
+<h1>Fechamento de transações</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>TIPO</th>
+    <th>DATA</th>
+    <th>VALOR</th>
+    <th>CPF</th>
+    <th>CARTAO</th>
+    <th>HORA</th>
+    <th>DONO</th>
+    <th>LOJA</th>
+  </tr>
+  <tr data-th-each="lista: ${lista}">
+    <td data-th-text="${lista.id}"></td>
+    <td data-th-text="${lista.tipo}"></td>
+    <td data-th-text="${lista.data}"></td>
+    <td data-th-text="${lista.valor}"></td>
+    <td data-th-text="${lista.cpf}"></td>
+    <td data-th-text="${lista.cartao}"></td>
+    <td data-th-text="${lista.hora}"></td>
+    <td data-th-text="${lista.donoLoja}"></td>
+    <td data-th-text="${lista.nomeLoja}"></td>
+  </tr>
+</table>
+
+<a href="/">Novo cadastro</a>
+
+</body>
+</html>

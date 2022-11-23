@@ -1,48 +1,33 @@
-package com.bycoders.cnab.entity;
+package com.bycoders.cnab.dto;
 
+import com.bycoders.cnab.entity.Cnab;
 import com.bycoders.cnab.enums.TipoTransacao;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
-@Table(name = "CNAB")
-public class Cnab {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CnabDTO {
     private Long id;
-    @Column(name="TIPO_TRANSACAO")
     private TipoTransacao tipo;
-    @Column(name="DATA_TRANSACAO")
     private LocalDate data;
-    @Column(name="VALOR_TRANSACAO")
     private BigDecimal valor;
-    @Column(name="CPF")
     private String cpf;
-    @Column(name="CARTAO")
     private String cartao;
-    @Column(name="HORA_TRANSACAO")
     private LocalTime hora;
-    @Column(name="DONO")
     private String donoLoja;
-    @Column(name="NOME")
     private String nomeLoja;
 
-    public Cnab() {
-
-    }
-
-    public Cnab(TipoTransacao tipo, LocalDate data, BigDecimal valor, String cpf, String cartao, LocalTime hora, String donoLoja, String nomeLoja) {
-        this.tipo = tipo;
-        this.data = data;
-        this.valor = valor;
-        this.cpf = cpf;
-        this.cartao = cartao;
-        this.hora = hora;
-        this.donoLoja = donoLoja;
-        this.nomeLoja = nomeLoja;
+    public CnabDTO(Cnab cnab) {
+        this.id = cnab.getId();
+        this.tipo = cnab.getTipo();
+        this.data = cnab.getData();
+        this.valor = cnab.getValor();
+        this.cpf = cnab.getCpf();
+        this.cartao = cnab.getCartao();
+        this.hora = cnab.getHora();
+        this.donoLoja = cnab.getDonoLoja();
+        this.nomeLoja = cnab.getNomeLoja();
     }
 
     public Long getId() {
@@ -116,10 +101,4 @@ public class Cnab {
     public void setNomeLoja(String nomeLoja) {
         this.nomeLoja = nomeLoja;
     }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
 }
