@@ -1,0 +1,66 @@
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# UPDATE PACKAGES
+RUN apt-get update
+
+# REMOVE LIBCURL
+RUN apt remove -y \
+    libcurl4
+
+# INSTALL SYSTEM UTILITIES
+RUN apt-get install -y \
+    apt-utils \
+    libcurl4 \
+    curl \
+    git \
+    apt-transport-https \
+    software-properties-common \
+    g++ \
+    build-essential \
+    dialog
+
+# INSTALL APACHE2
+RUN apt-get install -y apache2
+RUN a2enmod rewrite
+
+# INSTALL locales
+RUN apt-get install -qy language-pack-en-base \
+    && locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+# INSTALL PHP & LIBRARIES
+RUN add-apt-repository -y ppa:ondrej/php
+RUN apt-get update
+RUN apt-get --no-install-recommends --no-install-suggests --yes install \
+    php-pear \
+    php7.4 \
+    php7.4-common \
+    php7.4-mbstring \
+    php7.4-dev \
+    php7.4-xml \
+    php7.4-cli \
+    php7.4-mbstring \
+    php7.4-curl \
+    php7.4-gd \
+    php7.4-imagick \
+    php7.4-xdebug \
+    php7.4-xml \
+    php7.4-zip \
+    php7.4-odbc \
+    php7.4-soap \
+    php7.4-curl \
+    php7.4-cgi \
+    libapache2-mod-php7.4 \
+    php7.4-mysql
+
+# INSTALL EDITORS
+RUN apt-get update && apt-get install nano vim -y
+
+EXPOSE 80
+
+WORKDIR /var/www/html/
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

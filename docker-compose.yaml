@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  webserver:
+    container_name: webserver
+    build: 
+      context: .
+      dockerfile: Dockerfile-php
+    volumes:
+    - "./www:/var/www/html"
+    - "/home:/home"
+    ports:
+    - 80:80
+    - 443:443
+    cap_add:
+      - NET_ADMIN
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yii2basic
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_HOST: '%' 
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:
+    driver: local
