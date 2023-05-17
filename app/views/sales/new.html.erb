@@ -1,0 +1,24 @@
+<h1 class="text-2xl font-bold mb-4">New Sale</h1>
+
+<%= form_with(url: url_for(controller: 'sales', action: 'create'), method: "post", local: true, multipart: true) do |form| %>
+  <% if @sale.errors.any? %>
+    <div id="error_explanation" class="bg-red-100 text-red-900 p-4 rounded mb-4">
+      <h2 class="text-lg font-bold mb-2"><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
+
+      <ul class="list-disc ml-4">
+      <% @sale.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :file, class: 'block font-bold mb-2' %>
+    <%= form.file_field :file, class: 'form-control py-2 px-3 rounded shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
+  </div>
+
+  <div class="flex justify-end">
+    <%= form.submit "Upload", class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+  </div>
+<% end %>

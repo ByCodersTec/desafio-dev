@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 1
+  occ_day: MyString
+  value: 1
+  cpf: 1
+  card_number: 1
+  occ_hour: MyString
+  store_owner: MyString
+  store_name: MyString
+
+two:
+  type: 1
+  occ_day: MyString
+  value: 1
+  cpf: 1
+  card_number: 1
+  occ_hour: MyString
+  store_owner: MyString
+  store_name: MyString
