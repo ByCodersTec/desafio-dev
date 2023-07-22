@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.DocParserService\ByCodersTec.StoreDataImporter.DocParserService.csproj" />
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Domain\ByCodersTec.StoreDataImporter.Domain.csproj" />
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Entities\ByCodersTec.StoreDataImporter.Entities.csproj" />
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Repository.EF\ByCodersTec.StoreDataImporter.Repository.EF.csproj" />
