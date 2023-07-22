@@ -67,13 +67,3 @@ services:
         - "15672:15672"
 
 
-  bycoderstec.storedataimporter.ui:
-    image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporterui
-    ports:
-        - "8090:80"
-    depends_on:
-        - bycoderstec.storedataimporter
-    build:
-      context: .
-      dockerfile: ByCodersTec.StoreDataImporter.UI/Dockerfile
-

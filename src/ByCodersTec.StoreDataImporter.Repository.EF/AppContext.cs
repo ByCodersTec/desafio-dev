@@ -17,6 +17,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
         public DbSet<User> Users { get; set; }
         public DbSet<DocDefinition> DocDefinitions { get; set; }
         public DbSet<DocDefinitionColumn> DocDefinitionColumns { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionType> TransactionTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

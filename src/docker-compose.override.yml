@@ -7,9 +7,3 @@ services:
     ports:
       - "80"
 
-  bycoderstec.storedataimporter.ui:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-

@@ -15,9 +15,9 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
             if (!salesContext.Users.Any())
             {
                 //--- The next two lines add 100 rows to your database
-                List<User> users = new List<User> { 
-                    new User { 
-                        Id = Guid.NewGuid(), 
+                List<User> users = new List<User> {
+                    new User {
+                        Id = Guid.NewGuid(),
                         Name = "Charles dos Santos França",
                         Email = "charles-franca@live.com",
                         Username = "charlesfranca89",
@@ -32,7 +32,7 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
             if (!salesContext.DocDefinitions.Any())
             {
                 DocDefinition defs = new DocDefinition();
-                List<DocDefinitionColumn> columns = new List<DocDefinitionColumn>() { 
+                List<DocDefinitionColumn> columns = new List<DocDefinitionColumn>() {
                     new DocDefinitionColumn{
                         ClassPropName = "Type",
                         Name = "Tipo",
@@ -106,6 +106,50 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                     Name = "CNAB"
                 };
                 salesContext.DocDefinitions.Add(defs);
+            }
+
+            if (!salesContext.TransactionTypes.Any())
+            {
+                List<TransactionType> transactionTypes = new List<TransactionType>() {
+                    new TransactionType{
+                        Code = 1,
+                        Description = "Débito",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 2,
+                        Description = "Boleto",
+                        Nature = TransactionNature.Saida
+                    },new TransactionType{
+                        Code = 3,
+                        Description = "Financiamento",
+                        Nature = TransactionNature.Saida
+                    },new TransactionType{
+                        Code = 4,
+                        Description = "Crédito",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 5,
+                        Description = "Recebimento Empréstimo",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 6,
+                        Description = "Vendas",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 7,
+                        Description = "Recebimento TED",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 8,
+                        Description = "Recebimento DOC",
+                        Nature = TransactionNature.Entrada
+                    },new TransactionType{
+                        Code = 9,
+                        Description = "Aluguel",
+                        Nature = TransactionNature.Saida
+                    },
+                };
+                salesContext.TransactionTypes.AddRange(transactionTypes);
             }
 
             salesContext.SaveChanges();

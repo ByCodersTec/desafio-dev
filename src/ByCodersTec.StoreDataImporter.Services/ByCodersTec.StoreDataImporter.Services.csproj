@@ -19,4 +19,8 @@
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.ViewModel\ByCodersTec.StoreDataImporter.ViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Message\Store\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,8 @@
 using ByCodersTec.StoreDataImporter.ViewModel;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
 {
@@ -20,6 +22,9 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
             var cnabLine = "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO Ó - MATRIZ";
 
             var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine, columns, zeroBased: true);
+
+            var formatedDate = Regex.Replace(docline.Date+docline.Time, @"(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", "$1-$2-$3 $4:$5:$6");
+            var date = DateTime.Parse(formatedDate);
 
             Assert.AreEqual(docline.Dealer, "MARIA JOSEFINA");
             Assert.AreEqual(docline.StoreName, "LOJA DO Ó - MATRIZ");
