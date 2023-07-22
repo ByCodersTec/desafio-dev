@@ -17,5 +17,6 @@
         public int End { get; set; }
         public int Lenght { get; set; }
         public string Description { get; set; }
+        public string ValidationPattern { get; set; }
     }
 }
