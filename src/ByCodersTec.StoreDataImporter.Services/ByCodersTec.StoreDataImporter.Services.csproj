@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Domain\ByCodersTec.StoreDataImporter.Domain.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Entities\ByCodersTec.StoreDataImporter.Entities.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Repository.EF\ByCodersTec.StoreDataImporter.Repository.EF.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.ViewModel\ByCodersTec.StoreDataImporter.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

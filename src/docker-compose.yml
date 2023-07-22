@@ -1,0 +1,79 @@
+version: '3.4'
+
+services:
+  bycoderstec.storedataimporter:
+    container_name: storeimporter-api
+    image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporter
+    build:
+      context: .
+      dockerfile: ByCodersTec.StoreDataImporter/Dockerfile
+    ports:
+        - "8080:80"
+    depends_on:
+        - db
+        - rabbitmq
+    environment:
+        - DB_HOST=db
+        - DB_NAME=StoreImporter
+        - DB_SA_PASSWORD=S3cur3P@ssW0rd!
+
+
+  #bycoderstec.storedataimporter.ui:
+  #  container_name: storeimporter-ui
+  #  image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporterui
+  #  build:
+  #    context: .
+  #    dockerfile: storedataimporterui/Dockerfile
+  #  ports:
+  #    - "8006:3000"
+  #  depends_on:
+  #      - bycoderstec.storedataimporter
+
+  bycoderstec.storedataimporter.workerservice:
+    container_name: storeimporter-worker
+    image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporterworkerservice
+    build:
+      context: .
+      dockerfile: ByCodersTec.StoreDataImporter.WorkerService/Dockerfile
+    depends_on:
+        - db
+        - rabbitmq
+    environment:
+        - DB_HOST=db
+        - DB_NAME=StoreImporter
+        - DB_SA_PASSWORD=S3cur3P@ssW0rd!
+        - Development=True
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+        - 8002:1433
+
+    environment:
+        SA_PASSWORD: "S3cur3P@ssW0rd!"
+        ACCEPT_EULA: "Y"
+
+  rabbitmq: # login guest:guest
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
+    ports:
+        - "4369:4369"
+        - "5671:5671"
+        - "5672:5672"
+        - "25672:25672"
+        - "15671:15671"
+        - "15672:15672"
+
+
+  bycoderstec.storedataimporter.ui:
+    image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporterui
+    ports:
+        - "8090:80"
+    depends_on:
+        - bycoderstec.storedataimporter
+    build:
+      context: .
+      dockerfile: ByCodersTec.StoreDataImporter.UI/Dockerfile
+

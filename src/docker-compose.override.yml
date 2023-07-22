@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  bycoderstec.storedataimporter:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+  bycoderstec.storedataimporter.ui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

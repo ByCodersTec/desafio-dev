@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ByCodersTec.StoreDataImporter.WorkerService": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
