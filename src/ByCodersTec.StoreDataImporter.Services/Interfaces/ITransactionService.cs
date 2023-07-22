@@ -11,5 +11,6 @@ namespace ByCodersTec.StoreDataImporter.Services.Interfaces
     {
         Task<AddTransactionsFromFileResponse> AddTransactionsCNABFromFile(AddTransactionsFromFileRequest request);
         AddTransactionResponse AddTransaction(AddTransactionRequest request);
+        GetTransactionsResponse GetTransactions(GetTransactionsRequest request);
     }
 }

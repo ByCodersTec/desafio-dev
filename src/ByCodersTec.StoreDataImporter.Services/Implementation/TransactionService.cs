@@ -113,5 +113,21 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
 
             return response;
         }
+
+        public GetTransactionsResponse GetTransactions(GetTransactionsRequest request)
+        {
+            var response = new GetTransactionsResponse();
+            var transactions = _transactionRepository.GetAll(filter: null, orderBy: null, includeProperties: "Store,Type", includeSecondProperties: null);
+            response.transaction = transactions.Select(t => new TransactionViewModel {
+                Card = t.Card,
+                Date=t.Date,
+                Document=t.Document,
+                Identifier=t.Identifier,
+                StoreName=t.Store.Name,
+                Type=t.Type.Code,
+                Value=t.Value
+            }).ToList();
+            return response;
+        }
     }
 }

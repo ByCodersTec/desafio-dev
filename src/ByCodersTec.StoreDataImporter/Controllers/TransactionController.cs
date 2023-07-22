@@ -32,5 +32,12 @@ namespace ByCodersTec.StoreDataImporter.Controllers
             await _transactionService.AddTransactionsCNABFromFile(new Services.Message.AddTransactionsFromFileRequest { file = file.OpenReadStream() });
             return ApiResponse<bool>.CreateResponse(true);
         }
+
+        [HttpGet("")]
+        public ApiResponse<List<TransactionViewModel>> GetAll()
+        {
+            var response = _transactionService.GetTransactions(new Services.Message.GetTransactionsRequest { }).transaction;
+            return ApiResponse<List<TransactionViewModel>>.CreateResponse(response);
+        }
     }
 }
