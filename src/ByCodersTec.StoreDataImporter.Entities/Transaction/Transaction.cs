@@ -10,6 +10,7 @@ namespace ByCodersTec.StoreDataImporter.Entities
         public string Document { get; set; }
         public string Card { get; set; }
         public Store Store { get; set; }
+        public string Identifier { get; set; }
 
         public override bool validate()
         {

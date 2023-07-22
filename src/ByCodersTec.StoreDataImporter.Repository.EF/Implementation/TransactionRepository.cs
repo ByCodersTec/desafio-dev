@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ByCodersTec.StoreDataImporter.Repository.EF.Implementation
 {
-    public class TransactioRepository : BaseRepository<Transaction, Guid>, ITransactionRepository
+    public class TransactionRepository : BaseRepository<Transaction, Guid>, ITransactionRepository
     {
-        public TransactioRepository(IUnitOfWork unit) : base(unit)
+        public TransactionRepository(IUnitOfWork unit) : base(unit)
         {
 
         }

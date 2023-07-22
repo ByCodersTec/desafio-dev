@@ -1,7 +1,7 @@
 ﻿using ByCodersTec.StoreDataImporter.ViewModel;
 using System.Reflection;
 
-namespace ByCodersTec.StoreDataImporter.DocParserService
+namespace ByCodersTec.StoreDataImporter.DocParserService.Implementation
 {
     public class DocParserService : IDocParserService
     {

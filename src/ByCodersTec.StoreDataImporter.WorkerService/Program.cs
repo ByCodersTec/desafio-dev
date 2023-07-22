@@ -38,14 +38,14 @@ consumer.Received += (model, ea) =>
 {
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
-    UserViewModel user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserViewModel>(message);
+    CnabImportViewModel cnabTransaction = Newtonsoft.Json.JsonConvert.DeserializeObject<CnabImportViewModel>(message);
 
-    StructureMapContainer.Instance.container.GetInstance<IUserService>().AddUser(new AddUserRequest { model = user });
+    StructureMapContainer.Instance.container.GetInstance<ITransactionService>().AddTransaction(new AddTransactionRequest { model = cnabTransaction });
 
     Console.WriteLine(" [x] Received from Rabbit: {0}", message);
 };
 channel.BasicConsume(queue: "hello",
-                        autoAck: false,
+                        autoAck: true,
                         consumer: consumer);
 
 Console.WriteLine("passed");

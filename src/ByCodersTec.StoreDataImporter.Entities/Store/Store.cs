@@ -5,6 +5,7 @@ namespace ByCodersTec.StoreDataImporter.Entities
     public class Store : BaseModel<Guid>
     {
         public string Name { get; set; }
+        public string LegalPerson { get; set; }
 
         public override bool validate()
         {

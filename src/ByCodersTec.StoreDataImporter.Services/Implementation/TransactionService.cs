@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ByCodersTec.StoreDataImporter.Services.Implementation
@@ -16,6 +17,8 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
     public class TransactionService : ITransactionService
     {
         readonly ITransactionRepository _transactionRepository;
+        readonly ITransactionTypeRepository _transactionTypeRepository;
+        readonly IStoreRepository _storeRepository; 
         readonly IDocDefinitionRepository _docDefinitionRepository;
         readonly IUnitOfWork _unitOfWork;
         readonly ByCodersTec.StoreDataImporter.Domain.IMessageService _messageService;
@@ -26,7 +29,9 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             ByCodersTec.StoreDataImporter.Domain.IMessageService messageService,
             IDocParserService docParserService,
             ITransactionRepository transactionRepository,
-            IDocDefinitionRepository docDefinitionRepository
+            IDocDefinitionRepository docDefinitionRepository,
+            IStoreRepository storeRepository,
+            ITransactionTypeRepository transactionTypeRepository
         )
         {
             _docDefinitionRepository = docDefinitionRepository;
@@ -34,6 +39,8 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             _unitOfWork = unitOfWork;
             _messageService = messageService;
             _docParserService = docParserService;
+            _storeRepository = storeRepository;
+            _transactionTypeRepository = transactionTypeRepository;
         }
 
         public async Task<AddTransactionsFromFileResponse> AddTransactionsCNABFromFile(AddTransactionsFromFileRequest request)
@@ -69,6 +76,41 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                     _messageService.Enqueue(item);
                 }
             }
+            return response;
+        }
+
+        public AddTransactionResponse AddTransaction(AddTransactionRequest request)
+        {
+            var response = new AddTransactionResponse();
+
+            var formatedDate = Regex.Replace(request.model.Date + request.model.Time, @"(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", "$1-$2-$3 $4:$5:$6");
+            var date = DateTime.Parse(formatedDate);
+
+            var transactionType = _transactionTypeRepository.GetAll(t => t.Code == request.model.Type).FirstOrDefault();
+            var store = _storeRepository.GetAll(s => s.Name == request.model.StoreName)?.FirstOrDefault();
+            if (store == null)
+            {
+                store = new Store {
+                    LegalPerson = request.model.Dealer,
+                    Name = request.model.StoreName
+                };
+                _storeRepository.Insert(store);
+            }
+
+            var transaction = new Transaction
+            {
+                Card = request.model.Card,
+                Date = date,
+                Document = request.model.Document,
+                Identifier = request.model.LineHash,
+                Type = transactionType,
+                Store = store,
+                Value = decimal.Parse(request.model.Val) / 100
+            };
+
+            if (!_transactionRepository.Exists(t => t.Identifier == transaction.Identifier))
+                _transactionRepository.Insert(transaction);
+
             return response;
         }
     }

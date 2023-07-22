@@ -10,5 +10,6 @@ namespace ByCodersTec.StoreDataImporter.Services.Interfaces
     public interface ITransactionService
     {
         Task<AddTransactionsFromFileResponse> AddTransactionsCNABFromFile(AddTransactionsFromFileRequest request);
+        AddTransactionResponse AddTransaction(AddTransactionRequest request);
     }
 }

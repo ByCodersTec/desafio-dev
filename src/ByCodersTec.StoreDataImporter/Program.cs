@@ -1,4 +1,5 @@
 using ByCodersTec.StoreDataImporter.DocParserService;
+using ByCodersTec.StoreDataImporter.DocParserService.Implementation;
 using ByCodersTec.StoreDataImporter.Entities;
 using ByCodersTec.StoreDataImporter.QueueService.Rabbit;
 using ByCodersTec.StoreDataImporter.Repository.EF;
@@ -23,7 +24,9 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Registering Repositories
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<ITransactionRepository, TransactioRepository>();
+builder.Services.AddTransient<ITransactionRepository, TransactionRepository>();
+builder.Services.AddTransient<ITransactionTypeRepository, TransactionTypeRepository>();
+builder.Services.AddTransient<IStoreRepository, StoreRepository>();
 builder.Services.AddTransient<IDocDefinitionRepository, DocDefinitionRepository>();
 builder.Services.AddTransient<IDocDefinitionColumnRepository, DocDefinitionColumnRepository>();
 

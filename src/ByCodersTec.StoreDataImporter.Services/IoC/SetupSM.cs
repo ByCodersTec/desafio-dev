@@ -1,4 +1,6 @@
-﻿using ByCodersTec.StoreDataImporter.Entities;
+﻿using ByCodersTec.StoreDataImporter.DocParserService;
+using ByCodersTec.StoreDataImporter.Entities;
+using ByCodersTec.StoreDataImporter.QueueService.Rabbit;
 using ByCodersTec.StoreDataImporter.Repository.EF;
 using ByCodersTec.StoreDataImporter.Repository.EF.Implementation;
 using ByCodersTec.StoreDataImporter.Services.Implementation;
@@ -21,7 +23,15 @@ namespace ByCodersTec.StoreDataImporter.Services
                 _.For<IAppContext>().Use<Repository.EF.AppContext>();
                 _.For<IUnitOfWork>().Use<UnitOfWork>();
                 _.For<IUserRepository>().Use<UserRepository>();
+                _.For<ITransactionRepository>().Use<TransactionRepository>();
+                _.For<ITransactionTypeRepository>().Use<TransactionTypeRepository>();
+                _.For<IStoreRepository>().Use<StoreRepository>();
+                _.For<IDocDefinitionRepository>().Use<DocDefinitionRepository>();
+                _.For<IDocDefinitionColumnRepository>().Use<DocDefinitionColumnRepository>();
                 _.For<IUserService>().Use<UserService>();
+                _.For<ITransactionService>().Use<TransactionService>();
+                _.For<ByCodersTec.StoreDataImporter.Domain.IMessageService>().Use<RabbitMessageService>();
+                _.For<IDocParserService>().Use<ByCodersTec.StoreDataImporter.DocParserService.Implementation.DocParserService>();
             });
         }
         private static StructureMapContainer instance = null;
