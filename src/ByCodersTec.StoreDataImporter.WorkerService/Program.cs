@@ -45,7 +45,7 @@ consumer.Received += (model, ea) =>
     Console.WriteLine(" [x] Received from Rabbit: {0}", message);
 };
 channel.BasicConsume(queue: "hello",
-                        autoAck: true,
+                        autoAck: false,
                         consumer: consumer);
 
 Console.WriteLine("passed");

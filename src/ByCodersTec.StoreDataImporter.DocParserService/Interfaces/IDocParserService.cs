@@ -10,5 +10,6 @@ namespace ByCodersTec.StoreDataImporter.DocParserService
     public interface IDocParserService
     {
         T ParseFileLinseFromString<T>(string fileLine, List<DocColumnViewModel> columns, bool zeroBased);
+        List<T> ParseFileLinseFromString<T>(List<string> fileLine, List<DocColumnViewModel> columns, bool zeroBased);
     }
 }

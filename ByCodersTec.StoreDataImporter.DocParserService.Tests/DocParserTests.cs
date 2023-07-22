@@ -2,6 +2,7 @@ using ByCodersTec.StoreDataImporter.ViewModel;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
@@ -23,8 +24,8 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
 
             var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine, columns, zeroBased: true);
 
-            var formatedDate = Regex.Replace(docline.Date+docline.Time, @"(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", "$1-$2-$3 $4:$5:$6");
-            var date = DateTime.Parse(formatedDate);
+            //var formatedDate = Regex.Replace(docline.Date+docline.Time, @"(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", "$1-$2-$3 $4:$5:$6");
+            //var date = DateTime.Parse(formatedDate);
 
             Assert.AreEqual(docline.Dealer, "MARIA JOSEFINA");
             Assert.AreEqual(docline.StoreName, "LOJA DO Ó - MATRIZ");
@@ -34,6 +35,31 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
             Assert.AreEqual(docline.Card, "3123****7687");
             Assert.AreEqual(docline.Time, "145607");
             Assert.AreEqual(docline.Document, "55641815063");
+        }
+
+        [Test]
+        public void Should_Parse_2_CNAB_Document_Lines()
+        {
+            var columns = GetCNABColumns();
+            var cnabLine = new string[] {
+                "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO Ó - MATRIZ",
+                "3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO"
+            };
+
+            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine.ToList(), columns, zeroBased: true);
+
+            //var formatedDate = Regex.Replace(docline.Date + docline.Time, @"(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", "$1-$2-$3 $4:$5:$6");
+            //var date = DateTime.Parse(formatedDate);
+
+            Assert.AreEqual(2, docline.Count);
+            Assert.AreEqual(docline[0].Dealer, "MARIA JOSEFINA");
+            Assert.AreEqual(docline[0].StoreName, "LOJA DO Ó - MATRIZ");
+            Assert.AreEqual(docline[0].Type, 5);
+            Assert.AreEqual(docline[0].Date, "20190301");
+            Assert.AreEqual(docline[0].Val, "0000013200");
+            Assert.AreEqual(docline[0].Card, "3123****7687");
+            Assert.AreEqual(docline[0].Time, "145607");
+            Assert.AreEqual(docline[0].Document, "55641815063");
         }
 
         private List<DocColumnViewModel> GetCNABColumns() {

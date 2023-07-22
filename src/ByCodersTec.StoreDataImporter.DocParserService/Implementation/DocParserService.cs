@@ -23,5 +23,20 @@ namespace ByCodersTec.StoreDataImporter.DocParserService
 
             return response;
         }
+
+        public List<T> ParseFileLinseFromString<T>(List<string> fileLine, List<DocColumnViewModel> columns, bool zeroBased)
+        {
+            var listType = typeof(List<>);
+            var constructedListType = listType.MakeGenericType(typeof(T));
+
+            List<T> response = (List<T>)Activator.CreateInstance(constructedListType);
+
+            foreach (var item in fileLine)
+            {
+                response.Add(ParseFileLinseFromString<T>(item, columns, zeroBased));
+            }
+
+            return response;
+        }
     }
 }
