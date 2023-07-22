@@ -39,7 +39,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
         public async Task<AddTransactionsFromFileResponse> AddTransactionsCNABFromFile(AddTransactionsFromFileRequest request)
         {
             var response = new AddTransactionsFromFileResponse();
-            var result = new StringBuilder();
+            var fileLines = new List<string>();
 
             var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", null, "Columns", null)?.FirstOrDefault()?.Columns;
             if (columns?.Any() == true)
@@ -47,12 +47,20 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                 using (var reader = new StreamReader(request.file))
                 {
                     while (reader.Peek() >= 0)
-                        result.AppendLine(await reader.ReadLineAsync());
+                        fileLines.Add(await reader.ReadLineAsync());
                 }
-                var fileLines = result.ToString();
-                var linesToProcess = _docParserService.ParseFileLinseFromString<List<CnabImportViewModel>>(
+
+                var linesToProcess = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(
                     fileLines,
-                    columns.Select(c => new DocColumnViewModel { }).ToList(),
+                    columns.Select(c => new DocColumnViewModel {
+                        ClassPropName = c.ClassPropName,
+                        Description = c.Description,
+                        End = c.End,
+                        Lenght = c.Lenght,
+                        Name = c.Name,
+                        Start = c.Start,
+                        Type = (DocDefinitionColumnTypeEnumViewModel)c.Type
+                    }).ToList(),
                     zeroBased: true
                 );
 

@@ -40,7 +40,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=1,
                         Start=1,
                         Lenght=1,
-                        Type=DocDefinitionColumnTypeEnum.Int
+                        Type=DocDefinitionColumnTypeEnum.Int,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Date",
                         Name = "Data",
@@ -48,7 +49,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=9,
                         Start=2,
                         Lenght=8,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Val",
                         Name = "Valor",
@@ -56,7 +58,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=19,
                         Start=10,
                         Lenght=10,
-                        Type=DocDefinitionColumnTypeEnum.Decimal
+                        Type=DocDefinitionColumnTypeEnum.Decimal,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Document",
                         Name = "CPF",
@@ -64,7 +67,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=30,
                         Start=20,
                         Lenght=11,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Card",
                         Name = "Cartão",
@@ -72,7 +76,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=42,
                         Start=31,
                         Lenght=12,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Time",
                         Name = "Hora",
@@ -80,7 +85,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=48,
                         Start=43,
                         Lenght=6,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "Dealer",
                         Name = "Dono da loja",
@@ -88,7 +94,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=62,
                         Start=49,
                         Lenght=14,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     },new DocDefinitionColumn{
                         ClassPropName = "StoreName",
                         Name = "Nome loja",
@@ -96,7 +103,8 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                         End=81,
                         Start=63,
                         Lenght=19,
-                        Type=DocDefinitionColumnTypeEnum.String
+                        Type=DocDefinitionColumnTypeEnum.String,
+                        ValidationPattern = ""
                     }
                 };
                 defs = new DocDefinition
@@ -114,7 +122,7 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
                     new TransactionType{
                         Code = 1,
                         Description = "Débito",
-                        Nature = TransactionNature.Entrada
+                        Nature = TransactionNature.Entrada,
                     },new TransactionType{
                         Code = 2,
                         Description = "Boleto",
