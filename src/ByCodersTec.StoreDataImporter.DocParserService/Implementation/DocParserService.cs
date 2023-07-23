@@ -1,5 +1,6 @@
 ﻿using ByCodersTec.StoreDataImporter.ViewModel;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ByCodersTec.StoreDataImporter.DocParserService.Implementation
 {
@@ -18,6 +19,11 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Implementation
                     lenght = fileLine.Length - item.Start + 1;
 
                 object value = fileLine.Substring(item.Start - 1, lenght).Trim();
+                if (!string.IsNullOrEmpty(item.ValidationPattern) && !Regex.IsMatch(value.ToString(), item.ValidationPattern))
+                {
+                    throw new Exception("Validation Error");
+                }
+
                 propertyInfo.SetValue(response, Convert.ChangeType(value, propertyInfo.PropertyType), null);
             }
 

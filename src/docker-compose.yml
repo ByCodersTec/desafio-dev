@@ -17,6 +17,23 @@ services:
         - DB_NAME=StoreImporter
         - DB_SA_PASSWORD=S3cur3P@ssW0rd!
 
+  app:
+    container_name: app-ui
+    image: app-ui
+    build:
+      context: ./storedataimporter_ui
+      dockerfile: ./Dockerfile
+      target: development
+    volumes:
+       - ./storedataimporter_ui:/app
+       - /app/node_modules
+    #restart: always
+    depends_on:
+        - bycoderstec.storedataimporter
+    stdin_open: true
+    ports:
+      - 3000:3000
+
   bycoderstec.storedataimporter.workerservice:
     container_name: storeimporter-worker
     image: ${DOCKER_REGISTRY-}bycoderstecstoredataimporterworkerservice
