@@ -7,6 +7,8 @@ using ByCodersTec.StoreDataImporter.Repository.EF.Implementation;
 using ByCodersTec.StoreDataImporter.Services.Implementation;
 using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,9 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
 builder.Services.AddTransient<IDocParserService, DocParserService>();
 builder.Services.AddTransient<ByCodersTec.StoreDataImporter.Domain.IMessageService, RabbitMessageService>();
+
+builder.Services.AddMediatR(typeof(ByCodersTec.StoreDataImporter.CQRS.Handlers.GetUsersHandler).Assembly);
+//builder.Services.AddMediatR(typeof(AddProductCommand));
 
 var app = builder.Build();
 

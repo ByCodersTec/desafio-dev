@@ -1,4 +1,5 @@
-﻿using ByCodersTec.StoreDataImporter.ViewModel;
+﻿using ByCodersTec.StoreDataImporter.Domain;
+using ByCodersTec.StoreDataImporter.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace ByCodersTec.StoreDataImporter.Services.Message
 {
     public class GetTransactionsResponse
     {
-        public List<TransactionViewModel> transaction { get; set; }
+        public PagedList<TransactionViewModel> transaction { get; set; }
     }
 }

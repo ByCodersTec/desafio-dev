@@ -1,7 +1,9 @@
+using ByCodersTec.StoreDataImporter.CQRS.Queries;
 using ByCodersTec.StoreDataImporter.Domain;
 using ByCodersTec.StoreDataImporter.Entities;
 using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using ByCodersTec.StoreDataImporter.ViewModel;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByCodersTec.StoreDataImporter.Controllers
@@ -13,22 +15,25 @@ namespace ByCodersTec.StoreDataImporter.Controllers
         private readonly ILogger<UsersController> _logger;
         readonly IUserService _userService;
         readonly IMessageService _messageService;
+        private readonly IMediator _mediator;
         public UsersController(
             ILogger<UsersController> logger,
             IUserService userService,
-            IMessageService messageService
+            IMessageService messageService,
+            IMediator mediator
         )
         {
             _logger = logger;
             _userService = userService;
             _messageService = messageService;
+            _mediator = mediator;
         }
 
         [HttpGet("")]
-        public ApiResponse<List<UserViewModel>> GetUsers()
+        public async Task<ApiResponse<List<UserViewModel>>> GetUsers()
         {
-            var user = _userService.GetUsers(new Services.Message.GetUsersRequest { }).list;
-            return ApiResponse<List<UserViewModel>>.CreateResponse(user);
+            var response = await _mediator.Send(new GetUsersQuery());
+            return ApiResponse<List<UserViewModel>>.CreateResponse(response);
         }
 
         [HttpGet("{id}")]

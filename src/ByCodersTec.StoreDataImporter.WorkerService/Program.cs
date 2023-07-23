@@ -19,7 +19,7 @@ if (Boolean.TryParse(Environment.GetEnvironmentVariable("Development"), out bool
     }
 }
 
-Task.Delay(1000).Wait();
+Task.Delay(5000).Wait();
 Console.WriteLine("Consuming Queue Now");
 
 ConnectionFactory factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };

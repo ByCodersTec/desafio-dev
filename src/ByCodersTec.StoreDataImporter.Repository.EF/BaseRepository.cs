@@ -134,6 +134,35 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
             }
         }
 
+        public PagedList<T> GetAll(Expression<Func<T, bool>> filter, PagingRequestModel paging, string includeProperties, string includeSecondProperties)
+        {
+            IQueryable<T> query = this.dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    if (!string.IsNullOrEmpty(includeSecondProperties))
+                    {
+                        query = query.Include(includeProperty).Include(includeSecondProperties);
+                    }
+                    else
+                    {
+                        query = query.Include(includeProperty);
+                    }
+                }
+            }
+
+            var result = query.OrderByDynamic<T>(paging.orderBy, paging.direction).Paging<T>(paging.PageSize, paging.PageNumber).ToList();
+            return new PagedList<T>(result, query.Count(), paging.PageNumber, paging.PageSize);
+        }
+
         public Dictionary<string, string> GetAuditNames(dynamic dynamicObject)
         {
             throw new NotImplementedException();
@@ -141,12 +170,12 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
 
         public IEnumerable<T> GetAll()
         {
-            return this.GetAll(null, null, null, null);
+            return this.GetAll(filter: null, orderBy:null, null, null);
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter)
         {
-            return this.GetAll(filter, null, null, null);
+            return this.GetAll(filter, orderBy: null, null, null);
         }
 
         public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
@@ -156,7 +185,7 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
 
         public IEnumerable<T> GetAll(string includeProperties, string includeSecondProperties)
         {
-            return this.GetAll(null, null, includeSecondProperties, null);
+            return this.GetAll(null, orderBy: null, includeSecondProperties, null);
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)

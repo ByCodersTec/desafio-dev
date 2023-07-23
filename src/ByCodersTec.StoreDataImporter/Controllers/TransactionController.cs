@@ -3,6 +3,7 @@ using ByCodersTec.StoreDataImporter.Entities;
 using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using ByCodersTec.StoreDataImporter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text;
 
 namespace ByCodersTec.StoreDataImporter.Controllers
@@ -34,10 +35,10 @@ namespace ByCodersTec.StoreDataImporter.Controllers
         }
 
         [HttpGet("")]
-        public ApiResponse<List<TransactionViewModel>> GetAll()
+        public ApiResponse<PagedResult<TransactionViewModel>> GetAll([FromQuery] PagingRequestModel paging)
         {
-            var response = _transactionService.GetTransactions(new Services.Message.GetTransactionsRequest { }).transaction;
-            return ApiResponse<List<TransactionViewModel>>.CreateResponse(response);
+            var response = _transactionService.GetTransactions(new Services.Message.GetTransactionsRequest { Paging=paging }).transaction;
+            return ApiResponse<PagedResult<TransactionViewModel>>.CreateResponse(new PagedResult<TransactionViewModel>(response));
         }
     }
 }

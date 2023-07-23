@@ -1,4 +1,5 @@
 ﻿using ByCodersTec.StoreDataImporter.DocParserService;
+using ByCodersTec.StoreDataImporter.Domain;
 using ByCodersTec.StoreDataImporter.Entities;
 using ByCodersTec.StoreDataImporter.Repository.EF;
 using ByCodersTec.StoreDataImporter.Services.Interfaces;
@@ -20,12 +21,12 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
         readonly ITransactionTypeRepository _transactionTypeRepository;
         readonly IStoreRepository _storeRepository; 
         readonly IDocDefinitionRepository _docDefinitionRepository;
-        readonly IUnitOfWork _unitOfWork;
+        readonly Repository.EF.IUnitOfWork _unitOfWork;
         readonly ByCodersTec.StoreDataImporter.Domain.IMessageService _messageService;
         readonly IDocParserService _docParserService;
         public TransactionService(
             IUserRepository userRepository,
-            IUnitOfWork unitOfWork,
+            Repository.EF.IUnitOfWork unitOfWork,
             ByCodersTec.StoreDataImporter.Domain.IMessageService messageService,
             IDocParserService docParserService,
             ITransactionRepository transactionRepository,
@@ -48,7 +49,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             var response = new AddTransactionsFromFileResponse();
             var fileLines = new List<string>();
 
-            var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", null, "Columns", null)?.FirstOrDefault()?.Columns;
+            var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", orderBy: null, "Columns", null)?.FirstOrDefault()?.Columns;
             if (columns?.Any() == true)
             {
                 using (var reader = new StreamReader(request.file))
@@ -117,16 +118,19 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
         public GetTransactionsResponse GetTransactions(GetTransactionsRequest request)
         {
             var response = new GetTransactionsResponse();
-            var transactions = _transactionRepository.GetAll(filter: null, orderBy: null, includeProperties: "Store,Type", includeSecondProperties: null);
-            response.transaction = transactions.Select(t => new TransactionViewModel {
+            var transactions = _transactionRepository.GetAll(filter: null, request.Paging, includeProperties: "Store,Type", includeSecondProperties: null);
+            var pagedResponse = new PagedList<TransactionViewModel>(transactions.Select(t => new TransactionViewModel
+            {
                 Card = t.Card,
-                Date=t.Date,
-                Document=t.Document,
-                Identifier=t.Identifier,
-                StoreName=t.Store.Name,
-                Type=t.Type.Code,
-                Value=t.Value
-            }).ToList();
+                Date = t.Date,
+                Document = t.Document,
+                Identifier = t.Identifier,
+                StoreName = t.Store.Name,
+                Type = t.Type.Code,
+                Value = t.Value
+            }).ToList(), transactions.TotalCount, transactions.CurrentPage, transactions.PageSize);
+
+            response.transaction = pagedResponse;
             return response;
         }
     }

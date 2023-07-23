@@ -21,7 +21,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Implementation
                 object value = fileLine.Substring(item.Start - 1, lenght).Trim();
                 if (!string.IsNullOrEmpty(item.ValidationPattern) && !Regex.IsMatch(value.ToString(), item.ValidationPattern))
                 {
-                    throw new Exception("Validation Error");
+                    throw new Exception("Error validating");
                 }
 
                 propertyInfo.SetValue(response, Convert.ChangeType(value, propertyInfo.PropertyType), null);
