@@ -1,3 +1,5 @@
+using ByCodersTec.StoreDataImporter.DocParserService.Message;
+using ByCodersTec.StoreDataImporter.Domain;
 using ByCodersTec.StoreDataImporter.Services;
 using ByCodersTec.StoreDataImporter.ViewModel;
 using NUnit.Framework;
@@ -22,16 +24,25 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
         {
             var columns = GetCNABColumns();
             var cnabLine = "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO � - MATRIZ";
-            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine, columns, zeroBased: true);
+            var request = new ParseDocLineRequest
+            {
+                DocLine = new ViewModel.ParseDocLineViewModel
+                {
+                    LineContent = cnabLine,
+                    Columns = columns.ToList<IParseDocColumn>(),
+                    ZeroBased = true
+                }
+            };
+            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(request);
 
-            Assert.AreEqual(docline.Dealer, "MARIA JOSEFINA");
-            Assert.AreEqual(docline.StoreName, "LOJA DO � - MATRIZ");
-            Assert.AreEqual(docline.Type, 5);
-            Assert.AreEqual(docline.Date, "20190301");
-            Assert.AreEqual(docline.Val, "0000013200");
-            Assert.AreEqual(docline.Card, "3123****7687");
-            Assert.AreEqual(docline.Time, "145607");
-            Assert.AreEqual(docline.Document, "55641815063");
+            Assert.AreEqual(docline.result.ParsedLineItem.Dealer, "MARIA JOSEFINA");
+            Assert.AreEqual(docline.result.ParsedLineItem.StoreName, "LOJA DO � - MATRIZ");
+            Assert.AreEqual(docline.result.ParsedLineItem.Type, 5);
+            Assert.AreEqual(docline.result.ParsedLineItem.Date, "20190301");
+            Assert.AreEqual(docline.result.ParsedLineItem.Val, "0000013200");
+            Assert.AreEqual(docline.result.ParsedLineItem.Card, "3123****7687");
+            Assert.AreEqual(docline.result.ParsedLineItem.Time, "145607");
+            Assert.AreEqual(docline.result.ParsedLineItem.Document, "55641815063");
         }
 
         [Test]
@@ -42,17 +53,34 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                 "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO � - MATRIZ",
                 "3201903010000014200096206760174753****3153153453JO�O MACEDO   BAR DO JO�O"
             };
-            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine.ToList(), columns, zeroBased: true);
+            var request = new ParseDocRequest
+            {
+                DocLine = new List<ViewModel.ParseDocLineViewModel> {
+                    new ViewModel.ParseDocLineViewModel
+                {
+                    LineContent = cnabLine[0],
+                    Columns = columns.ToList<IParseDocColumn>(),
+                    ZeroBased = true
+                },
+                    new ViewModel.ParseDocLineViewModel
+                {
+                    LineContent = cnabLine[1],
+                    Columns = columns.ToList<IParseDocColumn>(),
+                    ZeroBased = true
+                }
+                }
+            };
+            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(request);
 
-            Assert.AreEqual(2, docline.Count);
-            Assert.AreEqual(docline[0].Dealer, "MARIA JOSEFINA");
-            Assert.AreEqual(docline[0].StoreName, "LOJA DO � - MATRIZ");
-            Assert.AreEqual(docline[0].Type, 5);
-            Assert.AreEqual(docline[0].Date, "20190301");
-            Assert.AreEqual(docline[0].Val, "0000013200");
-            Assert.AreEqual(docline[0].Card, "3123****7687");
-            Assert.AreEqual(docline[0].Time, "145607");
-            Assert.AreEqual(docline[0].Document, "55641815063");
+            Assert.AreEqual(2, docline.result.Lines.Count);
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Dealer, "MARIA JOSEFINA");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.StoreName, "LOJA DO � - MATRIZ");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Type, 5);
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Date, "20190301");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Val, "0000013200");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Card, "3123****7687");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Time, "145607");
+            Assert.AreEqual(docline.result.Lines[0].ParsedLineItem.Document, "55641815063");
         }
 
         [Test]
@@ -60,16 +88,25 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
         {
             var columns = GetCNABColumns();
             var cnabLine = "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO � - MATRIZ";
-            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine, columns, zeroBased: true);
+            var request = new ParseDocLineRequest
+            {
+                DocLine = new ViewModel.ParseDocLineViewModel
+                {
+                    LineContent = cnabLine,
+                    Columns = columns.ToList<IParseDocColumn>(),
+                    ZeroBased = true
+                }
+            };
+            var docline = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(request);
 
-            Assert.AreEqual(docline.Dealer, "MARIA JOSEFINA");
-            Assert.AreEqual(docline.StoreName, "LOJA DO � - MATRIZ");
-            Assert.AreEqual(docline.Type, 5);
-            Assert.AreEqual(docline.Date, "20190301");
-            Assert.AreEqual(docline.Val, "0000013200");
-            Assert.AreEqual(docline.Card, "3123****7687");
-            Assert.AreEqual(docline.Time, "145607");
-            Assert.AreEqual(docline.Document, "55641815063");
+            Assert.AreEqual(docline.result.ParsedLineItem.Dealer, "MARIA JOSEFINA");
+            Assert.AreEqual(docline.result.ParsedLineItem.StoreName, "LOJA DO � - MATRIZ");
+            Assert.AreEqual(docline.result.ParsedLineItem.Type, 5);
+            Assert.AreEqual(docline.result.ParsedLineItem.Date, "20190301");
+            Assert.AreEqual(docline.result.ParsedLineItem.Val, "0000013200");
+            Assert.AreEqual(docline.result.ParsedLineItem.Card, "3123****7687");
+            Assert.AreEqual(docline.result.ParsedLineItem.Time, "145607");
+            Assert.AreEqual(docline.result.ParsedLineItem.Document, "55641815063");
         }
 
         [Test]
@@ -77,12 +114,23 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
         {
             var columns = GetCNABColumns();
             var cnabLine = "5211903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO � - MATRIZ";
-            var ex = Assert.Throws<Exception>(() => _docParserService.ParseFileLinseFromString<CnabImportViewModel>(cnabLine, columns, zeroBased: true));
+            var request = new ParseDocLineRequest
+            {
+                DocLine = new ViewModel.ParseDocLineViewModel
+                {
+                    LineContent = cnabLine,
+                    Columns = columns.ToList<IParseDocColumn>(),
+                    ZeroBased = true
+                }
+            };
+            var response = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(request);
 
-            Assert.AreEqual("Error validating", ex.Message);
+            Assert.AreEqual(false, response.result.IsValid);
+            Assert.AreEqual("21190301", response.result.ParsedLineItem.Date);
         }
 
-        private List<DocColumnViewModel> GetCNABColumns() {
+        private List<DocColumnViewModel> GetCNABColumns()
+        {
             return new List<DocColumnViewModel>() {
                     new DocColumnViewModel{
                         ClassPropName = "Type",
@@ -90,7 +138,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Tipo da transa��o",
                         End=1,
                         Start=1,
-                        Lenght=1,
+                        Length=1,
                         Type=DocDefinitionColumnTypeEnumViewModel.Int
                     },new DocColumnViewModel{
                         ClassPropName = "Date",
@@ -98,7 +146,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Data da ocorr�ncia",
                         End=9,
                         Start=2,
-                        Lenght=8,
+                        Length=8,
                         Type=DocDefinitionColumnTypeEnumViewModel.String,
                         ValidationPattern=@"(19|20)\d{2}(0[1-9]|1[1,2])(0[1-9]|[12][0-9]|3[01])"
                     },new DocColumnViewModel{
@@ -107,7 +155,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Valor da movimenta��o. Obs. O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normaliz�-lo.",
                         End=19,
                         Start=10,
-                        Lenght=10,
+                        Length=10,
                         Type=DocDefinitionColumnTypeEnumViewModel.Decimal
                     },new DocColumnViewModel{
                         ClassPropName = "Document",
@@ -115,7 +163,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "CPF do benefici�rio",
                         End=30,
                         Start=20,
-                        Lenght=11,
+                        Length=11,
                         Type=DocDefinitionColumnTypeEnumViewModel.String
                     },new DocColumnViewModel{
                         ClassPropName = "Card",
@@ -123,7 +171,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Cart�o utilizado na transa��o",
                         End=42,
                         Start=31,
-                        Lenght=12,
+                        Length=12,
                         Type=DocDefinitionColumnTypeEnumViewModel.String
                     },new DocColumnViewModel{
                         ClassPropName = "Time",
@@ -131,7 +179,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Hora da ocorr�ncia atendendo ao fuso de UTC-3",
                         End=48,
                         Start=43,
-                        Lenght=6,
+                        Length=6,
                         Type=DocDefinitionColumnTypeEnumViewModel.String
                     },new DocColumnViewModel{
                         ClassPropName = "Dealer",
@@ -139,7 +187,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Nome do representante da loja",
                         End=62,
                         Start=49,
-                        Lenght=14,
+                        Length=14,
                         Type=DocDefinitionColumnTypeEnumViewModel.String
                     },new DocColumnViewModel{
                         ClassPropName = "StoreName",
@@ -147,7 +195,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
                         Description = "Nome da loja",
                         End=81,
                         Start=63,
-                        Lenght=19,
+                        Length=19,
                         Type=DocDefinitionColumnTypeEnumViewModel.String
                     }
                 };

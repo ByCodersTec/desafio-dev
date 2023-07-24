@@ -19,7 +19,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
     {
         readonly ITransactionRepository _transactionRepository;
         readonly ITransactionTypeRepository _transactionTypeRepository;
-        readonly IStoreRepository _storeRepository; 
+        readonly IStoreRepository _storeRepository;
         readonly IDocDefinitionRepository _docDefinitionRepository;
         readonly Repository.EF.IUnitOfWork _unitOfWork;
         readonly ByCodersTec.StoreDataImporter.Domain.IMessageService _messageService;
@@ -58,23 +58,26 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                         fileLines.Add(await reader.ReadLineAsync());
                 }
 
-                var linesToProcess = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(
-                    fileLines,
-                    columns.Select(c => new DocColumnViewModel {
-                        ClassPropName = c.ClassPropName,
-                        Description = c.Description,
-                        End = c.End,
-                        Lenght = c.Lenght,
-                        Name = c.Name,
-                        Start = c.Start,
-                        Type = (DocDefinitionColumnTypeEnumViewModel)c.Type
-                    }).ToList(),
-                    zeroBased: true
-                );
+                var linesToProcess = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(new DocParserService.Message.ParseDocRequest {
+                    DocLine = fileLines.Select(fl => new DocParserService.ViewModel.ParseDocLineViewModel {
+                        Columns = columns.Select(c => new DocColumnViewModel
+                        {
+                            ClassPropName = c.ClassPropName,
+                            Description = c.Description,
+                            End = c.End,
+                            Length = c.Lenght,
+                            Name = c.Name,
+                            Start = c.Start,
+                            Type = (DocDefinitionColumnTypeEnumViewModel)c.Type
+                        }).ToList<IParseDocColumn>(),
+                        LineContent = fl,
+                        ZeroBased = true
+                    }).ToList()
+                });
 
-                foreach (var item in linesToProcess)
+                foreach (var item in linesToProcess.result.Lines)
                 {
-                    _messageService.Enqueue(item);
+                    _messageService.Enqueue(item.ParsedLineItem);
                 }
             }
             return response;
@@ -91,7 +94,8 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             var store = _storeRepository.GetAll(s => s.Name == request.model.StoreName)?.FirstOrDefault();
             if (store == null)
             {
-                store = new Store {
+                store = new Store
+                {
                     LegalPerson = request.model.Dealer,
                     Name = request.model.StoreName
                 };

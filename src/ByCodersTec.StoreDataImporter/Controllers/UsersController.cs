@@ -42,12 +42,5 @@ namespace ByCodersTec.StoreDataImporter.Controllers
             var user = _userService.GetUser(new Services.Message.GetUserRequest { Id = id }).user;
             return ApiResponse<UserViewModel>.CreateResponse(user);
         }
-
-        [HttpPost("enqueue")]
-        public ApiResponse<bool> EnqueueUser([FromBody] UserViewModel model)
-        {
-            var userenqueued = _messageService.Enqueue(model);
-            return ApiResponse<bool>.CreateResponse(userenqueued);
-        }
     }
 }

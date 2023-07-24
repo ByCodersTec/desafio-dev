@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ByCodersTec.StoreDataImporter.DocParserService\ByCodersTec.StoreDataImporter.DocParserService.csproj" />
-    <ProjectReference Include="..\src\ByCodersTec.StoreDataImporter.Services\ByCodersTec.StoreDataImporter.Services.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.DocParserService\ByCodersTec.StoreDataImporter.DocParserService.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Services\ByCodersTec.StoreDataImporter.Services.csproj" />
   </ItemGroup>
 
 </Project>
