@@ -41,6 +41,19 @@ builder.Services.AddTransient<ByCodersTec.StoreDataImporter.Domain.IMessageServi
 builder.Services.AddMediatR(typeof(ByCodersTec.StoreDataImporter.CQRS.Handlers.GetUsersHandler).Assembly);
 //builder.Services.AddMediatR(typeof(AddProductCommand));
 
+var MyAllowedOrigins = "_myCORS";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowedOrigins,
+            policy =>
+            {
+                policy.WithOrigins("*")
+                 .AllowAnyHeader()
+                 .AllowAnyMethod();
+            });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,5 +73,5 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors(MyAllowedOrigins);
 app.Run();

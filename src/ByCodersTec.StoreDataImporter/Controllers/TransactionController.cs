@@ -1,3 +1,4 @@
+using ByCodersTec.StoreDataImporter.DocParserService.ViewModel;
 using ByCodersTec.StoreDataImporter.Domain;
 using ByCodersTec.StoreDataImporter.Entities;
 using ByCodersTec.StoreDataImporter.Services.Interfaces;
@@ -32,6 +33,13 @@ namespace ByCodersTec.StoreDataImporter.Controllers
         {
             await _transactionService.AddTransactionsCNABFromFile(new Services.Message.AddTransactionsFromFileRequest { file = file.OpenReadStream() });
             return ApiResponse<bool>.CreateResponse(true);
+        }
+
+        [HttpPost("validate-cnae-document")]
+        public async Task<ApiResponse<DocParseResultViewModel<CnabImportViewModel>>> ValidateDoc(IFormFile file)
+        {
+            var result = await _transactionService.ValidateFile(new Services.Message.ValidateTransactionsFromFileRequest { file = file.OpenReadStream() });
+            return ApiResponse<DocParseResultViewModel<CnabImportViewModel>>.CreateResponse(result.response);
         }
 
         [HttpGet("")]

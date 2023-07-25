@@ -55,7 +55,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Tests
             };
             var request = new ParseDocRequest
             {
-                DocLine = new List<ViewModel.ParseDocLineViewModel> {
+                DocLines = new List<ViewModel.ParseDocLineViewModel> {
                     new ViewModel.ParseDocLineViewModel
                 {
                     LineContent = cnabLine[0],

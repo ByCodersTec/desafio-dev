@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ByCodersTec.StoreDataImporter.ViewModel": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64308;http://localhost:64309"
+    }
+  }
+}

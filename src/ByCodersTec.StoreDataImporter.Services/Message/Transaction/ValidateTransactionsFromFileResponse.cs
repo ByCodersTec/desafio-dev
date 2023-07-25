@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByCodersTec.StoreDataImporter.DocParserService.Message
+namespace ByCodersTec.StoreDataImporter.Services.Message
 {
-    public class ParseDocRequest
+    public class ValidateTransactionsFromFileResponse
     {
-        public List<ParseDocLineViewModel> DocLines { get; set; }
+        public DocParseResultViewModel<CnabImportViewModel> response { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                 }
 
                 var linesToProcess = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(new DocParserService.Message.ParseDocRequest {
-                    DocLine = fileLines.Select(fl => new DocParserService.ViewModel.ParseDocLineViewModel {
+                    DocLines = fileLines.Select(fl => new DocParserService.ViewModel.ParseDocLineViewModel {
                         Columns = columns.Select(c => new DocColumnViewModel
                         {
                             ClassPropName = c.ClassPropName,
@@ -79,6 +79,42 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                 {
                     _messageService.Enqueue(item.ParsedLineItem);
                 }
+            }
+            return response;
+        }
+
+        public async Task<ValidateTransactionsFromFileResponse> ValidateFile(ValidateTransactionsFromFileRequest request)
+        {
+            var response = new ValidateTransactionsFromFileResponse();
+            var fileLines = new List<string>();
+
+            var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", orderBy: null, "Columns", null)?.FirstOrDefault()?.Columns;
+            if (columns?.Any() == true)
+            {
+                using (var reader = new StreamReader(request.file))
+                {
+                    while (reader.Peek() >= 0)
+                        fileLines.Add(await reader.ReadLineAsync());
+                }
+
+                response.response = _docParserService.ParseFileLinseFromString<CnabImportViewModel>(new DocParserService.Message.ParseDocRequest
+                {
+                    DocLines = fileLines.Select(fl => new DocParserService.ViewModel.ParseDocLineViewModel
+                    {
+                        Columns = columns.Select(c => new DocColumnViewModel
+                        {
+                            ClassPropName = c.ClassPropName,
+                            Description = c.Description,
+                            End = c.End,
+                            Length = c.Lenght,
+                            Name = c.Name,
+                            Start = c.Start,
+                            Type = (DocDefinitionColumnTypeEnumViewModel)c.Type
+                        }).ToList<IParseDocColumn>(),
+                        LineContent = fl,
+                        ZeroBased = true
+                    }).ToList()
+                }).result;
             }
             return response;
         }

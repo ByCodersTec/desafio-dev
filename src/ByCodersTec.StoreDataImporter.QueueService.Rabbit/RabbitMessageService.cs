@@ -23,7 +23,7 @@ namespace ByCodersTec.StoreDataImporter.QueueService.Rabbit
             _factory.Password = "guest";
             _conn = _factory.CreateConnection();
             _channel = _conn.CreateModel();
-            _channel.QueueDeclare(queue: "hello",
+            _channel.QueueDeclare(queue: "transaction",
                                     durable: false,
                                     exclusive: false,
                                     autoDelete: false,
@@ -33,7 +33,7 @@ namespace ByCodersTec.StoreDataImporter.QueueService.Rabbit
         {
             var body = Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(messageString));
             _channel.BasicPublish(exchange: "",
-                                routingKey: "hello",
+                                routingKey: "transaction",
                                 basicProperties: null,
                                 body: body);
             Console.WriteLine(" [x] Published {0} to RabbitMQ", messageString);

@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: ByCodersTec.StoreDataImporter/Dockerfile
     ports:
-        - "8080:80"
+        - 8080:6002
     depends_on:
         - db
         - rabbitmq
@@ -16,18 +16,19 @@ services:
         - DB_HOST=db
         - DB_NAME=StoreImporter
         - DB_SA_PASSWORD=S3cur3P@ssW0rd!
+        - ServicePort=8080
 
   app:
     container_name: app-ui
     image: app-ui
     build:
-      context: ./storedataimporter_ui
+      context: ./storedataimporterui
       dockerfile: ./Dockerfile
       target: development
     volumes:
-       - ./storedataimporter_ui:/app
+       - ./storedataimporterui:/app
        - /app/node_modules
-    #restart: always
+    restart: always
     depends_on:
         - bycoderstec.storedataimporter
     stdin_open: true

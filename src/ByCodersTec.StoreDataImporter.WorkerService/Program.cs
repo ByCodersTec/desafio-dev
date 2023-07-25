@@ -1,53 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-using ByCodersTec.StoreDataImporter.Services;
-using ByCodersTec.StoreDataImporter.Services.Interfaces;
-using ByCodersTec.StoreDataImporter.Services.Message;
-using ByCodersTec.StoreDataImporter.ViewModel;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System.Text;
+﻿using ByCodersTec.StoreDataImporter.WorkerService;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-Console.WriteLine("Hello, World!");
-
-if (Boolean.TryParse(Environment.GetEnvironmentVariable("Development"), out bool isDev))
-{
-    if (isDev)
+IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(services =>
     {
-        var appContext = StructureMapContainer.Instance.container.GetInstance<ByCodersTec.StoreDataImporter.Repository.EF.AppContext>();
-        //appContext.Database.EnsureCreated();
-        //appContext.Seed();
-    }
-}
+        services.AddHostedService<Worker>();
+    })
+    .Build();
 
-Task.Delay(5000).Wait();
-Console.WriteLine("Consuming Queue Now");
-
-ConnectionFactory factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };
-factory.UserName = "guest";
-factory.Password = "guest";
-IConnection conn = factory.CreateConnection();
-IModel channel = conn.CreateModel();
-channel.QueueDeclare(queue: "hello",
-                        durable: false,
-                        exclusive: false,
-                        autoDelete: false,
-                        arguments: null);
-
-var consumer = new EventingBasicConsumer(channel);
-consumer.Received += (model, ea) =>
-{
-    var body = ea.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    CnabImportViewModel cnabTransaction = Newtonsoft.Json.JsonConvert.DeserializeObject<CnabImportViewModel>(message);
-
-    StructureMapContainer.Instance.container.GetInstance<ITransactionService>().AddTransaction(new AddTransactionRequest { model = cnabTransaction });
-
-    Console.WriteLine(" [x] Received from Rabbit: {0}", message);
-};
-channel.BasicConsume(queue: "hello",
-                        autoAck: true,
-                        consumer: consumer);
-
-Console.WriteLine("passed");
-//Console.ReadLine();
-await Task.Run(() => Thread.Sleep(Timeout.Infinite));
+await host.RunAsync();

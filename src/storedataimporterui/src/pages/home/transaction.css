@@ -1,0 +1,14 @@
+div.container {
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table tr, table td, table th {
+    border: 1px solid black;
+    text-align: center;
+}

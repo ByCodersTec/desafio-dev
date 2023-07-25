@@ -40,7 +40,7 @@ namespace ByCodersTec.StoreDataImporter.DocParserService.Implementation
         public ParseDocResponse<T> ParseFileLinseFromString<T>(ParseDocRequest request)
         {
             var response = new ParseDocResponse<T>();
-            foreach (var item in request.DocLine)
+            foreach (var item in request.DocLines)
             {
                 var line = ParseFileLinseFromString<T>(new ParseDocLineRequest { DocLine = item }).result;
                 response.result.Lines.Add(line);
