@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+echo "*****Running check code******"
+
+RELEASE=1.7
+JAR_NAME="google-java-format-${RELEASE}-all-deps.jar"
+RELEASES_URL=https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format
+JAR_URL="${RELEASES_URL}/${RELEASE}/${JAR_NAME}"
+
+CACHE_DIR="./.cache/"
+JAR_FILE="$CACHE_DIR/$JAR_NAME"
+
+echo $JAR_FILE
+changed_java_files=$(git diff --cached --name-only --diff-filter=ACMR *.java || true)
+if [[ -n "$changed_java_files" ]]
+then
+    echo "Reformatting Java files: $changed_java_files"
+    java -jar "$JAR_FILE" --replace --set-exit-if-changed $changed_java_files
+else
+    echo "No Java files changes found."
+fi
+
+
+status=$?
+
+echo "*****Done with check code******"
+
+exit $status

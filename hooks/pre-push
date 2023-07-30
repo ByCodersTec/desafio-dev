@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "*****Running check tests******"
+
+mvn test
+
+status=$?
+
+echo "*****Done with check tests******"
+
+exit $status
