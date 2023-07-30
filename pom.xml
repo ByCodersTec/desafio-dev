@@ -17,7 +17,8 @@
     <properties>
         <java.version>1.8</java.version>
         <jacoco.version>0.8.6</jacoco.version>
-        <postgresql.version>42.4.3</postgresql.version>
+        <lombok.version>1.18.26</lombok.version>
+        <postgresql.version>42.5.4</postgresql.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
@@ -30,7 +31,7 @@
         <dependency>
             <groupId>org.jacoco</groupId> 
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.6</version>
+            <version>${jacoco.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,6 +59,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 

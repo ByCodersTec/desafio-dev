@@ -9,4 +9,3 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dev
-    network_mode: host
