@@ -1,12 +1,12 @@
-package com.chat;
+package com.desafiodev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChatApplication {
+public class DesafioDevApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ChatApplication.class, args);
+    SpringApplication.run(DesafioDevApplication.class, args);
   }
 }
