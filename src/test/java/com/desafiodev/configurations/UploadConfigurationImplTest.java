@@ -13,6 +13,6 @@ class UploadConfigurationImplTest {
 
   @Test
   void getFileName() {
-    assertEquals(".uploads\\test.txt", uploadConfigurations.getFileName("test.txt"));
+    assertTrue(uploadConfigurations.getFileName().contains(".uploads\\"));
   }
 }

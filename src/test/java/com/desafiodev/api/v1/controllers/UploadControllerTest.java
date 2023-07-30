@@ -1,6 +1,5 @@
 package com.desafiodev.api.v1.controllers;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,7 +21,7 @@ class UploadControllerTest {
 
   @BeforeEach
   void setUp() {
-    when(uploadConfiguration.getFileName(anyString())).thenReturn(".uploads/test");
+    when(uploadConfiguration.getFileName()).thenReturn(".uploads/test");
   }
 
   @Test
@@ -31,6 +30,6 @@ class UploadControllerTest {
         new MockMultipartFile(
             "file", "hello.txt", MediaType.TEXT_PLAIN_VALUE, "Hello, World!".getBytes());
     mockMvc.perform(multipart("/api/v1/upload/cnab").file(file)).andExpect(status().isOk());
-    verify(uploadConfiguration, times(1)).getFileName("hello.txt");
+    verify(uploadConfiguration, times(1)).getFileName();
   }
 }

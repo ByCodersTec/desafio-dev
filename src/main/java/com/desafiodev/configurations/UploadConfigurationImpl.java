@@ -1,6 +1,7 @@
 package com.desafiodev.configurations;
 
 import com.desafiodev.configurations.interfaces.UploadConfiguration;
+import java.util.UUID;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ public class UploadConfigurationImpl implements UploadConfiguration {
   }
 
   @Override
-  public String getFileName(@NonNull String fileName) {
-    return uploadPath + "\\" + fileName;
+  public String getFileName() {
+    return uploadPath + "\\" + UUID.randomUUID();
   }
 }

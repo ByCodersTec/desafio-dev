@@ -22,8 +22,7 @@ public class UploadController {
   @PostMapping("/cnab")
   public @ResponseBody ResponseEntity<String> cnab(@RequestParam("file") MultipartFile file)
       throws IOException {
-    String fileName = file.getOriginalFilename();
-    file.transferTo(new File(uploadConfiguration.getFileName(fileName)));
+    file.transferTo(new File(uploadConfiguration.getFileName()));
     return ResponseEntity.ok("File uploaded successfully.");
   }
 }
