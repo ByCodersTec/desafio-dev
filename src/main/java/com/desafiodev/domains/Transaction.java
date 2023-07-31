@@ -5,7 +5,6 @@ import java.time.Instant;
 import lombok.*;
 
 @Value
-@Builder
 public class Transaction {
   TransactionType type;
   Instant date;
@@ -14,6 +13,18 @@ public class Transaction {
   CreditCard creditCard;
   String storeOwner;
   String store;
+  double total;
+
+  public static Transaction getInstance(
+      @NonNull TransactionType type,
+      @NonNull Instant date,
+      double value,
+      @NonNull Cpf cpf,
+      @NonNull CreditCard creditCard,
+      @NonNull String storeOwner,
+      @NonNull String store) {
+    return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
+  }
 
   private Transaction(
       @NonNull TransactionType type,
@@ -40,10 +51,11 @@ public class Transaction {
           .build();
     this.type = type;
     this.date = date;
-    this.value = type.getValue(value);
+    this.value = value;
     this.cpf = cpf;
     this.creditCard = creditCard;
     this.storeOwner = storeOwner;
     this.store = store;
+    this.total = type.getValue(value);
   }
 }

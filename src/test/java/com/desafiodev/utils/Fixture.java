@@ -20,14 +20,7 @@ public class Fixture {
   }
 
   public static Transaction getTransaction() {
-    return Transaction.builder()
-        .cpf(getCpf())
-        .value(10)
-        .type(getTransactionType())
-        .date(Instant.now())
-        .creditCard(getCreditCard())
-        .store("Store")
-        .storeOwner("Willian")
-        .build();
+    return Transaction.getInstance(
+        getTransactionType(), Instant.now(), 10, getCpf(), getCreditCard(), "Willian", "Store");
   }
 }

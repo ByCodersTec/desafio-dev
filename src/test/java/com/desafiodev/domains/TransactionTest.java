@@ -16,15 +16,7 @@ class TransactionTest extends UtilsTest {
     CreditCard creditCard = Fixture.getCreditCard();
     Instant instant = Instant.now();
     Transaction transaction =
-        Transaction.builder()
-            .cpf(cpf)
-            .value(10)
-            .type(transactionType)
-            .date(instant)
-            .creditCard(creditCard)
-            .store("Store")
-            .storeOwner("Willian")
-            .build();
+        Transaction.getInstance(transactionType, instant, 10, cpf, creditCard, "Willian", "Store");
     assertClass(Transaction.class, transaction);
     assertEquals(cpf, transaction.getCpf());
     assertEquals(transactionType, transaction.getType());
@@ -32,25 +24,27 @@ class TransactionTest extends UtilsTest {
     assertEquals(instant, transaction.getDate());
     assertEquals("Store", transaction.getStore());
     assertEquals("Willian", transaction.getStoreOwner());
-    assertEquals(-10, transaction.getValue());
+    assertEquals(10, transaction.getValue());
+    assertEquals(-10, transaction.getTotal());
   }
 
   @Test
   void builderWithError() {
-    Transaction.TransactionBuilder transactionBuilder =
-        Transaction.builder()
-            .cpf(Fixture.getCpf())
-            .value(10)
-            .type(Fixture.getTransactionType())
-            .date(Instant.now())
-            .creditCard(Fixture.getCreditCard())
-            .store("Store")
-            .storeOwner("StoreOwner");
-
-    transactionBuilder.store("").storeOwner("StoreOwner");
-    assertThrows(IllegalStateException.class, transactionBuilder::build);
-
-    transactionBuilder.store("Store").storeOwner("");
-    assertThrows(IllegalStateException.class, transactionBuilder::build);
+    Cpf cpf = Fixture.getCpf();
+    TransactionType transactionType = Fixture.getTransactionType();
+    CreditCard creditCard = Fixture.getCreditCard();
+    Instant instant = Instant.now();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            Transaction.getInstance(
+                transactionType, instant, -10, cpf, creditCard, "Willian", "Store"));
+    assertThrows(
+        IllegalStateException.class,
+        () -> Transaction.getInstance(transactionType, instant, 10, cpf, creditCard, "", "Store"));
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            Transaction.getInstance(transactionType, instant, 10, cpf, creditCard, "Willian", ""));
   }
 }
