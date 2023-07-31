@@ -2,10 +2,13 @@ package com.desafiodev.domains;
 
 import com.desafiodev.domains.exceptions.IllegalStateExceptionFactory;
 import java.time.Instant;
+import java.util.UUID;
 import lombok.*;
 
 @Value
 public class Transaction {
+
+  UUID id;
   TransactionType type;
   Instant date;
   double value;
@@ -49,6 +52,7 @@ public class Transaction {
           .message("Store can't be empty")
           .param("store", store)
           .build();
+    this.id = UUID.randomUUID();
     this.type = type;
     this.date = date;
     this.value = value;
