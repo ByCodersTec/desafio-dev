@@ -2,6 +2,7 @@ package com.desafiodev.domains;
 
 import static com.desafiodev.domains.TransactionType.MovimentType.*;
 
+import com.desafiodev.domains.exceptions.IllegalStateExceptionFactory;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public enum TransactionType {
 
   static {
     Arrays.stream(TransactionType.values())
-        .map(transactionType -> map.put(transactionType.cnabPosition, transactionType));
+        .forEach(transactionType -> map.put(transactionType.cnabPosition, transactionType));
   }
 
   private final MovimentType movimentType;
@@ -59,6 +60,11 @@ public enum TransactionType {
     }
 
     double getValue(double value) {
+      if (value < 0)
+        throw IllegalStateExceptionFactory.builder(getClass())
+            .message("The transaction value, should be a positive value")
+            .param("value", value)
+            .build();
       return function.apply(value);
     }
   }

@@ -21,7 +21,6 @@ public class Transaction {
       double value,
       @NonNull Cpf cpf,
       @NonNull CreditCard creditCard,
-      int hour,
       @NonNull String storeOwner,
       @NonNull String store) {
     if (value < 0)
