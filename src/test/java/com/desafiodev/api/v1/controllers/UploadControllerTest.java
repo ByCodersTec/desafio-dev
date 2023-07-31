@@ -21,7 +21,7 @@ class UploadControllerTest {
 
   @BeforeEach
   void setUp() {
-    when(uploadConfiguration.getFileName()).thenReturn(".uploads/test");
+    when(uploadConfiguration.getFileName()).thenReturn(".uploads\\test");
   }
 
   @Test
