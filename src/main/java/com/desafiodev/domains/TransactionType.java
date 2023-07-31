@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public enum TransactionType {
   DEBITO(1, ENTRADA),
@@ -50,12 +50,12 @@ public enum TransactionType {
   }
 
   enum MovimentType {
-    ENTRADA((x) -> x),
-    SAIDA((x) -> x * -1);
+    ENTRADA(x -> x),
+    SAIDA(x -> x * -1);
 
-    private final Function<Double, Double> function;
+    private final UnaryOperator<Double> function;
 
-    MovimentType(Function<Double, Double> function) {
+    MovimentType(UnaryOperator<Double> function) {
       this.function = function;
     }
 

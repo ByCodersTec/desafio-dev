@@ -37,29 +37,20 @@ class TransactionTest extends UtilsTest {
 
   @Test
   void builderWithError() {
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            Transaction.builder()
-                .cpf(Fixture.getCpf())
-                .value(10)
-                .type(Fixture.getTransactionType())
-                .date(Instant.now())
-                .creditCard(Fixture.getCreditCard())
-                .store("")
-                .storeOwner("Name")
-                .build());
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            Transaction.builder()
-                .cpf(Fixture.getCpf())
-                .value(10)
-                .type(Fixture.getTransactionType())
-                .date(Instant.now())
-                .creditCard(Fixture.getCreditCard())
-                .store("Name")
-                .storeOwner("")
-                .build());
+    Transaction.TransactionBuilder transactionBuilder =
+        Transaction.builder()
+            .cpf(Fixture.getCpf())
+            .value(10)
+            .type(Fixture.getTransactionType())
+            .date(Instant.now())
+            .creditCard(Fixture.getCreditCard())
+            .store("Store")
+            .storeOwner("StoreOwner");
+
+    transactionBuilder.store("").storeOwner("StoreOwner");
+    assertThrows(IllegalStateException.class, transactionBuilder::build);
+
+    transactionBuilder.store("Store").storeOwner("");
+    assertThrows(IllegalStateException.class, transactionBuilder::build);
   }
 }
