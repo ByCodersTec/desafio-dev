@@ -18,6 +18,7 @@ class TransactionTest extends UtilsTest {
     Transaction transaction =
         Transaction.getInstance(transactionType, instant, 10, cpf, creditCard, "Willian", "Store");
     assertClass(Transaction.class, transaction);
+    assertNotNull(transaction.getId());
     assertEquals(cpf, transaction.getCpf());
     assertEquals(transactionType, transaction.getType());
     assertEquals(creditCard, transaction.getCreditCard());

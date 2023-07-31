@@ -1,9 +1,6 @@
 package com.desafiodev.utils;
 
-import com.desafiodev.domains.Cpf;
-import com.desafiodev.domains.CreditCard;
-import com.desafiodev.domains.Transaction;
-import com.desafiodev.domains.TransactionType;
+import com.desafiodev.domains.*;
 import java.time.Instant;
 
 public class Fixture {
@@ -22,5 +19,10 @@ public class Fixture {
   public static Transaction getTransaction() {
     return Transaction.getInstance(
         getTransactionType(), Instant.now(), 10, getCpf(), getCreditCard(), "Willian", "Store");
+  }
+
+  public static Cnab getCnab() {
+    return Cnab.getInstance(
+        "3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO       ");
   }
 }

@@ -12,12 +12,12 @@ public final class IllegalStateExceptionFactory {
   }
 
   public <T> IllegalStateExceptionFactory param(String param, T value) {
-    stringBuilder.append(param).append(value.toString());
+    stringBuilder.append(param).append(" ").append(value.toString()).append(" ");
     return this;
   }
 
   public IllegalStateExceptionFactory message(String massage) {
-    stringBuilder.append(massage);
+    stringBuilder.append(massage).append(" ");
     return this;
   }
 

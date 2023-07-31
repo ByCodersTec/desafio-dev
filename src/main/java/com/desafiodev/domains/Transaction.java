@@ -18,17 +18,6 @@ public class Transaction {
   String store;
   double total;
 
-  public static Transaction getInstance(
-      @NonNull TransactionType type,
-      @NonNull Instant date,
-      double value,
-      @NonNull Cpf cpf,
-      @NonNull CreditCard creditCard,
-      @NonNull String storeOwner,
-      @NonNull String store) {
-    return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
-  }
-
   private Transaction(
       @NonNull TransactionType type,
       @NonNull Instant date,
@@ -61,5 +50,16 @@ public class Transaction {
     this.storeOwner = storeOwner;
     this.store = store;
     this.total = type.getValue(value);
+  }
+
+  public static Transaction getInstance(
+      @NonNull TransactionType type,
+      @NonNull Instant date,
+      double value,
+      @NonNull Cpf cpf,
+      @NonNull CreditCard creditCard,
+      @NonNull String storeOwner,
+      @NonNull String store) {
+    return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
   }
 }
