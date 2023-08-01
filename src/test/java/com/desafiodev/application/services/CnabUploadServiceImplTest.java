@@ -1,5 +1,6 @@
 package com.desafiodev.application.services;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -20,13 +21,20 @@ class CnabUploadServiceImplTest {
 
   @BeforeEach
   void setUp() {
-    doNothing().when(transactionRepository).save(any());
     cnabUploadService = new CnabUploadServiceImpl(transactionRepository);
   }
 
   @Test
   void accept() {
+    doNothing().when(transactionRepository).save(any(), any());
     cnabUploadService.accept(new File("src/test/resources/CNAB.txt"));
-    verify(transactionRepository, times(21)).save(any());
+    verify(transactionRepository, times(21)).save(any(), any());
+  }
+
+  @Test
+  void acceptWithError() {
+    assertThrows(
+        IllegalStateException.class, () -> cnabUploadService.accept(new File("not_exist")));
+    verify(transactionRepository, times(0)).save(any(), any());
   }
 }

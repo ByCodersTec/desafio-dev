@@ -1,9 +1,8 @@
 package com.desafiodev.utils;
 
-import com.desafiodev.application.domains.Cpf;
-import com.desafiodev.application.domains.CreditCard;
-import com.desafiodev.application.domains.Transaction;
-import com.desafiodev.application.domains.TransactionType;
+import com.desafiodev.application.domains.*;
+import com.desafiodev.application.domains.ids.StoreId;
+import com.desafiodev.application.domains.ids.TransactionId;
 import com.google.common.testing.NullPointerTester;
 import com.jparams.verifier.tostring.ToStringVerifier;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -16,7 +15,11 @@ public abstract class UtilsTest {
             .setDefault(Cpf.class, Fixture.getCpf())
             .setDefault(CreditCard.class, Fixture.getCreditCard())
             .setDefault(TransactionType.class, Fixture.getTransactionType())
-            .setDefault(Transaction.class, Fixture.getTransaction());
+            .setDefault(Transaction.class, Fixture.getTransaction())
+            .setDefault(Cnab.class, Fixture.getCnab())
+            .setDefault(StoreId.class, Fixture.getStoreId())
+            .setDefault(TransactionId.class, Fixture.getTransactionId())
+            .setDefault(Store.class, Fixture.getStore());
     test.testAllPublicStaticMethods(tClass);
     test.testAllPublicInstanceMethods(instance);
     test.testAllPublicConstructors(tClass);

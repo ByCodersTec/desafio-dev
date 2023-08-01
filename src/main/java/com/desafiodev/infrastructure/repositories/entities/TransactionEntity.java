@@ -1,12 +1,10 @@
 package com.desafiodev.infrastructure.repositories.entities;
 
+import com.desafiodev.application.domains.Store;
 import com.desafiodev.application.domains.Transaction;
 import com.desafiodev.application.domains.TransactionType;
 import java.time.Instant;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -23,6 +21,10 @@ import org.hibernate.annotations.Immutable;
 public class TransactionEntity {
   @Id @EqualsAndHashCode.Exclude private String id;
 
+  @ManyToOne
+  @JoinColumn(name = "fk_store")
+  private StoreEntity store;
+
   @NotNull
   @Enumerated(EnumType.STRING)
   private TransactionType type;
@@ -33,9 +35,6 @@ public class TransactionEntity {
   @NotBlank private String cpf;
 
   @NotBlank private String creditCard;
-  @NotBlank private String storeOwner;
-  @NotBlank private String store;
-  private double total;
 
   public TransactionEntity() {}
 
@@ -46,30 +45,24 @@ public class TransactionEntity {
       double value,
       @NonNull String cpf,
       @NonNull String creditCard,
-      @NonNull String storeOwner,
-      @NonNull String store,
-      double total) {
+      @NonNull StoreEntity store) {
     this.id = id;
     this.type = type;
     this.date = date;
     this.value = value;
     this.cpf = cpf;
     this.creditCard = creditCard;
-    this.storeOwner = storeOwner;
     this.store = store;
-    this.total = total;
   }
 
-  public static TransactionEntity from(Transaction transaction) {
+  public static TransactionEntity from(Transaction transaction, Store store) {
     return new TransactionEntity(
-        transaction.getId().toString(),
+        transaction.getTransactionId().getId(),
         transaction.getType(),
         transaction.getDate(),
         transaction.getValue(),
         transaction.getCpf().getNumber(),
         transaction.getCreditCard().getNumber(),
-        transaction.getStoreOwner(),
-        transaction.getStore(),
-        transaction.getTotal());
+        StoreEntity.from(store));
   }
 }

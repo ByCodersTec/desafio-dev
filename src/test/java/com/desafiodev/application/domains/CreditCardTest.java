@@ -13,7 +13,7 @@ class CreditCardTest extends UtilsTest {
 
   @Test
   void getInstance() {
-    CreditCard creditCard = CreditCard.getInstance("222222222222");
+    CreditCard creditCard = CreditCard.newInstance("222222222222");
     assertClass(CreditCard.class, creditCard);
     assertEquals("222222222222", creditCard.getNumber());
   }
@@ -22,6 +22,6 @@ class CreditCardTest extends UtilsTest {
   @EmptySource
   @CsvSource("2222222222")
   void getInstanceWithError(String number) {
-    assertThrows(IllegalStateException.class, () -> CreditCard.getInstance(number));
+    assertThrows(IllegalStateException.class, () -> CreditCard.newInstance(number));
   }
 }

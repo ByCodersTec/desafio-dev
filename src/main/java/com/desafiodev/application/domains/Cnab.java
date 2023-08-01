@@ -100,7 +100,7 @@ public class Cnab {
     return result;
   }
 
-  public static Cnab getInstance(@NonNull String line) {
+  public static Cnab newInstance(@NonNull String line) {
     return new Cnab(line);
   }
 }

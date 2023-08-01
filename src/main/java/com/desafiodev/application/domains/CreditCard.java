@@ -23,7 +23,7 @@ public class CreditCard {
     this.number = number;
   }
 
-  public static CreditCard getInstance(@NonNull String number) {
+  public static CreditCard newInstance(@NonNull String number) {
     return new CreditCard(number);
   }
 }

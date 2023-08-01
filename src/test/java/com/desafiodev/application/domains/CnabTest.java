@@ -37,13 +37,13 @@ class CnabTest extends UtilsTest {
     "32019030100000ABC00096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO      *",
   })
   void getInstanceWithError(String line) {
-    assertThrows(IllegalStateException.class, () -> Cnab.getInstance(line));
+    assertThrows(IllegalStateException.class, () -> Cnab.newInstance(line));
   }
 
   @Test
   void valueEmpty() {
     Cnab cnab =
-        Cnab.getInstance(
+        Cnab.newInstance(
             "3201903010000000000096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO      *");
     assertEquals(0, cnab.getValue());
   }
@@ -51,7 +51,7 @@ class CnabTest extends UtilsTest {
   @Test
   void testHour() {
     Cnab cnab =
-        Cnab.getInstance(
+        Cnab.newInstance(
             "1201903010000015200096206760171234****7890233000JOÃO MACEDO   BAR DO JOÃO       ");
     assertEquals(Instant.parse("2019-03-01T23:30:00.00Z"), cnab.getInstant());
   }

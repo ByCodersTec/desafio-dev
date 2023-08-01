@@ -13,7 +13,7 @@ class CpfTest extends UtilsTest {
 
   @Test
   void getInstance() {
-    Cpf cpf = Cpf.getInstance("22222222222");
+    Cpf cpf = Cpf.newInstance("22222222222");
     assertClass(Cpf.class, cpf);
     assertEquals("22222222222", cpf.getNumber());
   }
@@ -22,6 +22,6 @@ class CpfTest extends UtilsTest {
   @EmptySource
   @CsvSource("2222222222")
   void getInstanceWithError(String number) {
-    assertThrows(IllegalStateException.class, () -> Cpf.getInstance(number));
+    assertThrows(IllegalStateException.class, () -> Cpf.newInstance(number));
   }
 }

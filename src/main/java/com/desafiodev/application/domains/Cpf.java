@@ -23,7 +23,7 @@ public class Cpf {
     this.number = number;
   }
 
-  public static Cpf getInstance(@NonNull String number) {
+  public static Cpf newInstance(@NonNull String number) {
     return new Cpf(number);
   }
 }

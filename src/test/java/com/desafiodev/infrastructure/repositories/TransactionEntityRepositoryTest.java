@@ -26,7 +26,7 @@ class TransactionEntityRepositoryTest {
 
   @Test
   void save() {
-    transactionEntityRepository.save(Fixture.getTransaction());
+    transactionEntityRepository.save(Fixture.getTransaction(), Fixture.getStore());
     verify(transactionEntityJpaRepository, times(1)).save(any());
   }
 }
