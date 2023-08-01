@@ -1,6 +1,6 @@
 package com.desafiodev.infrastructure.repositories.jpas;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.desafiodev.infrastructure.repositories.entities.TransactionEntity;
 import com.desafiodev.utils.Fixture;

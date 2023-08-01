@@ -1,9 +1,10 @@
 package com.desafiodev.application.domains;
 
 import com.desafiodev.application.domains.exceptions.IllegalStateExceptionFactory;
-import java.time.*;
+import java.time.Instant;
 import java.util.UUID;
-import lombok.*;
+import lombok.NonNull;
+import lombok.Value;
 
 @Value
 public class Transaction {

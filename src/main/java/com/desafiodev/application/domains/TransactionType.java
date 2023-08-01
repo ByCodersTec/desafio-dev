@@ -1,6 +1,7 @@
 package com.desafiodev.application.domains;
 
-import static com.desafiodev.application.domains.TransactionType.MovimentType.*;
+import static com.desafiodev.application.domains.TransactionType.MovimentType.ENTRADA;
+import static com.desafiodev.application.domains.TransactionType.MovimentType.SAIDA;
 
 import com.desafiodev.application.domains.exceptions.IllegalStateExceptionFactory;
 import java.util.Arrays;

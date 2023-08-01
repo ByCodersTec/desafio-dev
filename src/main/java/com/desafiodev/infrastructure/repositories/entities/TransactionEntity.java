@@ -37,7 +37,7 @@ public class TransactionEntity {
   @NotBlank private String store;
   private double total;
 
-  public TransactionEntity() {};
+  public TransactionEntity() {}
 
   private TransactionEntity(
       @NonNull String id,

@@ -1,6 +1,7 @@
 package com.desafiodev.application.domains;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.desafiodev.utils.UtilsTest;
 import org.junit.jupiter.api.Test;
