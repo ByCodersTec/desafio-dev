@@ -1,6 +1,6 @@
 package com.desafiodev.infrastructure.configurations;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,11 @@ class UploadConfigurationImplTest {
 
   @Test
   void getPathname() {
-    assertTrue(uploadConfigurations.getPathname().contains(".uploads\\"));
+    assertEquals("upload", uploadConfigurations.getPathname());
+  }
+
+  @Test
+  void getFilename() {
+    assertEquals("targetFile.tmp", uploadConfigurations.getFilename());
   }
 }

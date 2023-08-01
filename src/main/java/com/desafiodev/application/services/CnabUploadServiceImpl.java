@@ -37,7 +37,7 @@ public class CnabUploadServiceImpl implements UploadService {
         Cnab cnab = Cnab.newInstance(line);
         Store store =
             storeRepository
-                .findByNameAndOwnerName(cnab.getStoreName(), cnab.getStoreName())
+                .findByNameAndOwnerName(cnab.getStoreName(), cnab.getOwner())
                 .orElse(Store.from(cnab));
         Transaction transaction = Transaction.parse(Cnab.newInstance(line), store.getStoreId());
         Store newStore = store.sum(transaction);

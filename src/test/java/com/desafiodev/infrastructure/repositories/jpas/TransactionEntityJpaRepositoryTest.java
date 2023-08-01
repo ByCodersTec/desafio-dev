@@ -6,6 +6,7 @@ import com.desafiodev.application.domains.Store;
 import com.desafiodev.infrastructure.repositories.entities.StoreEntity;
 import com.desafiodev.infrastructure.repositories.entities.TransactionEntity;
 import com.desafiodev.utils.Fixture;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,5 +27,18 @@ class TransactionEntityJpaRepositoryTest {
     storeEntityJpaRepository.save(StoreEntity.from(store));
     TransactionEntity result = transactionEntityJpaRepository.save(transactionEntity);
     assertEquals(transactionEntity, result);
+  }
+
+  @Test
+  void findAll() {
+    Store store = Fixture.getStore();
+    TransactionEntity transactionEntity = TransactionEntity.from(Fixture.getTransaction(), store);
+    StoreEntity storeEntity = StoreEntity.from(store);
+    storeEntityJpaRepository.save(storeEntity);
+    TransactionEntity result = transactionEntityJpaRepository.save(transactionEntity);
+    List<TransactionEntity> list = transactionEntityJpaRepository.findAll();
+    assertEquals(1, list.size());
+    assertEquals(result, list.stream().findFirst().orElseThrow());
+    assertEquals(storeEntity, list.stream().findFirst().orElseThrow().getStore());
   }
 }

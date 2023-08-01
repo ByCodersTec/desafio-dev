@@ -29,4 +29,5 @@ build/
 
 ### VS Code ###
 .vscode/
-.uploads/
+
+src/main/resources/targetFile.tmp

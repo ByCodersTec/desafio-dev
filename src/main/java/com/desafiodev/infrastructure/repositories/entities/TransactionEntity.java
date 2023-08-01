@@ -3,7 +3,9 @@ package com.desafiodev.infrastructure.repositories.entities;
 import com.desafiodev.application.domains.Store;
 import com.desafiodev.application.domains.Transaction;
 import com.desafiodev.application.domains.TransactionType;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,7 +31,7 @@ public class TransactionEntity {
   @Enumerated(EnumType.STRING)
   private TransactionType type;
 
-  @NotNull private Instant date;
+  @NotNull private LocalDateTime date;
   private double value;
 
   @NotBlank private String cpf;
@@ -41,7 +43,7 @@ public class TransactionEntity {
   private TransactionEntity(
       @NonNull String id,
       @NonNull TransactionType type,
-      @NonNull Instant date,
+      @NonNull LocalDateTime date,
       double value,
       @NonNull String cpf,
       @NonNull String creditCard,
@@ -59,7 +61,8 @@ public class TransactionEntity {
     return new TransactionEntity(
         transaction.getTransactionId().getId(),
         transaction.getType(),
-        transaction.getDate(),
+        LocalDateTime.ofInstant(
+            transaction.getDate().truncatedTo(ChronoUnit.MILLIS), ZoneId.of("America/Sao_Paulo")),
         transaction.getValue(),
         transaction.getCpf().getNumber(),
         transaction.getCreditCard().getNumber(),
