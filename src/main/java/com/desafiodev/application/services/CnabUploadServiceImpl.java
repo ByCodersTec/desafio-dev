@@ -7,10 +7,8 @@ import com.desafiodev.application.domains.exceptions.IllegalStateExceptionFactor
 import com.desafiodev.application.ports.in.UploadService;
 import com.desafiodev.application.ports.out.StoreRepository;
 import com.desafiodev.application.ports.out.TransactionRepository;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,9 @@ public class CnabUploadServiceImpl implements UploadService {
   @Override
   public void accept(@NonNull File uploadFile) {
     try {
-      BufferedReader reader = new BufferedReader(new FileReader(uploadFile));
+      BufferedReader reader =
+          new BufferedReader(
+              new InputStreamReader(new FileInputStream(uploadFile), StandardCharsets.UTF_8));
       for (String line = reader.readLine(); line != null; line = reader.readLine()) {
         Cnab cnab = Cnab.newInstance(line);
         Store store =
