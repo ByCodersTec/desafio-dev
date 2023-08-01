@@ -1,11 +1,8 @@
 package com.desafiodev.domains;
 
-import static com.desafiodev.domains.TransactionType.getTransactionType;
 import static com.desafiodev.domains.exceptions.IllegalStateExceptionFactory.builder;
-import static java.time.format.DateTimeFormatter.ofPattern;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import lombok.*;
 
@@ -62,27 +59,11 @@ public class Transaction {
   }
 
   public static Transaction parse(@NonNull Cnab cnab) {
-    TransactionType type =
-        getTransactionType(cnab.getType())
-            .orElseThrow(
-                () ->
-                    builder(Transaction.class)
-                        .message("Transaction type not found")
-                        .param("cnab", cnab)
-                        .build());
-    DateTimeFormatter formatter = ofPattern("yyyyMMddHHmmss");
-    Instant date =
-        Instant.parse(
-                LocalDateTime.parse(cnab.getDate().concat(cnab.getHour()), formatter)
-                    .toString()
-                    .concat(".00Z"))
-            .atZone(ZoneId.of("America/Sao_Paulo"))
-            .toInstant();
-    double value = Double.parseDouble(cnab.getValue()) / 100;
     Cpf cpf = Cpf.getInstance(cnab.getCpf());
     CreditCard creditCard = CreditCard.getInstance(cnab.getCreditCard());
     String storeOwner = cnab.getOwner();
     String store = cnab.getStoreName();
-    return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
+    return new Transaction(
+        cnab.getType(), cnab.getInstant(), cnab.getValue(), cpf, creditCard, storeOwner, store);
   }
 }

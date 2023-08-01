@@ -22,7 +22,7 @@ class TransactionTypeTest {
     "9, true, ALUGUEL, -10"
   })
   void transactionTypeTest(
-      int cnabPosition, boolean expected, TransactionType transactionType, int expectedValue) {
+      String cnabPosition, boolean expected, TransactionType transactionType, int expectedValue) {
     Optional<TransactionType> optional = TransactionType.getTransactionType(cnabPosition);
     assertEquals(expected, optional.isPresent());
     if (!expected) return;

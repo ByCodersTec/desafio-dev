@@ -8,19 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import lombok.NonNull;
 
 public enum TransactionType {
-  DEBITO(1, ENTRADA),
-  BOLETO(2, SAIDA),
-  FINANCIAMENTO(3, SAIDA),
-  CREDITO(4, ENTRADA),
-  RECEBIMENTO_EMPRESTIMO(5, ENTRADA),
-  VENDAS(6, ENTRADA),
-  RECEBIMENTO_TED(7, ENTRADA),
-  RECEBIMENTO_DOC(8, ENTRADA),
-  ALUGUEL(9, SAIDA);
-  private static final Map<Integer, TransactionType> map = new HashMap<>();
-  private final int cnabPosition;
+  DEBITO("1", ENTRADA),
+  BOLETO("2", SAIDA),
+  FINANCIAMENTO("3", SAIDA),
+  CREDITO("4", ENTRADA),
+  RECEBIMENTO_EMPRESTIMO("5", ENTRADA),
+  VENDAS("6", ENTRADA),
+  RECEBIMENTO_TED("7", ENTRADA),
+  RECEBIMENTO_DOC("8", ENTRADA),
+  ALUGUEL("9", SAIDA);
+  private static final Map<String, TransactionType> map = new HashMap<>();
+  private final String cnabPosition;
 
   static {
     Arrays.stream(TransactionType.values())
@@ -29,12 +30,12 @@ public enum TransactionType {
 
   private final MovimentType movimentType;
 
-  TransactionType(int cnabPosition, MovimentType movimentType) {
+  TransactionType(@NonNull String cnabPosition, @NonNull MovimentType movimentType) {
     this.cnabPosition = cnabPosition;
     this.movimentType = movimentType;
   }
 
-  public static Optional<TransactionType> getTransactionType(int cnabPosition) {
+  public static Optional<TransactionType> getTransactionType(@NonNull String cnabPosition) {
     return Optional.ofNullable(map.get(cnabPosition));
   }
 
