@@ -52,8 +52,6 @@ public class Transaction {
   public static Transaction parse(@NonNull Cnab cnab, @NonNull StoreId storeId) {
     Cpf cpf = Cpf.newInstance(cnab.getCpf());
     CreditCard creditCard = CreditCard.newInstance(cnab.getCreditCard());
-    String storeOwner = cnab.getOwner();
-    String store = cnab.getStoreName();
     return new Transaction(
         cnab.getType(), cnab.getInstant(), cnab.getValue(), cpf, creditCard, storeId);
   }

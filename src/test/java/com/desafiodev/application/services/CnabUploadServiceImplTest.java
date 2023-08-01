@@ -53,8 +53,8 @@ class CnabUploadServiceImplTest {
 
   @Test
   void acceptWithError() {
-    assertThrows(
-        IllegalStateException.class, () -> cnabUploadService.accept(new File("not_exist")));
+    File file = new File("not_exist");
+    assertThrows(IllegalStateException.class, () -> cnabUploadService.accept(file));
     verify(transactionRepository, times(0)).save(any(), any());
   }
 }
