@@ -2,7 +2,6 @@ package com.desafiodev.infrastructure.api.v1.controllers;
 
 import com.desafiodev.application.ports.in.UploadService;
 import com.desafiodev.infrastructure.storeges.interfaces.StorageService;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,7 @@ public class UploadController {
 
   @PostMapping("/cnab")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public @ResponseBody ResponseEntity<String> cnab(@RequestParam("file") MultipartFile file)
-      throws IOException {
+  public @ResponseBody ResponseEntity<String> cnab(@RequestParam("file") MultipartFile file) {
     uploadService.accept(storageService.save(file));
     return ResponseEntity.accepted().body("File uploaded successfully.");
   }
