@@ -7,15 +7,13 @@ import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.hibernate.annotations.Immutable;
 
-@Immutable
 @Entity(name = "store")
 @Getter
 @ToString
 @EqualsAndHashCode
 @Table(
-    uniqueConstraints = { // other constraints
+    uniqueConstraints = {
       @UniqueConstraint(
           name = "UniqueNameAndOwnerName",
           columnNames = {"name", "ownerName"})
