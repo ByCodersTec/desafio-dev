@@ -20,7 +20,7 @@ public class Cnab {
   private static final int[] HOUR_INDEX = new int[] {42, 48};
   private static final int[] OWNER_INDEX = new int[] {48, 62};
   private static final int[] STORE_NAME_INDEX = new int[] {62, 80};
-  String type;
+  int type;
   String date;
   String value;
   String cpf;
@@ -38,7 +38,7 @@ public class Cnab {
           .param("line", line)
           .build();
 
-    this.type = array[TYPE_INDEX];
+    this.type = Integer.parseInt(array[TYPE_INDEX]);
     this.date = collectFrom(array, DATE_INDEX);
     this.value = StringUtils.stripStart(collectFrom(array, VALUE_INDEX), "0");
     this.cpf = collectFrom(array, CPF_INDEX);

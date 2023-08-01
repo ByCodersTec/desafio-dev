@@ -1,7 +1,11 @@
 package com.desafiodev.domains;
 
-import com.desafiodev.domains.exceptions.IllegalStateExceptionFactory;
-import java.time.Instant;
+import static com.desafiodev.domains.TransactionType.getTransactionType;
+import static com.desafiodev.domains.exceptions.IllegalStateExceptionFactory.builder;
+import static java.time.format.DateTimeFormatter.ofPattern;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import lombok.*;
 
@@ -27,20 +31,14 @@ public class Transaction {
       @NonNull String storeOwner,
       @NonNull String store) {
     if (value < 0)
-      throw IllegalStateExceptionFactory.builder(getClass())
-          .message("Value must be positive")
-          .param("value", value)
-          .build();
+      throw builder(getClass()).message("Value must be positive").param("value", value).build();
     if (storeOwner.isEmpty())
-      throw IllegalStateExceptionFactory.builder(getClass())
+      throw builder(getClass())
           .message("Store Owner can't be empty")
           .param("storeOwner", storeOwner)
           .build();
     if (store.isEmpty())
-      throw IllegalStateExceptionFactory.builder(getClass())
-          .message("Store can't be empty")
-          .param("store", store)
-          .build();
+      throw builder(getClass()).message("Store can't be empty").param("store", store).build();
     this.id = UUID.randomUUID();
     this.type = type;
     this.date = date;
@@ -60,6 +58,31 @@ public class Transaction {
       @NonNull CreditCard creditCard,
       @NonNull String storeOwner,
       @NonNull String store) {
+    return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
+  }
+
+  public static Transaction parse(@NonNull Cnab cnab) {
+    TransactionType type =
+        getTransactionType(cnab.getType())
+            .orElseThrow(
+                () ->
+                    builder(Transaction.class)
+                        .message("Transaction type not found")
+                        .param("cnab", cnab)
+                        .build());
+    DateTimeFormatter formatter = ofPattern("yyyyMMddHHmmss");
+    Instant date =
+        Instant.parse(
+                LocalDateTime.parse(cnab.getDate().concat(cnab.getHour()), formatter)
+                    .toString()
+                    .concat(".00Z"))
+            .atZone(ZoneId.of("America/Sao_Paulo"))
+            .toInstant();
+    double value = Double.parseDouble(cnab.getValue()) / 100;
+    Cpf cpf = Cpf.getInstance(cnab.getCpf());
+    CreditCard creditCard = CreditCard.getInstance(cnab.getCreditCard());
+    String storeOwner = cnab.getOwner();
+    String store = cnab.getStoreName();
     return new Transaction(type, date, value, cpf, creditCard, storeOwner, store);
   }
 }

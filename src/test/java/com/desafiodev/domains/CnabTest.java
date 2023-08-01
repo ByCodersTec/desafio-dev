@@ -12,7 +12,7 @@ class CnabTest extends UtilsTest {
   void testClass() {
     Cnab cnab = Fixture.getCnab();
     assertClass(Cnab.class, Fixture.getCnab());
-    assertEquals("3", cnab.getType());
+    assertEquals(3, cnab.getType());
     assertEquals("20190301", cnab.getDate());
     assertEquals("14200", cnab.getValue());
     assertEquals("09620676017", cnab.getCpf());
