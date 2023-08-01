@@ -4,20 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.desafiodev.infrastructure.repositories.entities.StoreEntity;
 import com.desafiodev.utils.Fixture;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class StoreEntityJpaRepositoryTest {
   @Autowired private StoreEntityJpaRepository storeEntityJpaRepository;
-
-  @BeforeEach
-  void setUp() {
-    storeEntityJpaRepository.deleteAll();
-  }
 
   @Test
   void save() {
