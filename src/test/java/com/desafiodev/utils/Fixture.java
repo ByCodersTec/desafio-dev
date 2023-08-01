@@ -1,6 +1,6 @@
 package com.desafiodev.utils;
 
-import com.desafiodev.domains.*;
+import com.desafiodev.application.domains.*;
 import java.time.Instant;
 
 public class Fixture {

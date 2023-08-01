@@ -1,9 +1,9 @@
 package com.desafiodev.utils;
 
-import com.desafiodev.domains.Cpf;
-import com.desafiodev.domains.CreditCard;
-import com.desafiodev.domains.Transaction;
-import com.desafiodev.domains.TransactionType;
+import com.desafiodev.application.domains.Cpf;
+import com.desafiodev.application.domains.CreditCard;
+import com.desafiodev.application.domains.Transaction;
+import com.desafiodev.application.domains.TransactionType;
 import com.google.common.testing.NullPointerTester;
 import com.jparams.verifier.tostring.ToStringVerifier;
 import nl.jqno.equalsverifier.EqualsVerifier;
