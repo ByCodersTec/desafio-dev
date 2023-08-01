@@ -12,21 +12,21 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class TransactionEntityRepositoryTest {
+class TransactionRepositoryImplTest {
 
   @Mock private TransactionEntityJpaRepository transactionEntityJpaRepository;
 
-  private TransactionEntityRepository transactionEntityRepository;
+  private TransactionRepositoryImpl transactionRepositoryImpl;
 
   @BeforeEach
   void setUp() {
     when(transactionEntityJpaRepository.save(any())).thenReturn(any());
-    transactionEntityRepository = new TransactionEntityRepository(transactionEntityJpaRepository);
+    transactionRepositoryImpl = new TransactionRepositoryImpl(transactionEntityJpaRepository);
   }
 
   @Test
   void save() {
-    transactionEntityRepository.save(Fixture.getTransaction(), Fixture.getStore());
+    transactionRepositoryImpl.save(Fixture.getTransaction(), Fixture.getStore());
     verify(transactionEntityJpaRepository, times(1)).save(any());
   }
 }

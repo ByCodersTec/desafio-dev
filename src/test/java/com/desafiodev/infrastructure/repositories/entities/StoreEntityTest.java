@@ -17,5 +17,6 @@ class StoreEntityTest extends UtilsTest {
     assertEquals(store.getStoreId().getId(), entity.getId());
     assertEquals(store.getName(), entity.getName());
     assertEquals(store.getOwnerName(), entity.getOwnerName());
+    assertEquals(store.getBalance(), entity.getBalance());
   }
 }

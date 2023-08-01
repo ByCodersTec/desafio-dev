@@ -40,8 +40,8 @@ public enum TransactionType {
     return Optional.ofNullable(map.get(cnabPosition));
   }
 
-  public double getValue(double value) {
-    return this.movimentType.getValue(value);
+  public double apply(double value) {
+    return this.movimentType.apply(value);
   }
 
   enum MovimentType {
@@ -53,7 +53,7 @@ public enum TransactionType {
       this.function = function;
     }
 
-    double getValue(double value) {
+    double apply(double value) {
       if (value < 0)
         throw IllegalStateExceptionFactory.builder(getClass())
             .message("The transaction value, should be a positive value")

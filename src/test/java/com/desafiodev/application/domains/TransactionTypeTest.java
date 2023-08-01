@@ -29,7 +29,7 @@ class TransactionTypeTest {
     if (!expected) return;
     TransactionType result = optional.orElseThrow();
     assertEquals(transactionType, result);
-    assertEquals(expectedValue, result.getValue(10));
-    assertThrows(IllegalStateException.class, () -> result.getValue(-10));
+    assertEquals(expectedValue, result.apply(10));
+    assertThrows(IllegalStateException.class, () -> result.apply(-10));
   }
 }

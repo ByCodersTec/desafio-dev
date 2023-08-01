@@ -39,4 +39,9 @@ public class Fixture {
   public static Store getStore() {
     return Store.newInstance("NAME", "OWNER NAME");
   }
+
+  public static Transaction getTransaction(TransactionType type, double transactionValue) {
+    return Transaction.newInstance(
+        type, Instant.now(), transactionValue, getCpf(), getCreditCard(), StoreId.newInstance());
+  }
 }

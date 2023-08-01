@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionEntityRepository implements TransactionRepository {
+public class TransactionRepositoryImpl implements TransactionRepository {
 
   private final TransactionEntityJpaRepository transactionEntityJpaRepository;
 
   @Autowired
-  public TransactionEntityRepository(
-      TransactionEntityJpaRepository transactionEntityJpaRepository) {
+  public TransactionRepositoryImpl(TransactionEntityJpaRepository transactionEntityJpaRepository) {
     this.transactionEntityJpaRepository = transactionEntityJpaRepository;
   }
 

@@ -34,4 +34,25 @@ class StoreEntityJpaRepositoryTest {
     assertThrows(
         DataIntegrityViolationException.class, () -> storeEntityJpaRepository.save(newStoreEntity));
   }
+
+  @Test
+  void findByNameAndOwnerName() {
+    StoreEntity storeEntity = StoreEntity.from(Fixture.getStore());
+    StoreEntity store = storeEntityJpaRepository.save(storeEntity);
+    assertEquals(
+        store,
+        storeEntityJpaRepository
+            .findByNameIgnoreCaseAndOwnerNameIgnoreCase(store.getName(), store.getOwnerName())
+            .orElseThrow());
+    assertEquals(
+        store,
+        storeEntityJpaRepository
+            .findByNameIgnoreCaseAndOwnerNameIgnoreCase(
+                store.getName().toLowerCase(), store.getOwnerName().toLowerCase())
+            .orElseThrow());
+    assertTrue(
+        storeEntityJpaRepository
+            .findByNameIgnoreCaseAndOwnerNameIgnoreCase("Not exist", "Not exist")
+            .isEmpty());
+  }
 }

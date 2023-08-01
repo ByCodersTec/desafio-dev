@@ -3,6 +3,7 @@ package com.desafiodev.infrastructure.repositories.entities;
 import com.desafiodev.application.domains.Store;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -25,15 +26,23 @@ public class StoreEntity {
   @NotBlank private String name;
   @NotBlank private String ownerName;
 
+  @NotNull private double balance;
+
   public StoreEntity() {}
 
-  private StoreEntity(String id, String name, String ownerName) {
+  private StoreEntity(String id, String name, String ownerName, double balance) {
     this.id = id;
     this.name = name;
     this.ownerName = ownerName;
+    this.balance = balance;
+  }
+
+  public Store getStore() {
+    return Store.getInstance(id, name, ownerName, balance);
   }
 
   public static StoreEntity from(Store store) {
-    return new StoreEntity(store.getStoreId().getId(), store.getName(), store.getOwnerName());
+    return new StoreEntity(
+        store.getStoreId().getId(), store.getName(), store.getOwnerName(), store.getBalance());
   }
 }

@@ -5,6 +5,7 @@ import com.desafiodev.application.domains.Store;
 import com.desafiodev.application.domains.Transaction;
 import com.desafiodev.application.domains.exceptions.IllegalStateExceptionFactory;
 import com.desafiodev.application.ports.in.UploadService;
+import com.desafiodev.application.ports.out.StoreRepository;
 import com.desafiodev.application.ports.out.TransactionRepository;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,9 +20,13 @@ public class CnabUploadServiceImpl implements UploadService {
 
   private final TransactionRepository transactionRepository;
 
+  private final StoreRepository storeRepository;
+
   @Autowired
-  public CnabUploadServiceImpl(TransactionRepository transactionRepository) {
+  public CnabUploadServiceImpl(
+      TransactionRepository transactionRepository, StoreRepository storeRepository) {
     this.transactionRepository = transactionRepository;
+    this.storeRepository = storeRepository;
   }
 
   @Override
@@ -30,9 +35,14 @@ public class CnabUploadServiceImpl implements UploadService {
       BufferedReader reader = new BufferedReader(new FileReader(uploadFile));
       for (String line = reader.readLine(); line != null; line = reader.readLine()) {
         Cnab cnab = Cnab.newInstance(line);
-        Store store = Store.newInstance(cnab.getStoreName(), cnab.getOwner());
+        Store store =
+            storeRepository
+                .findByNameAndOwnerName(cnab.getStoreName(), cnab.getStoreName())
+                .orElse(Store.from(cnab));
         Transaction transaction = Transaction.parse(Cnab.newInstance(line), store.getStoreId());
-        transactionRepository.save(transaction, store);
+        Store newStore = store.sum(transaction);
+        storeRepository.save(newStore);
+        transactionRepository.save(transaction, newStore);
       }
       reader.close();
     } catch (IOException e) {
