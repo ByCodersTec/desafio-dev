@@ -21,8 +21,8 @@ class LocalStorageServiceImplTest {
 
   @BeforeEach
   void setUp() {
-    when(uploadConfiguration.getPathname()).thenReturn("test");
-    when(uploadConfiguration.getFilename()).thenReturn("test.tmp");
+    when(uploadConfiguration.getPathname()).thenReturn("upload");
+    when(uploadConfiguration.getFilename()).thenReturn("targetFile.tmp");
     localStorageService = new LocalStorageServiceImpl(uploadConfiguration);
   }
 

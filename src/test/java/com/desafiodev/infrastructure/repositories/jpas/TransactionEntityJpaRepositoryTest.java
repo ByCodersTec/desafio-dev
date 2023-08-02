@@ -1,6 +1,7 @@
 package com.desafiodev.infrastructure.repositories.jpas;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.desafiodev.application.domains.Store;
 import com.desafiodev.infrastructure.repositories.entities.StoreEntity;
@@ -30,13 +31,15 @@ class TransactionEntityJpaRepositoryTest {
   }
 
   @Test
-  void findAll() {
+  void findByStore() {
     Store store = Fixture.getStore();
     TransactionEntity transactionEntity = TransactionEntity.from(Fixture.getTransaction(), store);
     StoreEntity storeEntity = StoreEntity.from(store);
+    assertTrue(transactionEntityJpaRepository.findByStore(storeEntity).isEmpty());
     storeEntityJpaRepository.save(storeEntity);
+    assertTrue(transactionEntityJpaRepository.findByStore(storeEntity).isEmpty());
     TransactionEntity result = transactionEntityJpaRepository.save(transactionEntity);
-    List<TransactionEntity> list = transactionEntityJpaRepository.findAll();
+    List<TransactionEntity> list = transactionEntityJpaRepository.findByStore(storeEntity);
     assertEquals(1, list.size());
     assertEquals(result, list.stream().findFirst().orElseThrow());
     assertEquals(storeEntity, list.stream().findFirst().orElseThrow().getStore());

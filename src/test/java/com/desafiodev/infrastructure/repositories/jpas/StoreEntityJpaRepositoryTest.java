@@ -2,8 +2,10 @@ package com.desafiodev.infrastructure.repositories.jpas;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.desafiodev.application.domains.Store;
 import com.desafiodev.infrastructure.repositories.entities.StoreEntity;
 import com.desafiodev.utils.Fixture;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -52,5 +54,14 @@ class StoreEntityJpaRepositoryTest {
         storeEntityJpaRepository
             .findByNameIgnoreCaseAndOwnerNameIgnoreCase("Not exist", "Not exist")
             .isEmpty());
+  }
+
+  @Test
+  void findAll() {
+    Store store = Fixture.getStore();
+    StoreEntity storeEntity = storeEntityJpaRepository.save(StoreEntity.from(store));
+    List<StoreEntity> list = storeEntityJpaRepository.findAll();
+    assertEquals(1, list.size());
+    assertEquals(storeEntity, list.stream().findFirst().orElseThrow());
   }
 }

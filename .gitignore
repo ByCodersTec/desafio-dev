@@ -30,4 +30,4 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/targetFile.tmp
+upload/

@@ -26,7 +26,19 @@ POST http://localhost:8080/api/v1/upload/cnab
 Content-Disposition: form-data; filename="example.txt"
 ```
 
-GET http://localhost:8080/api/v1/transaction
+GET http://localhost:8080/api/v1/store
+```JSON
+[
+  {
+    "storeId": "9cb36ec1-e16d-487c-a1b8-fe59ba72f6d0",
+    "storeName": "BAR DO JOÃO",
+    "ownerName": "JOÃO MACEDO",
+    "storeBalance": -102.0
+  }
+]
+```
+
+GET http://localhost:8080/api/v1/transaction?storeId=9cb36ec1-e16d-487c-a1b8-fe59ba72f6d0
 
 ```JSON
 [

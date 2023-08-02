@@ -30,14 +30,10 @@ class TransactionResponseDTOTest {
             singletonList(TransactionEntity.from(getTransaction(), getStore())));
     TransactionResponseDTO dto = list.stream().findFirst().orElseThrow();
     assertNotNull(dto.getTransactionId());
-    assertNotNull(dto.getStoreId());
     assertEquals("ALUGUEL", dto.getType());
     assertNotNull(dto.getDate());
     assertEquals(10.0, dto.getTransactionValue());
     assertEquals("11111111111", dto.getCpfNumber());
     assertEquals("111111111111", dto.getCreditCardNumber());
-    assertEquals("NAME", dto.getStoreName());
-    assertEquals("OWNER NAME", dto.getOwnerName());
-    assertEquals(0.0, dto.getStoreBalance());
   }
 }
