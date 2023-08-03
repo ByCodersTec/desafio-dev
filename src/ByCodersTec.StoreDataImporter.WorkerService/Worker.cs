@@ -11,6 +11,8 @@ using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using ByCodersTec.StoreDataImporter.Services.Message;
 using ByCodersTec.StoreDataImporter.Services;
 using ByCodersTec.StoreDataImporter.ViewModel;
+using Microsoft.AspNetCore.SignalR.Client;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ByCodersTec.StoreDataImporter.WorkerService
 {
@@ -19,11 +21,23 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
         private ILogger<Worker> _logger;
         private IConnection _connection;
         private IModel _channel;
-        private bool RabbitConnected;
+        private bool ConsumerAdded;
+        public QueueDeclareOk transactionsQueue { get; private set; }
+        public string consumerTag { get; private set; }
+        public string workerconsumer { get; private set; }
 
-        public Worker(ILogger<Worker> logger)
+        private bool RabbitConnected;
+        HubConnection hubConnection;
+        private bool SignalRConnected;
+        private readonly IReadMessage _readMessage;
+
+        public Worker(
+            ILogger<Worker> logger,
+            IReadMessage readMessage
+        )
         {
             _logger = logger;
+            _readMessage = readMessage;
         }
 
         private void ConnectToRabbit()
@@ -35,7 +49,7 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
                 factory.Password = "guest";
                 _connection = factory.CreateConnection();
                 _channel = _connection.CreateModel();
-                _channel.QueueDeclare(queue: "transaction", durable: false, exclusive: false, autoDelete: false, arguments: null);
+                transactionsQueue = _channel.QueueDeclare(queue: "transaction", durable: false, exclusive: false, autoDelete: false, arguments: null);
                 RabbitConnected = true;
             }
             catch (Exception ex)
@@ -45,33 +59,39 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
             }
         }
 
+        private void ConnectToSignalR()
+        {
+            try
+            {
+                hubConnection = new HubConnectionBuilder()
+                .WithUrl("http://localhost:8080/chat")
+                .Build();
+
+                hubConnection.Closed += async (error) =>
+                {
+                    await Task.Delay(new Random().Next(0, 5) * 1000);
+                    await hubConnection.StartAsync();
+                };
+
+                SignalRConnected = true;
+            }
+            catch (Exception)
+            {
+                SignalRConnected = false;
+            }
+        }
+
+        public uint GetMessageCount(string queueName)
+        {
+            return _channel.MessageCount(queueName);
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                //await Task.Delay(1000, stoppingToken);
-                if (!RabbitConnected)
-                {
-                    ConnectToRabbit();
-                } else
-                {
-                    var consumer = new EventingBasicConsumer(_channel);
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = ea.Body.ToArray();
-                        var message = Encoding.UTF8.GetString(body);
-                        CnabImportViewModel cnabTransaction = Newtonsoft.Json.JsonConvert.DeserializeObject<CnabImportViewModel>(message);
-
-                        StructureMapContainer.Instance.container.GetInstance<ITransactionService>().AddTransaction(new AddTransactionRequest { model = cnabTransaction });
-
-                        Console.WriteLine(" [x] Received from Rabbit: {0}", message);
-                    };
-                    _channel.BasicConsume(queue: "transaction",
-                                            autoAck: true,
-                                            consumer: consumer);
-                    _channel.BasicConsume(queue: "transaction", autoAck: true, consumer: consumer);
-                }
+                // Run the Read method
+                await Task.Run(() => _readMessage.Read());
             }
         }
     }

@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+
+  td, th {
+    background: white;
+    color: black;
+  }
+
+  td > div.reducted {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+  }
+}
+
+.loading-overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .overlay {
+        width: 100%;
+        height: 100%;
+        background: black;
+        position: absolute;
+        opacity: .5;
+    }
+}

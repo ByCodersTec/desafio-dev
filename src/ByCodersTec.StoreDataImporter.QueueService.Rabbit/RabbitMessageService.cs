@@ -24,17 +24,19 @@ namespace ByCodersTec.StoreDataImporter.QueueService.Rabbit
             _conn = _factory.CreateConnection();
             _channel = _conn.CreateModel();
             _channel.QueueDeclare(queue: "transaction",
-                                    durable: false,
+                                    durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
         }
-        public bool Enqueue<User>(User messageString)
+        public bool Enqueue<User>(User messageString, Dictionary<string, object> props)
         {
             var body = Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(messageString));
+            var messageProps = _channel.CreateBasicProperties();
+            messageProps.Headers = props;
             _channel.BasicPublish(exchange: "",
                                 routingKey: "transaction",
-                                basicProperties: null,
+                                basicProperties: messageProps,
                                 body: body);
             Console.WriteLine(" [x] Published {0} to RabbitMQ", messageString);
             return true;

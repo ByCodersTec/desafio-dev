@@ -11,4 +11,18 @@ export default class TransactionService {
             resolve(response.data.data);
         });
     }
+
+    public static UploadCnaeTransactionsFile(selectedFile: File) {
+        return new Promise(async (resolve, reject) => {
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            const request = {
+                method: "post",
+                headers: { "Content-Type": "multipart/form-data" },
+              };
+              console.log('selectedFile', selectedFile);
+            const response = await HttpClient.getInstance().post(this.baseUrl + '/enqueue', formData, request);
+            resolve(response);
+        })
+    }
 }

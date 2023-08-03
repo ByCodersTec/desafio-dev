@@ -9,6 +9,8 @@ using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using ByCodersTec.StoreDataImporter;
+using ByCodersTec.StoreDataImporter.WebSocketService.SignalRChatService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,7 @@ builder.Services.AddTransient<ByCodersTec.StoreDataImporter.Domain.IMessageServi
 
 builder.Services.AddMediatR(typeof(ByCodersTec.StoreDataImporter.CQRS.Handlers.GetUsersHandler).Assembly);
 //builder.Services.AddMediatR(typeof(AddProductCommand));
+builder.Services.AddSignalR();
 
 var MyAllowedOrigins = "_myCORS";
 
@@ -48,9 +51,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowedOrigins,
             policy =>
             {
-                policy.WithOrigins("*")
-                 .AllowAnyHeader()
-                 .AllowAnyMethod();
+                policy.WithOrigins("http://localhost:4200, http://localhost:3000, https://host.docker.internal:8080, https://host.docker.internal")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowCredentials();
             });
 });
 
@@ -74,4 +79,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseCors(MyAllowedOrigins);
+
+app.MapHub<ChatHub>("/chat");
+
 app.Run();

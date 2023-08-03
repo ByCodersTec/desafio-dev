@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "app": "StartWithoutDebugging",
+        "bycoderstec.storedataimporter": "StartDebugging",
+        "bycoderstec.storedataimporter.frontend": "StartDebugging",
+        "bycoderstec.storedataimporter.workerservice": "StartDebugging"
+      }
+    }
+  }
+}

@@ -73,3 +73,27 @@ services:
         - "15672:15672"
 
 
+  #ng-dev:
+  #  container_name: ng-docker-app
+  #  build:
+  #    context: ./frontend
+  #    dockerfile: Dockerfile
+  #  volumes:
+  #      - ./frontend:/app
+  #      - /app/node_modules
+  #  stdin_open: true
+  #  ports:
+  #    - "4200:4200"
+
+  ui_app:
+    image: ui_app
+    ports:
+      - 4200:4200
+    command: "ng serve --host 0.0.0.0 --poll=2000 --port 4200 --disable-host-check"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile    
+    stdin_open: true
+    volumes:
+      - ./frontend/:/home/app
+      - /home/app/node_modules

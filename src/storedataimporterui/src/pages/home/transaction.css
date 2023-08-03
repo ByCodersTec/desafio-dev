@@ -12,3 +12,10 @@ table tr, table td, table th {
     border: 1px solid black;
     text-align: center;
 }
+
+.dropboxcontainer {
+    background: lightgray;
+    padding: 21px;
+    color: #838383;
+    text-align: center;
+}

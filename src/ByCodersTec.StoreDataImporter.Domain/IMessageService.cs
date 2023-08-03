@@ -8,6 +8,6 @@ namespace ByCodersTec.StoreDataImporter.Domain
 {
     public interface IMessageService
     {
-        bool Enqueue<T>(T message);
+        bool Enqueue<T>(T message, Dictionary<string, object> props);
     }
 }

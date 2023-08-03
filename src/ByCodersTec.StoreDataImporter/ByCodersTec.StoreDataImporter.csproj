@@ -21,6 +21,7 @@
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.QueueService.Rabbit\ByCodersTec.StoreDataImporter.QueueService.Rabbit.csproj" />
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Repository.EF\ByCodersTec.StoreDataImporter.Repository.EF.csproj" />
     <ProjectReference Include="..\ByCodersTec.StoreDataImporter.Services\ByCodersTec.StoreDataImporter.Services.csproj" />
+    <ProjectReference Include="..\ByCodersTec.StoreDataImporter.WebSocketService.SignalRChatService\ByCodersTec.StoreDataImporter.WebSocketService.SignalRChatService.csproj" />
   </ItemGroup>
 
 </Project>

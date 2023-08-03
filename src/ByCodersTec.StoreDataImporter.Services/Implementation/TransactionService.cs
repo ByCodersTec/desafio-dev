@@ -75,9 +75,13 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                     }).ToList()
                 });
 
+                var couter = 0;
                 foreach (var item in linesToProcess.result.Lines)
                 {
-                    _messageService.Enqueue(item.ParsedLineItem);
+                    couter++;
+                    var props = new Dictionary<string, object>();
+                    props.Add("is_last_item", couter == linesToProcess.result.Lines.Count);
+                    _messageService.Enqueue(item.ParsedLineItem, props);
                 }
             }
             return response;
