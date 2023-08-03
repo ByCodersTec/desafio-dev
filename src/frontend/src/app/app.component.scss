@@ -1,10 +1,13 @@
+.main-container {
+  padding: 20px;
+}
+
+.table-container {
+    min-height: 580px;
+}
+
 table {
   width: 100%;
-
-  td, th {
-    background: white;
-    color: black;
-  }
 
   td > div.reducted {
     white-space: nowrap;
@@ -30,4 +33,16 @@ table {
         position: absolute;
         opacity: .5;
     }
+}
+
+.mat-mdc-raised-button:is(:disabled) {
+  color: white;
+}
+
+.mat-mdc-raised-button:is(:disabled) {
+  background-color: #b1748c;
+}
+
+.mdc-snackbar .mdc-snackbar__surface {
+  background-color: #c2185b !important;
 }

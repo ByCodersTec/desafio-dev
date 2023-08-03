@@ -10,6 +10,11 @@ import { HttpClientModule } from '@angular/common/http'
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatTableResponsiveModule } from './shared/directives/mat-table-responsive/mat-table-responsive.module';
+import { MatSortModule } from '@angular/material/sort';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MatButtonModule } from '@angular/material/button';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableResponsiveModule,
+    MatSortModule,
+    NgxDropzoneModule,
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [
     SpinnerService,

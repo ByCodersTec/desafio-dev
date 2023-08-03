@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class TransactionsService {
-
   private baseUrl = "http://localhost:8080/Transaction";
 
   constructor(
@@ -16,9 +15,9 @@ export class TransactionsService {
 
   }
 
-  public GetTransactions(pageNumber: number = 1, pageSize: number = 10): Promise<ApiResponse<PagedResponse<Transaction>>> {
+  public GetTransactions(pageNumber: number = 1, pageSize: number = 10, orderBy: string = "Date", direction: string = "desc"): Promise<ApiResponse<PagedResponse<Transaction>>> {
     return new Promise(async (resolve, reject) => {
-      this.httpClient.get<ApiResponse<PagedResponse<Transaction>>>(this.baseUrl + `?pageNumber=${pageNumber}&pageSize=${pageSize}&orderBy=Date&direction=desc`).subscribe(res => {
+      this.httpClient.get<ApiResponse<PagedResponse<Transaction>>>(this.baseUrl + `?pageNumber=${pageNumber}&pageSize=${pageSize}&orderBy=${orderBy}&direction=${direction}`).subscribe(res => {
         resolve(res);
       });
     });
@@ -28,12 +27,8 @@ export class TransactionsService {
     return new Promise(async (resolve, reject) => {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      const request = {
-        method: "post",
-        headers: { "Content-Type": "multipart/form-data" },
-      };
       console.log('selectedFile', selectedFile);
-      this.httpClient.post(this.baseUrl + '/enqueue', formData, request).subscribe(res => {
+      this.httpClient.post(this.baseUrl + '/enqueue', formData).subscribe(res => {
         resolve(res);
       })
     })

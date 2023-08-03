@@ -43,15 +43,22 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
 
         public void Read()
         {
-            // Definition of Connection 
-            // Obviously in a real project we mustn't put here the user and password...   
-            var _rabbitMQServer = new ConnectionFactory() { Password = "guest", UserName = "guest", HostName = "rabbitmq", Port = 5672 };
+            try
+            {
+                // Definition of Connection 
+                // Obviously in a real project we mustn't put here the user and password...   
+                var _rabbitMQServer = new ConnectionFactory() { Password = "guest", UserName = "guest", HostName = "rabbitmq", Port = 5672 };
 
-            using var connection = _rabbitMQServer.CreateConnection();
+                using var connection = _rabbitMQServer.CreateConnection();
 
-            using var channel = connection.CreateModel();
+                using var channel = connection.CreateModel();
 
-            StartReading(channel, "transaction");
+                StartReading(channel, "transaction");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void StartReading(IModel channel, string queueName)
@@ -80,14 +87,6 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
 
         private void ManageMessageAsync(BasicDeliverEventArgs e, IModel channel, string queueName)
         {
-            //var body = e.Body.ToArray();
-            //var message = Encoding.UTF8.GetString(body);
-            //Console.WriteLine(message);
-
-            //// We append the message in a file .txt
-            //using StreamWriter file = new("MessagesRead.txt", append: true);
-            //file.WriteLine(message);
-
             var body = e.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
             CnabImportViewModel cnabTransaction = Newtonsoft.Json.JsonConvert.DeserializeObject<CnabImportViewModel>(message);
@@ -96,8 +95,7 @@ namespace ByCodersTec.StoreDataImporter.WorkerService
             
             if (e.BasicProperties.Headers.TryGetValue("is_last_item", out object value))
             {
-                bool is_last_item = bool.Parse(value.ToString());
-                if (is_last_item)
+                if (bool.TryParse(value.ToString(), out bool is_last_item) && is_last_item)
                 {
                     Console.WriteLine("last_item");
                     if (hubConnection.State == HubConnectionState.Disconnected)

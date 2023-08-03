@@ -1,0 +1,76 @@
+@media (max-width: 768px) {
+  .mat-table[matTableResponsive] {
+    .mat-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      height: auto;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+
+      th.mat-header-cell {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        padding: 1rem 0.5rem;
+        justify-content: space-around;
+
+        & > .mat-sort-header-container {
+          padding-left: 15px; // padding is used to center the header table cells, due to the width of the sort icon
+        }
+
+        &:not([mat-sort-header]),
+        &.mat-sort-header-disabled,
+        &.mat-column-actions {
+          display: none;
+        }
+      }
+    }
+
+    .mat-row {
+      height: auto;
+
+      td.mat-cell:not(.mat-column-actions) {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        padding: 0.5rem;
+        text-align: right;
+        word-break: break-word;
+
+        & > * {
+          grid-column: 2;
+        }
+
+        &:before {
+          content: attr(data-column-name);
+          text-align: left;
+        }
+      }
+
+      td.mat-column-actions {
+        display: flex;
+        justify-content: center;
+        padding: 0 0.5rem;
+
+        & > button {
+          margin: 0.5rem 0;
+        }
+      }
+
+      &:last-of-type td:last-of-type {
+        border: none;
+      }
+
+      &:not(:last-of-type) td:last-of-type {
+        border-bottom: 0.5rem solid #fafafa;
+      }
+    }
+  }
+
+  .mat-card,
+  .mat-expansion-panel {
+    .mat-table[matTableResponsive] {
+      border: 0.5rem solid #fafafa;
+    }
+  }
+}
