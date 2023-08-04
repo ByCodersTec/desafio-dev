@@ -11,7 +11,7 @@ mvn clean install
 
 2. Install Infraestructure
 ````
-docker-compose up
+docker-compose up db
 ````
 
 3. Start locally
@@ -21,14 +21,9 @@ mvn spring-boot:run
 
 ## Build and run image ##
 
-1. Build Image
+2. Install Infraestructure and Image
 ````
- docker build --tag=desafio-dev:latest .
-````
-
-2. Docker Run 
-````
-docker run --name desafio-dev -p 8080:8080 -e SPRING_PROFILE=dockerdev --network=desafio-dev_default desafio-dev
+docker-compose up
 ````
 
 # API Documentation #
