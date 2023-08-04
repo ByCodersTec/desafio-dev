@@ -1,6 +1,9 @@
 # desafio-dev
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=leonardoscalabrini_desafio-dev&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=leonardoscalabrini_desafio-dev)
+[<img src="https://img.shields.io/badge/dockerhub-imagens-orange.svg?logo=DOCKER">][dockerhub]
+
+[dockerhub]: https://hub.docker.com/r/leonardoscalabrini/desafio-dev
 
 ## Dev quick start ##
 
@@ -21,7 +24,7 @@ mvn spring-boot:run
 
 ## Build and run image ##
 
-2. Install Infraestructure and Image
+1. Install Infraestructure and Image
 ````
 docker-compose up
 ````
