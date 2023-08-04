@@ -39,6 +39,8 @@ Running this project is acctually very easy.
 After having all the previous steps checked you just need to click the run buttom and that's it. Like exampled in the following picture:
 [![Running](https://github.com/charlesfranca/desafio-dev/blob/main/assets/running-project.png?raw=true "Running")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/running-project.png?raw=true "Running")
 
+Don't worry, all the initial data and database creation are being taken care of by the Seed database file under EntityFramework layer
+
 ## Application URL's
 
 After running the docker compose project, you will have 4 applications running. The api, the frontend, the worker that proccess RabbitMQ messages and last but not least the RabbitMQ server.
