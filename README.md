@@ -19,6 +19,8 @@ You will also need some libraries/frameworks installed
 - [NodeJs 18+](https://nodejs.org/en "NodeJs 18+")
 - [Angular Cli 16](https://angular.io/guide/setup-local "Angular Cli 16")
 
+Also, make sure that the ports 8002, 8080, 4200 and 15672 are not being used or change the url's on the project to use another ones
+
 ## Building
 
 This project is using [Visual Studio Community](https://visualstudio.microsoft.com/pt-br/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&passive=false&cid=2030 "Visual Studio Community") (For windows or mac and you can also use visual studio code) and docker
@@ -47,11 +49,11 @@ Here are the URL's you will use:
 - API Swagger documentation: http://localhost:8080/swagger/index.html
 - RabbitMQ: http://localhost:15672/#/
 
-##Rabbit MQ connection info
-Username: guest
-Password: guest
+## Rabbit MQ connection info
+- Username: guest
+- Password: guest
 
 ## SqlServer Connection info
-Host: localhost,8002
-Username: sa
-Password: S3cur3P@ssW0rd!
+- Host: localhost,8002
+- Username: sa
+- Password: S3cur3P@ssW0rd!
