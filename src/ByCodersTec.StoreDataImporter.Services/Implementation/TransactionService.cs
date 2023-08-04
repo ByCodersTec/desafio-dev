@@ -49,7 +49,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             var response = new AddTransactionsFromFileResponse();
             var fileLines = new List<string>();
 
-            var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", orderBy: null, "Columns", null)?.FirstOrDefault()?.Columns;
+            var columns = _docDefinitionRepository.GetAll(x => x.Code == "CNAB", null, "Columns", null)?.FirstOrDefault()?.Columns;
             if (columns?.Any() == true)
             {
                 using (var reader = new StreamReader(request.file))
@@ -82,6 +82,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
                     var props = new Dictionary<string, object>();
                     props.Add("is_last_item", couter == linesToProcess.result.Lines.Count);
                     _messageService.Enqueue(item.ParsedLineItem, props);
+                    response.transactions.Add(item.ParsedLineItem);
                 }
             }
             return response;
@@ -162,7 +163,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
         public GetTransactionsResponse GetTransactions(GetTransactionsRequest request)
         {
             var response = new GetTransactionsResponse();
-            var transactions = _transactionRepository.GetAll(filter: null, request.Paging, includeProperties: "Store,Type", includeSecondProperties: null);
+            var transactions = _transactionRepository.GetAllPaged(filter: null, request.Paging, includeProperties: "Store,Type", includeSecondProperties: null);
             var pagedResponse = new PagedList<TransactionViewModel>(transactions.Select(t => new TransactionViewModel
             {
                 Card = t.Card,

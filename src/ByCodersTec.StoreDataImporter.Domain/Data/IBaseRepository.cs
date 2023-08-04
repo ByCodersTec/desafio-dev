@@ -42,7 +42,7 @@ namespace ByCodersTec.StoreDataImporter.Domain
         /// <returns></returns>
         IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
 
-        PagedList<T> GetAll(Expression<Func<T, bool>> filter, PagingRequestModel paging, string includeProperties, string includeSecondProperties);
+        PagedList<T> GetAllPaged(Expression<Func<T, bool>> filter, PagingRequestModel paging, string includeProperties, string includeSecondProperties);
 
         /// <summary>
         /// Returns all the rows for type T

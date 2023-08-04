@@ -9,6 +9,6 @@ namespace ByCodersTec.StoreDataImporter.Services.Message
 {
     public class AddTransactionsFromFileResponse
     {
-        public List<TransactionViewModel> transactions { get; set; }
+        public List<CnabImportViewModel> transactions { get; set; } = new List<CnabImportViewModel>();
     }
 }

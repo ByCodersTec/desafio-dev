@@ -134,7 +134,7 @@ namespace ByCodersTec.StoreDataImporter.Repository.EF
             }
         }
 
-        public PagedList<T> GetAll(Expression<Func<T, bool>> filter, PagingRequestModel paging, string includeProperties, string includeSecondProperties)
+        public PagedList<T> GetAllPaged(Expression<Func<T, bool>> filter, PagingRequestModel paging, string includeProperties, string includeSecondProperties)
         {
             IQueryable<T> query = this.dbSet;
 
