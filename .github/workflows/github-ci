@@ -1,0 +1,12 @@
+name: GitHub CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    uses: ./.github/workflows/sonarcloud.yml
+  build-image:
+    needs: [quality-check]
+    uses: ./.github/workflows/docker.yml

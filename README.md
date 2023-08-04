@@ -19,6 +19,18 @@ docker-compose up
 mvn spring-boot:run
 ````
 
+## Build and run image ##
+
+1. Build Image
+````
+ docker build --tag=desafio-dev:latest .
+````
+
+2. Docker Run 
+````
+docker run --name desafio-dev -p 8080:8080 -e SPRING_PROFILE=dockerdev --network=desafio-dev_default desafio-dev
+````
+
 # API Documentation #
 
 POST http://localhost:8080/api/v1/upload/cnab
