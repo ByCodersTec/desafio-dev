@@ -1,85 +1,57 @@
-# Desafio programação - para vaga desenvolvedor
+# CNAE Transactions Importer 
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+## Features
 
-# Instruções de entrega do desafio
+- Import transactions from CNAE file
+- Show a paginable and sortable list of transactions
+- Proccess transactions over a queue on RabbitMQ
+- Real time update UI using SignalR socket connection
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
 
-# Descrição do projeto
+## Requirements
 
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
+This project runs over Docker so you gonna need [docker desktop](https://www.docker.com/products/docker-desktop/ "docker desktop") up and running on your machine(linux, mac or windows).
 
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
+You will also need some libraries/frameworks installed
 
-**Sua aplicação web DEVE:**
+- [.Net core 6.0](https://dotnet.microsoft.com/pt-br/download/dotnet/6.0 ".Net core 6.0")
+- [Angular 16](https://angular.io/guide/setup-local "Angular 16")
+- [NodeJs 18+](https://nodejs.org/en "NodeJs 18+")
+- [Angular Cli 16](https://angular.io/guide/setup-local "Angular Cli 16")
 
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
+## Building
 
-**Sua aplicação web não precisa:**
+This project is using [Visual Studio Community](https://visualstudio.microsoft.com/pt-br/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&passive=false&cid=2030 "Visual Studio Community") (For windows or mac and you can also use visual studio code) and docker
 
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
+## Setup startup project
 
-# Documentação do CNAB
+Before running the application, you gonna need to setup the docker compose project as the startup project.
 
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
+To do that open the solution on visual studio and do as the following picture shows:
+[![Setup](https://github.com/charlesfranca/desafio-dev/blob/main/assets/set-startup-project.png?raw=true "Setup")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/set-startup-project.png?raw=true "Setup")
 
-# Documentação sobre os tipos das transações
+## Running the project
 
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
+Running this project is acctually very easy.
 
-# Avaliação
+After having all the previous steps checked you just need to click the run buttom and that's it. Like exampled in the following picture:
+[![Running](https://github.com/charlesfranca/desafio-dev/blob/main/assets/running-project.png?raw=true "Running")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/running-project.png?raw=true "Running")
 
-Seu projeto será avaliado de acordo com os seguintes critérios.
+## Application URL's
 
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
+After running the docker compose project, you will have 4 applications running. The api, the frontend, the worker that proccess RabbitMQ messages and last but not least the RabbitMQ server.
 
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
+Here are the URL's you will use:
 
-# Referência
+- Frontend: http://localhost:4200/
+- API Swagger documentation: http://localhost:8080/swagger/index.html
+- RabbitMQ: http://localhost:15672/#/
 
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
+##Rabbit MQ connection info
+Username: guest
+Password: guest
 
----
-
-Boa sorte!
+## SqlServer Connection info
+Host: localhost,8002
+Username: sa
+Password: S3cur3P@ssW0rd!

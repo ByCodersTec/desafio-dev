@@ -1,6 +1,6 @@
 namespace ByCodersTec.StoreDataImporter.Controllers.Tests
 {
-    public class Tests
+    public class ControllersTests
     {
         [SetUp]
         public void Setup()

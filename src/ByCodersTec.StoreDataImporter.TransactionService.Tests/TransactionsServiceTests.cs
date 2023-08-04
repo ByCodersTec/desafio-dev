@@ -10,7 +10,7 @@ using Moq;
 
 namespace ByCodersTec.StoreDataImporter.TransactionService.Tests
 {
-    public class Tests
+    public class TransactionsServiceTests
     {
         Mock<ITransactionRepository> _transactionRepository = new Mock<ITransactionRepository>();
         Mock<ITransactionTypeRepository> _transactionTypeRepository = new Mock<ITransactionTypeRepository>();
@@ -20,8 +20,8 @@ namespace ByCodersTec.StoreDataImporter.TransactionService.Tests
         Mock<ByCodersTec.StoreDataImporter.Domain.IMessageService> _messageService = new Mock<Domain.IMessageService>();
         IDocParserService _docParserService = new DocParserService.Implementation.DocParserService();
         Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
-
         ITransactionService _transactionService;
+
         [SetUp]
         public void Setup()
         {
