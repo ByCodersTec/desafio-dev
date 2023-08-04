@@ -43,7 +43,7 @@ Don't worry, all the initial data and database creation are being taken care of 
 
 Here is an example of the site running after you hit the play button
 
-[![Running the site](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site.gif?raw=true "Running the site")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site.gif?raw=true "Running the site")
+[![Running the site](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site2.gif?raw=true "Running the site")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site2.gif?raw=true "Running the site")
 
 ## Uploading or deleting data
 
