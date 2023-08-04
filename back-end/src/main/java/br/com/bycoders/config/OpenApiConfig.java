@@ -13,7 +13,7 @@ public class OpenApiConfig {
 	  @Bean
 	  public OpenAPI customOpenAPI() {
 	    return new OpenAPI()
-	      .info(new Info().title("API Calculo de IMC"))
+	      .info(new Info().title("Desafio, desenvolvedor Java Senior - Andrelino"))
 	      .components(new Components());
 	    //http://localhost:8080/swagger-ui/index.html
 	  }

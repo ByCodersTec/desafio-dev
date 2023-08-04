@@ -1,85 +1,42 @@
-# Desafio programação - para vaga desenvolvedor
+# Desafio, Desenvolvedor Java Sênior - Andrelino
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
 
-# Instruções de entrega do desafio
+O desafio foi versionado no GITHUB, dividido em dois subdiretórios no repositório, back-end e front-end.
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
 
-# Descrição do projeto
+# Back-end
+Desenvolvido com o ecossistema Spring, utilizando toda facilidade do spring boot, testes automatizados, documentação swagger. Possui somente um endpoint onde envia o arquivo e recebe um json contendo as informações importadas com o saldo atual da conta.
+<br>
+O banco de dados utilizado foi o postgres tem um arquivo docker-compose.yml que levanta um container com o banco, a configuração de acesso da API ao banco está no projeto, no pacote resource, application.properties um dos principais ponto de configuração, o servidor embedado vai subir na porta 8001.
+<br>
+#Instalando o ambiente local
+<br>
+1 - pré requisito, Java versão 11+ e Maven 3+, Docker e Git.
+<br>
+2 - Faça um clone do projeto em terminal digite <b>git clone https://github.com/andregoiania2/desafio-dev.git</b>.
+<br>
+3 - Vamos levantar o container com o banco de dados, na raiz do diretório <b>desafio-dev</b> existe um arquivo com o nome docker-compose.yml vamos executá-lo com o código em terminal <b>docker-compose up -d</b>.
+<br>
+4 - Verifique se realmente subiu o container <docker ps> deverá ter como resposta a informação dos dois contêineres o do banco <b>postgres</b> e o <b>pgadmin4</b> no container postgres copie o CONTAINER ID. Caso no resultado não apareçam os dois container, rode novamente o docker-compose no passo 3 e repita esse passo 4.
+<br>
+5 - Vamos pegar o numero de IP para ser usado na configuração do banco de dados, execute o comando <b>docker inspect <container_id> | grep "IPAddress"</b> lembre de substituir o container ID, copie o número de IP.
+<br>
+6 - Entre no diretório <b>/desafio-dev/back-end/src/main/resources</b>, abra o arquivo application.properties, e coloque o numero de IP que vc copiou no passo anterior na linha 3 <b>spring.datasource.url=jdbc:postgresql://172.23.0.2:5432/dados
+</b>, salva a alteração.
+<br>
+7- Vamos compilar o projeto para gerar o artefato <b>desafio-dev-andrelino
+.jar</b> entre no diretório <b>/desafio-dev</b> no terminal digite o comando <b>mvn clean install</b>
+<br>.
+8 - Com o comando acima executado após obter sucesso, vai ser criado uma pasta <b>target</b>, vamos agora subir a API, entre na pasta no terminal e execute o comando <b>java -jar desafio-dev-andrelino.jar </b> 
+<br>
+10 - Para acessar o swagger da API, no browser digite http://localhost:8001/swagger-ui/index.html.
+<br>
+11 - Para testar no Postman import o comando <b>curl --location 'http://localhost:8001/transacoes/cnab/upload' \
+--form 'cnab=@"/home/andrelino/temp/CNAB.txt"'
+</b>.
 
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
 
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
+# Front-end
 
-**Sua aplicação web DEVE:**
 
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
 
-**Sua aplicação web não precisa:**
-
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
-
-# Documentação do CNAB
-
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
-
-# Documentação sobre os tipos das transações
-
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
-
-# Avaliação
-
-Seu projeto será avaliado de acordo com os seguintes critérios.
-
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
-
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
-
-# Referência
-
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
-
----
-
-Boa sorte!
