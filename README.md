@@ -41,6 +41,16 @@ After having all the previous steps checked you just need to click the run butto
 
 Don't worry, all the initial data and database creation are being taken care of by the Seed database file under EntityFramework layer
 
+Here is an example of the site running after you hit the play button
+
+[![Running the site](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site.gif?raw=true "Running the site")](https://github.com/charlesfranca/desafio-dev/blob/main/assets/site.gif?raw=true "Running the site")
+
+## Uploading or deleting data
+
+You don't need to worry about importing the same file multiple times, the application is creating a hash identifier using some of the fields from the transaction to avoid repeating data.
+
+If you wanna erase all the data and start over, you just need to use the clean solution option or delete all the containers. The application will recreate the containers if they not exists.
+
 ## Application URL's
 
 After running the docker compose project, you will have 4 applications running. The api, the frontend, the worker that proccess RabbitMQ messages and last but not least the RabbitMQ server.
