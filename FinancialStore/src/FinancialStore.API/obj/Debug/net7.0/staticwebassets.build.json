@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ZYEnreViQID5jO/7Ahx6wqjgeS7+MDB+itWnMjWABDE=",
+  "Source": "FinancialStore.API",
+  "BasePath": "_content/FinancialStore.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
