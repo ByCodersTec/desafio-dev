@@ -24,6 +24,10 @@ namespace Transactions.Infraestructure.Configurations
                 .HasColumnName("owner_name");
 
             builder
+                .Property(t => t.Balance)
+                .HasColumnName("balance");
+
+            builder
                 .Property(t => t.CreatedAt)
                 .HasColumnName("created_at");
 

@@ -25,10 +25,11 @@ namespace Transactions.Infrastructure.Repositories
             return await DbSet.FindAsync(id);
         }
 
-        public virtual async Task Create(TModel model)
+        public virtual async Task<TModel> Create(TModel model)
         {
             DbSet.Add(model);
             await SaveChanges();
+            return model;
         }
 
         public virtual async Task CreateMany(List<TModel> models)

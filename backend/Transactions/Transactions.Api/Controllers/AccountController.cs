@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Transactions.Application.ViewModels;
 using Transactions.Services.Interfaces;
 
 namespace Transactions.Api.Controllers
@@ -15,19 +16,15 @@ namespace Transactions.Api.Controllers
         }
 
         [HttpGet("stores")]
-        public async Task<string> GetStores()
+        public async Task<List<StoreViewModel>> GetStores()
         {
-            await Task.Delay(300);
-
-            return "GetStores Works";
+            return await _accountService.GetStores();
         }
 
         [HttpGet("stores/{storeId}/operations")]
-        public async Task<string> GetOperationsByStore(string storeId)
+        public async Task<List<OperationViewModel>> GetOperationsByStore(string storeId)
         {
-            await Task.Delay(300);
-
-            return "GetOperationsByStore Works";
+            return await _accountService.GetOperationsByStore(Guid.Parse(storeId));
         }
     }
 }

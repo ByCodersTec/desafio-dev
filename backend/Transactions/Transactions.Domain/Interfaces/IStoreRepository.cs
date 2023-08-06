@@ -5,8 +5,6 @@ namespace Transactions.Services.Interfaces
 {
     public interface IStoreRepository : IBaseRepository<StoreModel>
     {
-        Task<List<object>> GetStores();
-
-        Task CreateStore();
+        Task<StoreModel> GetStoreByName(string name);
     }
 }

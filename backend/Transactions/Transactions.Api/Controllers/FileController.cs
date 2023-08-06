@@ -15,11 +15,14 @@ namespace Transactions.Api.Controllers
         }
 
         [HttpPost("import")]
-        public async Task<string> ImportFile()
+        public async Task ImportFile(IFormFile file)
         {
-            await Task.Delay(300);
+            if (file == null)
+            {
+                return;
+            }
 
-            return "ImportFile Works";
+            await _fileService.ProcessFile(file);
         }
     }
 }

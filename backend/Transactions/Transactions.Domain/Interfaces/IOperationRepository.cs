@@ -5,8 +5,6 @@ namespace Transactions.Services.Interfaces
 {
     public interface IOperationRepository : IBaseRepository<OperationModel>
     {
-        Task<List<object>> GetOperationsByStore(string storeId);
-
-        Task CreateOperation();
+        Task<List<OperationModel>> GetOperationsByStore(Guid storeId);
     }
 }

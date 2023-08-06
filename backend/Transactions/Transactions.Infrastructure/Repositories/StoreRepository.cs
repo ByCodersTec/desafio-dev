@@ -1,4 +1,5 @@
-﻿using Transactions.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Transactions.Domain.Models;
 using Transactions.Infraestructure.Context;
 using Transactions.Services.Interfaces;
 
@@ -13,16 +14,9 @@ namespace Transactions.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<object>> GetStores()
+        public async Task<StoreModel> GetStoreByName(string name)
         {
-            await Task.Delay(300);
-
-            return new List<object>();
-        }
-
-        public async Task CreateStore()
-        {
-            await Task.Delay(300);
+            return await _context.Store.FirstOrDefaultAsync(x => x.Name == name);
         }
     }
 }

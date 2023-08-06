@@ -16,6 +16,10 @@ namespace Transactions.Infraestructure.Configurations
                 .HasColumnName("id");
 
             builder
+                  .Property(t => t.StoreId)
+                  .HasColumnName("store_id");
+
+            builder
                 .Property(t => t.TransactionType)
                 .HasColumnName("transaction_type");
 
