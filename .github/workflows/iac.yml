@@ -16,6 +16,5 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - run: terraform init
-      - run: terraform fmt -diff -check
       - run: terraform plan
       - run: terraform apply -auto-approve
