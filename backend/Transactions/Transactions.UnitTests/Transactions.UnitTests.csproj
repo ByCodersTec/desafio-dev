@@ -21,4 +21,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Transactions.Api\Transactions.Api.csproj" />
+    <ProjectReference Include="..\Transactions.Application\Transactions.Application.csproj" />
+    <ProjectReference Include="..\Transactions.CrossCutting\Transactions.CrossCutting.csproj" />
+    <ProjectReference Include="..\Transactions.Domain\Transactions.Domain.csproj" />
+    <ProjectReference Include="..\Transactions.Infrastructure\Transactions.Infrastructure.csproj" />
+    <ProjectReference Include="..\Transactions.Services\Transactions.Services.csproj" />
+  </ItemGroup>
+
 </Project>
