@@ -1,10 +1,10 @@
 terraform {
   required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "3.53"
+      google = {
+        source = "hashicorp/google"
+        version = "4.51.0"
+        }
     }
-  }
   backend "remote" {
     organization = "leonardoscalabrini_github"
     workspaces {
@@ -14,8 +14,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = "${file("${var.cloud_credential}")}"
-
+  credentials = var.cloud_credential
   project = var.project_id
   region  = var.region
   zone    = var.zone
