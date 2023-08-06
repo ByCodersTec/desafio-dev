@@ -15,7 +15,6 @@ terraform {
 
 provider "google" {
   credentials = var.cloud_credential
-
   project = var.project_id
   region  = var.region
   zone    = var.zone
