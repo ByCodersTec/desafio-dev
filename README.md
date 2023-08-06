@@ -29,6 +29,19 @@ mvn spring-boot:run
 docker-compose up
 ````
 
+## Build and run image ##
+
+1. Prepare minikube
+````
+minikube tunnel
+````
+
+2. Apply kube
+````
+kubectl apply -f .\kube\
+````
+
+
 # API Documentation #
 
 POST http://localhost:8080/api/v1/upload/cnab

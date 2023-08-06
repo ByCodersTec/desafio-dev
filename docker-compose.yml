@@ -23,6 +23,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://desafio-dev-db:5432/dev
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_PROFILES_ACTIVE=develop
     depends_on:
       - db
 volumes:

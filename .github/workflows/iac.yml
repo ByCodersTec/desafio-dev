@@ -1,0 +1,21 @@
+name: IaC workflow
+
+on:
+  workflow_call:
+    secrets:
+      TF_API_TOKEN:
+        required: true
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    name: IaC
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - run: terraform init
+      - run: terraform fmt -diff -check
+      - run: terraform plan
+      - run: terraform apply -auto-approve
