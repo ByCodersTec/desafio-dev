@@ -20,14 +20,14 @@ provider "google" {
   zone    = var.zone
 }
 
-resource "google_cloud_run_service" "desafio-dev" {
-  name     = "desafio-dev"
+resource "google_cloud_run_v2_job" "desafio-dev" {
+    name     = "desafio-dev"
     location = var.region
 
     template {
       spec {
         containers {
-          image = "leonardoscalabrini/desafio-dev:9"
+          image = "leonardoscalabrini/desafio-dev:latest"
         }
       }
     }
