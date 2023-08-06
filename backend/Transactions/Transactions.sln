@@ -3,40 +3,45 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Api", "Transactions.Api\Transactions.Api.csproj", "{4BDA7A08-03EB-4423-829E-C3733C1A8093}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Api", "Transactions.Api\Transactions.Api.csproj", "{4BDA7A08-03EB-4423-829E-C3733C1A8093}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2AC49748-E16B-4E4B-B7D1-C24510D19188} = {2AC49748-E16B-4E4B-B7D1-C24510D19188}
 		{8978BD58-F9DC-4828-90A3-B669C54CDFA3} = {8978BD58-F9DC-4828-90A3-B669C54CDFA3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Domain", "Transactions.Domain\Transactions.Domain.csproj", "{AE35FFFE-119C-4298-80FB-E416CC7B9B27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Domain", "Transactions.Domain\Transactions.Domain.csproj", "{AE35FFFE-119C-4298-80FB-E416CC7B9B27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Infrastructure", "Transactions.Infrastructure\Transactions.Infrastructure.csproj", "{E62BC5F4-6557-49BA-9CF9-A534FF146B67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Infrastructure", "Transactions.Infrastructure\Transactions.Infrastructure.csproj", "{E62BC5F4-6557-49BA-9CF9-A534FF146B67}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AE35FFFE-119C-4298-80FB-E416CC7B9B27} = {AE35FFFE-119C-4298-80FB-E416CC7B9B27}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Services", "Transactions.Services\Transactions.Services.csproj", "{2AC49748-E16B-4E4B-B7D1-C24510D19188}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Services", "Transactions.Services\Transactions.Services.csproj", "{2AC49748-E16B-4E4B-B7D1-C24510D19188}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E62BC5F4-6557-49BA-9CF9-A534FF146B67} = {E62BC5F4-6557-49BA-9CF9-A534FF146B67}
 		{EEE3B4B9-32BA-44CF-A8C6-BBD7E12727AF} = {EEE3B4B9-32BA-44CF-A8C6-BBD7E12727AF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.CrossCutting", "Transactions.CrossCutting\Transactions.CrossCutting.csproj", "{8978BD58-F9DC-4828-90A3-B669C54CDFA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.CrossCutting", "Transactions.CrossCutting\Transactions.CrossCutting.csproj", "{8978BD58-F9DC-4828-90A3-B669C54CDFA3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2AC49748-E16B-4E4B-B7D1-C24510D19188} = {2AC49748-E16B-4E4B-B7D1-C24510D19188}
 		{AE35FFFE-119C-4298-80FB-E416CC7B9B27} = {AE35FFFE-119C-4298-80FB-E416CC7B9B27}
 		{E62BC5F4-6557-49BA-9CF9-A534FF146B67} = {E62BC5F4-6557-49BA-9CF9-A534FF146B67}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Application", "Transactions.Application\Transactions.Application.csproj", "{EEE3B4B9-32BA-44CF-A8C6-BBD7E12727AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Application", "Transactions.Application\Transactions.Application.csproj", "{EEE3B4B9-32BA-44CF-A8C6-BBD7E12727AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AE35FFFE-119C-4298-80FB-E416CC7B9B27} = {AE35FFFE-119C-4298-80FB-E416CC7B9B27}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.UnitTests", "Transactions.UnitTests\Transactions.UnitTests.csproj", "{7CCDE66A-D341-4AEC-8CD3-1BDDF89133D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.UnitTests", "Transactions.UnitTests\Transactions.UnitTests.csproj", "{7CCDE66A-D341-4AEC-8CD3-1BDDF89133D1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4BDA7A08-03EB-4423-829E-C3733C1A8093} = {4BDA7A08-03EB-4423-829E-C3733C1A8093}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{608C75C5-C865-49AE-9941-F9C19629F1DD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

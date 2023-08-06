@@ -1,12 +1,16 @@
-﻿using Transactions.Services.Interfaces;
+﻿using Transactions.Domain.Models;
+using Transactions.Infraestructure.Context;
+using Transactions.Services.Interfaces;
 
 namespace Transactions.Infrastructure.Repositories
 {
-    public class OperationRepository : IOperationRepository
+    public class OperationRepository : BaseRepository<OperationModel>, IOperationRepository
     {
-        public OperationRepository()
-        {
+        protected readonly ApplicationDbContext _context;
 
+        public OperationRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
         }
 
         public async Task<List<object>> GetOperationsByStore(string storeId)

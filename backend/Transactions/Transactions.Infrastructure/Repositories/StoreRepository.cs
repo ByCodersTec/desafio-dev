@@ -1,12 +1,16 @@
-﻿using Transactions.Services.Interfaces;
+﻿using Transactions.Domain.Models;
+using Transactions.Infraestructure.Context;
+using Transactions.Services.Interfaces;
 
 namespace Transactions.Infrastructure.Repositories
 {
-    public class StoreRepository : IStoreRepository
+    public class StoreRepository : BaseRepository<StoreModel>, IStoreRepository
     {
-        public StoreRepository()
-        {
+        protected readonly ApplicationDbContext _context;
 
+        public StoreRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
         }
 
         public async Task<List<object>> GetStores()

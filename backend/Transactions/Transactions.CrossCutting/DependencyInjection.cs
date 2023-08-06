@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Transactions.Infraestructure.Context;
 using Transactions.Infrastructure.Repositories;
 using Transactions.Services.Interfaces;
 using Transactions.Services.Services;
@@ -21,6 +23,7 @@ namespace Transactions.CrossCutting
             #endregion
 
             #region DbContexts
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
             #endregion
         }
     }
