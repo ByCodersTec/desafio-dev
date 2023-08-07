@@ -35,7 +35,14 @@ public class UploadController {
     	    return mv;
         }
         
-        return uploadService.upload(cnab);       
+        try {
+			return uploadService.upload(cnab);
+		} catch (Exception e) {
+			ModelAndView mv = new ModelAndView("cnab");
+    	    mv.addObject("globalMessage","Erro interno. "+e.getMessage());
+    	    e.printStackTrace();
+    	    return mv;
+		}       
       
     }
 	

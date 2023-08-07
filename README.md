@@ -48,7 +48,7 @@ Existe apenas duas pagina Html, uma que o usuário escolhe o arquivo em sua máq
 
 #Instalando em ambiente local
 <br>
-1 - Como já fizemos o clone do projeto para instalar o back-end, vamos apenas compilar o projeto, para gerar o artefato <b>desafio-dev-andrelino-front.jar</b>. Já dentro da pasta /desafio-dev/front-end no terminal digite o comando <b>mvn clean install</b>
+1 - Como já fizemos o clone do projeto para instalar o back-end, vamos apenas compilar o projeto, para gerar o artefato <b>desafio-dev-andrelino-front.jar</b>. Já dentro da pasta <b>/desafio-dev/front-end/desafio-dev-andrelino-front</b> no terminal digite o comando <b>mvn clean install</b>
 <br>
 2 - Com o comando acima executado após obter sucesso, vai ser criado uma pasta <b>target</b>, vamos agora subir a API, entre na pasta no terminal e execute o comando <b>java -jar desafio-dev-andrelino-front.jar </b> 
 <br>
@@ -59,6 +59,8 @@ Existe apenas duas pagina Html, uma que o usuário escolhe o arquivo em sua máq
 <br>
 1 - Corrigir testes, em TransacoesControllerTest do back-end e UploadControllerTest do front-end ambos estão com problemas com o MockMultipartFile de enviar o arquivo nulo.
 <br>
-2 - Não foi testado e nem desenvolvido o comportamento de enviar um arquivo fora do leiaute, que com certeza terá muitas exceções.
+2 - UploadServiceTest precisa encontrar uma forma do Mock do RestTemplat funcionar, devido não conseguir Mockito.any() nos parâmetros pq existem métodos ambíguos.
+<br>
+3 - Não foi testado e nem desenvolvido o comportamento de enviar um arquivo fora do leiaute, que com certeza terá muitas exceções.
 
 
