@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit(): void {
-    this.homeService.getBooksDividedByYear()
+    this.homeService.getStores()
     .subscribe(data => {
       this.stores = data
     },

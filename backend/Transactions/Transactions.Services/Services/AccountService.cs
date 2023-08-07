@@ -30,11 +30,23 @@ namespace Transactions.Services.Services
             return _mapper.Map<List<StoreViewModel>>(stores);
         }
 
-        public async Task<List<OperationViewModel>> GetOperationsByStore(Guid storeId)
+        public async Task<OperationsDetailsDto> GetOperationsByStore(Guid storeId)
         {
+            var store = await _storeRepository.Find(storeId);
+
+            if (store == null)
+            {
+                return null;
+            }
+
             var operations = await _operationRepository.GetOperationsByStore(storeId);
 
-            return _mapper.Map<List<OperationViewModel>>(operations);
+            return new OperationsDetailsDto()
+            {
+                StoreName = store.Name,
+                Balance = Convert.ToDouble(store.Balance) / 100,
+                Operations = _mapper.Map<List<OperationViewModel>>(operations)
+            };
         }
 
         public async Task ProcessOperations(List<FileFormatDto> operations)

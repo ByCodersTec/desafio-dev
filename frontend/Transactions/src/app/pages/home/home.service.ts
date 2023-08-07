@@ -12,7 +12,7 @@ export class HomeService {
 
   baseUrl = environment.apiUrl
 
-  getBooksDividedByYear() {
+  getStores() {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })

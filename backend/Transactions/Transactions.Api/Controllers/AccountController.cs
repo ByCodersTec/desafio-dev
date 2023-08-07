@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Transactions.Application.Dtos;
 using Transactions.Application.ViewModels;
 using Transactions.Services.Interfaces;
 
@@ -22,7 +23,7 @@ namespace Transactions.Api.Controllers
         }
 
         [HttpGet("stores/{storeId}/operations")]
-        public async Task<List<OperationViewModel>> GetOperationsByStore(string storeId)
+        public async Task<OperationsDetailsDto> GetOperationsByStore(string storeId)
         {
             return await _accountService.GetOperationsByStore(Guid.Parse(storeId));
         }

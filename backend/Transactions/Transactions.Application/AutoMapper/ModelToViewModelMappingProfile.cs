@@ -16,7 +16,7 @@ namespace Transactions.Application.AutoMapper
 
             #region Operation
             CreateMap<OperationModel, OperationViewModel>()
-                .ForMember(vm => vm.Transaction, opt => opt.MapFrom(m => Regex.Replace(m.TransactionType.ToString(), "([A-Z])", " $1").TrimStart()))
+                .ForMember(vm => vm.Transaction, opt => opt.MapFrom(m => Regex.Replace(m.TransactionType.ToString(), "([A-Z](?=[a-z]))", " $1").TrimStart()))
                 .ForMember(vm => vm.Value, opt => opt.MapFrom(m => Convert.ToDouble(m.Value) / 100));
             #endregion
         }

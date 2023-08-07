@@ -6,7 +6,7 @@ namespace Transactions.Services.Interfaces
     public interface IAccountService
     {
         Task<List<StoreViewModel>> GetStores();
-        Task<List<OperationViewModel>> GetOperationsByStore(Guid storeId);
+        Task<OperationsDetailsDto> GetOperationsByStore(Guid storeId);
         Task ProcessOperations(List<FileFormatDto> operations);
     }
 }
