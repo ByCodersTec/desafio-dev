@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  database-container:
+    container_name: database-container
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=MyStrongP@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "9223:1433"
+    command: ["/opt/mssql/bin/sqlservr"]
+
+  backend-container:
+    container_name: backend-container
+    build:
+      context: ./backend/Transactions
+      dockerfile: Dockerfile
+    ports:
+      - "9222:80"
+    depends_on:
+      - database-container
+
+  frontend-container:
+    container_name: frontend-container
+    build:
+      context: ./frontend/Transactions
+      dockerfile: Dockerfile
+    ports:
+      - "9221:80"
+    depends_on:
+      - backend-container
