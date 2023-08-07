@@ -32,7 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <None Update="Services\File\CNAB-Test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
