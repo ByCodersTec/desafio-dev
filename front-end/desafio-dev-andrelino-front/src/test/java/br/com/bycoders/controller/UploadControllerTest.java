@@ -1,38 +1,82 @@
 package br.com.bycoders.controller;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.net.URI;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.bycoders.dto.OperacoesDTO;
-import br.com.bycoders.service.TransacoesService;
+import br.com.bycoders.dto.TransacoesDTO;
+import br.com.bycoders.service.UploadService;
 
-@WebMvcTest(TransacoesController.class)
-class TransacoesControllerTest {
-
+@RunWith(SpringRunner.class)
+@WebMvcTest(UploadController.class)
+class UploadControllerTest {
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private TransacoesService service;
+	private UploadService service;
+
+	@Test
+	void testCnab() throws Exception {
+		  mockMvc.perform(get("/cnab"))
+          .andExpect(status().isOk())
+          .andExpect(view().name("cnab"));          
+	}
+	
+	@Test
+	void testBarra() throws Exception {
+		  mockMvc.perform(get("/"))
+          .andExpect(status().isOk())
+          .andExpect(view().name("cnab"));          
+	}
 	
 	@Test
 	void testUpload() throws Exception {
-		URI uri = new URI("transacoes/cnab/upload");
+		List<OperacoesDTO> operacoes = new ArrayList<>();
+		OperacoesDTO op = new OperacoesDTO();
+		op.setNomeLoja("Bar do João");
+		op.setDonoLoja("João Apolinario");
+		List<TransacoesDTO> lista = new ArrayList<>();
+		TransacoesDTO transacoesDTO = new TransacoesDTO();
+		transacoesDTO.setId(1l);
+		transacoesDTO.setCartao("223xxx355");
+		transacoesDTO.setCpf("185.646.223-99");
+		transacoesDTO.setData(LocalDate.of(2023, 8, 5));
+		transacoesDTO.setHora(LocalTime.of(10, 22, 15));
+		transacoesDTO.setTipo("1 - Credito");
+		transacoesDTO.setValor(BigDecimal.valueOf(1500.0));
+		lista.add(transacoesDTO);
+		op.setTransacoes(lista);		
+		op.setSaldoConta(BigDecimal.ZERO);
+		operacoes.add(op);
+		
+		ModelAndView modelAndView = new ModelAndView("success", "operacoes", operacoes);
+		modelAndView.addObject("globalMessage", "Arquivo importado com sucesso");
+		
+		when(service.upload(Mockito.any())).thenReturn(modelAndView);
+		
 		StringBuilder sb = new StringBuilder("3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO       \n"
 				+ "5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO Ó - MATRIZ\n"
 				+ "3201903010000012200845152540736777****1313172712MARCOS PEREIRAMERCADO DA AVENIDA\n"
@@ -61,21 +105,28 @@ class TransacoesControllerTest {
 			    MediaType.TEXT_PLAIN_VALUE,
 			    sb.toString().getBytes()
 			);
-        
-		List<OperacoesDTO> listOperacoes = new ArrayList<>();
-		listOperacoes.add(OperacoesDTO.builder().build());
 		
-		when(service.upload(arquivo)).thenReturn(listOperacoes);
-		
-		MvcResult result = mockMvc
-		.perform(MockMvcRequestBuilders
-				.multipart(uri)				
-				.file(arquivo))				
-				.andExpect(MockMvcResultMatchers.status().is4xxClientError())
-				.andReturn();
-		
-		assertNotNull(result);
-		
+		mockMvc.perform(MockMvcRequestBuilders				
+				.multipart("/upload")
+		.file(arquivo))		
+        .andExpect(status().is4xxClientError());		
 	}
 
+	@Test
+	void testSemArquivo() throws Exception {
+		
+		//when(service.upload(Mockito.any())).thenReturn(modelAndView);
+
+		MockMultipartFile arquivo = new MockMultipartFile(
+			    "arquivo",
+			    "cnab.txt",
+			    MediaType.TEXT_PLAIN_VALUE,
+			    new String().toString().getBytes()
+			);
+		
+		mockMvc.perform(MockMvcRequestBuilders				
+				.multipart("/upload")
+		.file(arquivo))		
+        .andExpect(status().is4xxClientError());		
+	}
 }

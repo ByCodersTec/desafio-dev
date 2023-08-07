@@ -21,7 +21,7 @@ public class TransacoesController {
 	
 	@Operation(summary = "Upload de arquivo CNAB e input dos dados")	 
 	@PostMapping("/cnab/upload")	
-	public List<OperacoesDTO> upload(@RequestParam("cnab") MultipartFile file) {		
+	public List<OperacoesDTO> upload(@RequestParam(name = "cnab")  MultipartFile file) {		
 		return service.upload(file);		
 	}
 }
