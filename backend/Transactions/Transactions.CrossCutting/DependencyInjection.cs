@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Transactions.Domain.Interfaces;
 using Transactions.Infraestructure.Context;
 using Transactions.Infrastructure.Repositories;
 using Transactions.Services.Interfaces;

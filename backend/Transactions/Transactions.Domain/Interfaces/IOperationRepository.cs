@@ -1,7 +1,6 @@
-﻿using Transactions.Domain.Interfaces;
-using Transactions.Domain.Models;
+﻿using Transactions.Domain.Models;
 
-namespace Transactions.Services.Interfaces
+namespace Transactions.Domain.Interfaces
 {
     public interface IOperationRepository : IBaseRepository<OperationModel>
     {

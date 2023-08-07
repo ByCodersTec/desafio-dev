@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Transactions.Domain.Interfaces;
 using Transactions.Domain.Models;
 using Transactions.Infraestructure.Context;
-using Transactions.Services.Interfaces;
 
 namespace Transactions.Infrastructure.Repositories
 {

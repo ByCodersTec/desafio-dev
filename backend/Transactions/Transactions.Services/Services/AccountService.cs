@@ -2,6 +2,7 @@
 using Transactions.Application.Dtos;
 using Transactions.Application.ViewModels;
 using Transactions.Domain.Enums;
+using Transactions.Domain.Interfaces;
 using Transactions.Domain.Models;
 using Transactions.Services.Interfaces;
 

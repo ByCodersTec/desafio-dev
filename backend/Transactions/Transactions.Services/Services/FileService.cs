@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Transactions.Application.Dtos;
+using Transactions.Domain.Interfaces;
 using Transactions.Services.Interfaces;
 
 namespace Transactions.Services.Services
