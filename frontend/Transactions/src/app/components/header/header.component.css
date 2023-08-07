@@ -1,0 +1,16 @@
+.header {
+    height: 60px;
+    background-color: #2a8c4a;
+    padding: 9px;
+    width: 100%;
+    color: #FFFFFF;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+
+    img {
+        margin-right: 8px;
+    }
+}
