@@ -10,7 +10,8 @@ namespace Transactions.Application.AutoMapper
         public ModelToViewModelMappingProfile()
         {
             #region Store
-            CreateMap<StoreModel, StoreViewModel>();
+            CreateMap<StoreModel, StoreViewModel>()
+            .ForMember(vm => vm.Balance, opt => opt.MapFrom(m => Convert.ToDouble(m.Balance) / 100));
             #endregion
 
             #region Operation
