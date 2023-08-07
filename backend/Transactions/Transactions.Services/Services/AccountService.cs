@@ -45,7 +45,7 @@ namespace Transactions.Services.Services
             {
                 StoreName = store.Name,
                 Balance = Convert.ToDouble(store.Balance) / 100,
-                Operations = _mapper.Map<List<OperationViewModel>>(operations)
+                Operations = _mapper.Map<List<OperationViewModel>>(operations.OrderByDescending(x => x.Date))
             };
         }
 

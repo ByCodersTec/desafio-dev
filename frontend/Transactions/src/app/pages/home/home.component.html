@@ -1,3 +1,8 @@
+<div class="text-center">
+    <input class="form-control" type="file" (change)="onChange($event)">
+    <button (click)="onUpload()" mat-raised-button class="btn btn-primary" [disabled]="!allowUpload"> Upload </button>
+</div>
+
 <table mat-table [dataSource]="stores" class="mat-elevation-z8 table-container">
 
     <ng-container matColumnDef="storeName">

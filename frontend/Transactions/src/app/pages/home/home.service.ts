@@ -19,4 +19,13 @@ export class HomeService {
 
     return this.http.get<IStore[]>(`${this.baseUrl}/account/stores`, { headers })
   }
+
+  upload(file: File)
+  {
+    const formData = new FormData(); 
+  
+    formData.append("file", file, file.name);
+      
+    return this.http.post(`${this.baseUrl}/file/import`, formData)
+  }
 }
