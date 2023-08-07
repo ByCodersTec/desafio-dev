@@ -48,7 +48,7 @@
 				                    <td class="col-md-4" th:text="${transacao.tipo}"></td>
 				                    <td class="col-md-1" th:text="${transacao.cpf}"></td>
 				                    <td class="col-md-1" th:text="${transacao.cartao}"></td>
-				                    <td class="col-md-2 text-right"  th:if="${transacao.valor} != null" th:text="${'R$ ' + #numbers.formatDecimal(transacao.valor, 3, 'POINT', 2, 'COMMA')}"></td>
+				                    <td class="col-md-2 text-right"  th:if="${transacao.valor} != null" th:text="${'R$ ' + #numbers.formatDecimal(transacao.valor, 1, 'POINT', 2, 'COMMA')}"></td>
 				                </tr>
 				            </table>
 			            </div>
