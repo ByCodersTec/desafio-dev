@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Upload CNAB</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<div th:replace="~{fragments :: head}" />
+</head>
+
+<body>
+	<div th:replace="~{fragments :: logo}"></div>
+	
+
+	<div class="container mb-3">
+		<div th:replace="~{fragments :: titulo('Enviar arquivo CNAB')}"></div>
+		
+		<div class="alert alert-danger mb-2" th:if="${globalMessage}"
+			th:text="${globalMessage}">mensagem</div>
+		
+		<form action="/upload" method="POST" class="g-3 form-floating" enctype="multipart/form-data">
+			<div class="col-8 mb-2">
+			 	<label for="formFile" class="form-label mb-2">Arquivo CNAB</label>
+		    	<input class="form-control mb-2" id="formFile" type="file" name="cnab" />	
+			</div>
+			<div class="col-8">
+			    <button class="btn btn-primary active btn-lg mb-2" type="submit">Enviar</button>
+			</div>
+		</form>
+	</div>
+	
+
+	<div th:replace="fragments :: footer" />
+</body>
+</html>

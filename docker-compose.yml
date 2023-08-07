@@ -1,0 +1,41 @@
+version: '3.8'
+
+networks:
+  database:
+    ipam:
+      config:
+        - subnet: "172.28.0.0/16"
+
+services:
+  postgres:
+    networks:
+      database:
+        aliases:
+          - postgres_db
+    image: "postgres"
+    container_name: database-desafio
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=dados      
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql  
+     
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "andrelinom@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - "54321:80"
+    networks:
+      - database  
+    depends_on:
+      - postgres
+      
+  
+

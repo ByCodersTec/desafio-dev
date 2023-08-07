@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Arquivo CNAB importado com sucesso</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<div th:replace="~{fragments :: head}" />
+</head>
+
+<body>
+	<div th:replace="~{fragments :: logo}"></div>
+	
+
+	<div class="container">
+		<div class="container">
+			<div th:replace="~{fragments :: titulo('Lançamentos que foram importados.')}">
+		</div>
+		
+		<div class="alert alert-success mb-2" th:if="${globalMessage}"
+				th:text="${globalMessage}">mensagem
+		</div>
+		
+	
+			
+			<table class="col-md-12">			       
+			    <tr th:each="operacao : ${operacoes}">
+			         <td>
+						<div class="row mb-2">
+								<div class="col-md-4"><b>Loja:</b> <span th:text="${operacao.nomeLoja}">Ze</span></div>
+								<div class="col-md-4"><b>Propriétario:</b> <span th:text="${operacao.donoLoja}">1Z</span></div>
+								<div class="col-md-4 text-right"><b>Saldo:</b> <span th:if="${operacao.saldoConta} != null" th:text="${'R$ ' + #numbers.formatDecimal(operacao.saldoConta, 3, 'POINT', 2, 'COMMA')}">200,99</span></div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12"><b>Operações:</b></div>
+						</div>	
+						<div class="row mb-2">	            
+				            <table class="table table-responsive table-bordered">
+				                <tr>				                    
+				                    <th>Data</th>
+				                    <th>Hora</th>
+				                    <th>Tipo</th>
+				                    <th>CPF</th>
+				                    <th>Cartão</th>
+				                    <th>Valor</th>
+				                </tr>
+				                	<tr class="col-md-1" th:each="transacao : ${operacao.transacoes}">				                    
+				                    <td class="col-md-1" th:text="${#temporals.format(transacao.data, 'dd/MM/yyyy')}"></td>
+				                    <td class="col-md-1" th:text="${#temporals.format(transacao.hora, 'hh:mm:ss')}"></td>
+				                    <td class="col-md-4" th:text="${transacao.tipo}"></td>
+				                    <td class="col-md-1" th:text="${transacao.cpf}"></td>
+				                    <td class="col-md-1" th:text="${transacao.cartao}"></td>
+				                    <td class="col-md-2 text-right"  th:if="${transacao.valor} != null" th:text="${'R$ ' + #numbers.formatDecimal(transacao.valor, 1, 'POINT', 2, 'COMMA')}"></td>
+				                </tr>
+				            </table>
+			            </div>
+			        </td>
+			    </tr>    
+			
+		</table>
+		
+		
+		
+	</div>
+
+	<div class="espacoFinal"></div>
+
+	<div th:replace="fragments :: footer" />
+</body>
+</html>

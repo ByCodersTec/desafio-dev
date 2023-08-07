@@ -1,0 +1,37 @@
+<head th:fragment="head">
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">	
+	<link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+	<style>
+		.logo-container {
+			background-color: #191970;
+			color: #FFF;
+		}
+		.logo {
+			font-family: 'Handlee', cursive;
+			font-size: 1.5rem;
+		}
+	</style>
+</head>
+
+<div th:fragment="logo" class="logo-container mb-3 p-3 d-flex justify-content-between">
+	<span class="logo">CNAB</span>	
+</div>	
+
+<div th:fragment="titulo(valor)" class="jumbotron mb-2">
+	<h1 class="display-6" th:text="${valor}"></h1>
+</div>
+
+<div th:fragment="footer" class="footer navbar-fixed-bottom  mb-2">
+
+		<div class="container">
+
+			<footer>
+				<address>
+					<!-- this is footer -->
+					&copy; 2023 www.andrelino.com.br 
+				</address>
+			</footer>
+		</div>
+
+	</div>
