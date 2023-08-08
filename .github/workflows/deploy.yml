@@ -19,14 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
         with:
-          version: ${{ secrets.VERSION }}
-          project_id: ${{ secrets.PROJECT_ID }}
           service_account_key: ${{ secrets.CLOUD_CREDENTIAL }}
+          project_id: ${{ secrets.PROJECT_ID }}
+      - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+        with:
+          cluster_name: ${{ env.CLUSTER_NAME }}
+          location: ${{ env.ZONE }}
+          credentials: ${{ secrets.CLOUD_CREDENTIAL }}
       - run: |
-          gcloud config set project ${{ secrets.PROJECT_ID }}
-          gcloud config set compute/zone ${{ secrets.ZONE }}
-          gcloud config set compute/zone ${{ secrets.CLUSTER_NAME }}
-      - run: |
-          kubectl apply -f .\kube\
+        kubectl apply -f .\kube\
+        kubectl rollout status deployment/desafio-dev
+        kubectl get services -o wide
+
