@@ -31,7 +31,8 @@ spec:
     spec:
       containers:
         - name: desafio-dev
-          image: leonardoscalabrini/desafio-dev:8
+          image: leonardoscalabrini/desafio-dev:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

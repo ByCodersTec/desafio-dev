@@ -29,4 +29,4 @@ jobs:
           gcloud config set compute/zone ${{ secrets.ZONE }}
           gcloud config set compute/zone ${{ secrets.CLUSTER_NAME }}
       - run: |
-          kubectl apply -f deployment.yml
+          kubectl apply -f .\kube\
