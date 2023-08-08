@@ -24,7 +24,6 @@ jobs:
     needs: [ create-infrastructure ]
     uses: ./.github/workflows/deploy.yml
     secrets:
-      VERSION: ${{ secrets.VERSION }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
       CLOUD_CREDENTIAL: ${{ secrets.CLOUD_CREDENTIAL }}
       ZONE: ${{ secrets.ZONE }}
