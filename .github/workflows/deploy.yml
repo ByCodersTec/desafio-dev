@@ -24,7 +24,7 @@ jobs:
         with:
           cluster_name: ${{ secrets.CLUSTER_NAME }}
           location: ${{ secrets.ZONE }}
-      - run: kubectl apply -f .\kube\
+      - run: kubectl apply -f kube\
       - run: kubectl rollout status deployment/desafio-dev
       - run: kubectl get services -o wide
 
