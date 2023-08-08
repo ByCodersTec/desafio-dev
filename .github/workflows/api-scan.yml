@@ -11,6 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     name: API Scan
     steps:
-    - uses: zaproxy/action-api-scan@v0.4.0
-      with:
-        target: ${{ secrets.END_POINT }}
+      - uses: zaproxy/action-api-scan@v0.4.0
+        with:
+          target: ${{ secrets.END_POINT }}
