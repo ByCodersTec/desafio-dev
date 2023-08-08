@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: desafio-dev
+  labels:
+    app: desafio-dev
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: "TCP"
+  selector:
+    app: desafio-dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desafio-dev
+  labels:
+    app: desafio-dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: desafio-dev
+  template:
+    metadata:
+      labels:
+        app: desafio-dev
+    spec:
+      containers:
+        - name: desafio-dev
+          image: leonardoscalabrini/desafio-dev:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/db?useUnicode=yes&characterEncoding=UTF-8"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "password"

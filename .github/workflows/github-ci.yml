@@ -1,0 +1,35 @@
+name: GitHub CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    uses: ./.github/workflows/sonarcloud.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  build-image:
+    needs: [quality-check]
+    uses: ./.github/workflows/docker.yml
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  create-infrastructure:
+    needs: [ build-image ]
+    uses: ./.github/workflows/iac.yml
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  deploy:
+    needs: [ create-infrastructure ]
+    uses: ./.github/workflows/deploy.yml
+    secrets:
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      CLOUD_CREDENTIAL: ${{ secrets.CLOUD_CREDENTIAL }}
+      ZONE: ${{ secrets.ZONE }}
+      CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+  api-scan:
+    needs: [ deploy ]
+    uses: ./.github/workflows/api-scan.yml
+    secrets:
+      END_POINT: ${{ secrets.END_POINT }}

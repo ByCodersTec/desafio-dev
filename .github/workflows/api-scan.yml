@@ -1,0 +1,16 @@
+name: API Scan workflow
+
+on:
+  workflow_call:
+    secrets:
+      END_POINT:
+        required: true
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    name: API Scan
+    steps:
+      - uses: zaproxy/action-api-scan@v0.4.0
+        with:
+          target: ${{ secrets.END_POINT }}

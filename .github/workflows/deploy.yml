@@ -1,0 +1,30 @@
+name: Build and Publish Docker image
+
+on:
+  workflow_call:
+    secrets:
+      PROJECT_ID:
+        required: true
+      CLOUD_CREDENTIAL:
+        required: true
+      ZONE:
+        required: true
+      CLUSTER_NAME:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.CLOUD_CREDENTIAL }}
+      - uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+          location: ${{ secrets.ZONE }}
+      - run: kubectl apply -f kube\
+      - run: kubectl rollout status deployment/desafio-dev
+      - run: kubectl get services -o wide
+
