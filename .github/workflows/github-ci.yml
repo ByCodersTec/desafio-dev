@@ -28,3 +28,8 @@ jobs:
       CLOUD_CREDENTIAL: ${{ secrets.CLOUD_CREDENTIAL }}
       ZONE: ${{ secrets.ZONE }}
       CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+  api-scan:
+    needs: [ deploy ]
+    uses: ./.github/workflows/api-scan.yml
+    secrets:
+      END_POINT: ${{ secrets.END_POINT }}
