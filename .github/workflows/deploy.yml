@@ -28,6 +28,7 @@ jobs:
           cluster_name: ${{ secrets.CLUSTER_NAME }}
           location: ${{ secrets.ZONE }}
           credentials: ${{ secrets.CLOUD_CREDENTIAL }}
+          project_id: ${{ secrets.PROJECT_ID }}
       - run: kubectl apply -f .\kube\
       - run: kubectl rollout status deployment/desafio-dev
       - run: kubectl get services -o wide
