@@ -26,16 +26,16 @@ resource "google_service_account" "default" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "gke-cluster"
-  location = "us-central1"
+  name     = var.cluster_name
+  location = var.region
 
   remove_default_node_pool = true
   initial_node_count       = 1
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
-  name       = "node-pool"
-  location   = "us-central1"
+  name       = var.node_name
+  location   = var.region
   cluster    = google_container_cluster.primary.name
   node_count = 1
 

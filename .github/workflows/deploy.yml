@@ -1,0 +1,32 @@
+name: Build and Publish Docker image
+
+on:
+  workflow_call:
+    secrets:
+      VERSION:
+        required: true
+      PROJECT_ID:
+        required: true
+      CLOUD_CREDENTIAL:
+        required: true
+      ZONE:
+        required: true
+      CLUSTER_NAME:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: ${{ secrets.VERSION }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.CLOUD_CREDENTIAL }}
+      - run: |
+          gcloud config set project ${{ secrets.PROJECT_ID }}
+          gcloud config set compute/zone ${{ secrets.ZONE }}
+          gcloud config set compute/zone ${{ secrets.CLUSTER_NAME }}
+      - run: |
+          kubectl apply -f deployment.yml
