@@ -1,0 +1,47 @@
+.form-control {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 6px;
+    padding: 6px;
+    width: 500px;
+}
+
+.table-container {
+    border-top: 1px solid black;
+}
+
+.visualize {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+table 
+{
+    width: 100%;
+}
+
+.actionsColumn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-row {
+    border-bottom-width: 1px !important;
+    border-bottom-color: rgba(0,0,0,.12) !important;
+    border-bottom-style: solid !important;
+}
+
+.width-15 {
+    width: 15% !important;
+}
+
+.width-10 {
+    width: 10% !important;
+}
+
+.width-5 {
+    width: 5% !important;
+}

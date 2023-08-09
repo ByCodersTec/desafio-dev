@@ -1,0 +1,14 @@
+.header {
+    height: 60px;
+    background-color: #2a8c4a;
+    padding: 9px;
+    color: #FFFFFF;
+}
+
+.label-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    height: 55px;
+}

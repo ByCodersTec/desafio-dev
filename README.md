@@ -1,85 +1,113 @@
-# Desafio programação - para vaga desenvolvedor
+# Project: Transactions
+# - Tecnologies
+## Backend:
+ - Clean Architecture
+ - .NET 6
+ - Entity Framework Core
+ - AutoMapper
+ - XUnit
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+## Frontend:
+ - Angular 14
+ - Angular Material
 
-# Instruções de entrega do desafio
+## Database:
+ - SqlServer
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
+# - Deploy
+## Requirements to Deploy:
+ - Linux
+ - Docker
+ - Docker Compose
 
-# Descrição do projeto
+## How deploy:
+First, make sure that the ports 9221, 9222 and 9223 are not in use.
 
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
+In the root directory, execute the following command:
 
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
+```bash
+docker-compose up --build
+```
 
-**Sua aplicação web DEVE:**
+Upon successful execution, three containers will be created with their respective ports:
 
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
+ - frontend-container (9221)
+ - backend-container  (9222)
+ - database-container (9223)
 
-**Sua aplicação web não precisa:**
+Access the UI via: http://localhost:9221
 
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
+## Tests:
+The backend has 24 unit tests. To run them, either utilize Visual Studio Test Explorer or execute the following command in the root directory:
 
-# Documentação do CNAB
+```bash
+(cd backend/Transactions/Transactions.UnitTests/ && dotnet test)
+```
 
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
+# - UI
 
-# Documentação sobre os tipos das transações
+## Home
+On the home page, you can import transactions via CNAB.txt and view a list of all previously registered stores.
 
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
+![Home](./images/home.png)
+## Store Operations
+In the store operations page, you can review detailed information about all the transactions of a specific store. Additionally, you can also view the store's name and current balance.
 
-# Avaliação
+![Store Operations](./images/storeOperations.png)
+# - API
 
-Seu projeto será avaliado de acordo com os seguintes critérios.
+## Endpoint: POST http://localhost:9222/api/file/import
 
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
+* Functionality: Gets the CNAB.txt, processes all transactions, and inserts them into the 'operations' table. If the processed transaction pertains to a new store, a new entry is created in the 'stores' table.
+* Input: .txt file
+```JSON
+file
+string($binary)
+```
 
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
+## Endpoint: GET http://localhost:9222/api/account/stores
+* Functionality: Get all stores from 'stores' table.
+```JSON
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "name": "Store 1",
+    "ownerName": "Owner 1",
+    "balance": 100
+  },
+  {
+    "id": "d9ac4e88-bc6d-45de-9bc8-14105fc284bf",
+    "name": "Store 2",
+    "ownerName": "Owner 2",
+    "balance": 200
+  }
+]
+```
 
-# Referência
-
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
-
----
-
-Boa sorte!
+## Endpoint: GET http://localhost:9222/api/account/stores/{storeId}/operations
+* Functionality: Retrieves the name, balance, and all transactions associated with a specific store.
+* Param (storeId): Guid from a registered store.
+```JSON
+{
+  "storeName": "Store 1",
+  "balance": 200,
+  "operations": [
+    {
+      "id": "68b72d71-82a2-4df5-8ecb-29f9ad3ab1d7",
+      "transaction": "TED",
+      "date": "2023-08-07T22:28:44.297Z",
+      "value": 100,
+      "document": "000.000.000-00",
+      "card": "1234****1234"
+    },
+    {
+      "id": "5b8dcde9-1629-4aa6-b01b-dc99a75833d5",
+      "transaction": "DOC",
+      "date": "2023-08-07T22:28:44.297Z",
+      "value": 100,
+      "document": "000.000.000-00",
+      "card": "1234****1234"
+    }
+  ]
+}
+```
