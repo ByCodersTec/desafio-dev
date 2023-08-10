@@ -32,6 +32,8 @@ namespace ByCodersTec.StoreDataImporter.Controllers
         [HttpGet("")]
         public async Task<ApiResponse<List<UserViewModel>>> GetUsers()
         {
+            _logger.LogWarning("UsersController Get - this is a nice message to test the logs", DateTime.UtcNow);
+
             var response = await _mediator.Send(new GetUsersQuery());
             return ApiResponse<List<UserViewModel>>.CreateResponse(response);
         }

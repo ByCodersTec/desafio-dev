@@ -7,7 +7,8 @@
         "app": "StartWithoutDebugging",
         "bycoderstec.storedataimporter": "StartDebugging",
         "bycoderstec.storedataimporter.frontend": "StartDebugging",
-        "bycoderstec.storedataimporter.workerservice": "StartDebugging"
+        "bycoderstec.storedataimporter.workerservice": "StartDebugging",
+        "bycoderstec.storedataimporter.oauth.identityserver": "StartDebugging"
       }
     }
   }

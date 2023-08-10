@@ -11,12 +11,42 @@ using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using ByCodersTec.StoreDataImporter;
 using ByCodersTec.StoreDataImporter.WebSocketService.SignalRChatService;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Sinks.Elasticsearch;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+ConfigureLogging();
+builder.Host.UseSerilog();
 builder.Services.AddControllers();
+
+//builder.Services.AddAuthentication("Bearer")
+//            .AddJwtBearer("Bearer", options =>
+//            {
+//                options.Authority = "http://host.docker.internal:5001";
+//                options.RequireHttpsMetadata = false;
+//                options.TokenValidationParameters = new TokenValidationParameters
+//                {
+//                    ValidateAudience = false,
+//                };
+//            });
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.Authority = "http://host.docker.internal:5001";
+    o.Audience = "api1";
+    o.RequireHttpsMetadata = false;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,6 +89,19 @@ builder.Services.AddCors(options =>
             });
 });
 
+
+
+//builder.Services.AddAuthentication("Bearer")
+//            .AddJwtBearer("Bearer", options =>
+//            {
+//                options.Authority = "http://host.docker.internal:5001";
+
+//                options.TokenValidationParameters = new TokenValidationParameters
+//                {
+//                    ValidateAudience = false
+//                };
+//            });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +118,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -83,3 +127,33 @@ app.UseCors(MyAllowedOrigins);
 app.MapHub<ChatHub>("/chat");
 
 app.Run();
+
+void ConfigureLogging()
+{
+    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile(
+            $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+            optional: true)
+        .Build();
+
+    Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .Enrich.WithExceptionDetails()
+        .WriteTo.Debug()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
+        .Enrich.WithProperty("Environment", environment)
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+}
+
+ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
+{
+    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+    };
+}

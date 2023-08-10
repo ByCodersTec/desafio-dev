@@ -6,6 +6,7 @@ using ByCodersTec.StoreDataImporter.Services.Interfaces;
 using ByCodersTec.StoreDataImporter.Services.Mapping;
 using ByCodersTec.StoreDataImporter.Services.Message;
 using ByCodersTec.StoreDataImporter.ViewModel;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
         readonly Repository.EF.IUnitOfWork _unitOfWork;
         readonly ByCodersTec.StoreDataImporter.Domain.IMessageService _messageService;
         readonly IDocParserService _docParserService;
+        private readonly ILogger<TransactionService> _logger;
         public TransactionService(
             IUserRepository userRepository,
             Repository.EF.IUnitOfWork unitOfWork,
@@ -32,7 +34,8 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             ITransactionRepository transactionRepository,
             IDocDefinitionRepository docDefinitionRepository,
             IStoreRepository storeRepository,
-            ITransactionTypeRepository transactionTypeRepository
+            ITransactionTypeRepository transactionTypeRepository,
+            ILogger<TransactionService> logger
         )
         {
             _docDefinitionRepository = docDefinitionRepository;
@@ -42,6 +45,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
             _docParserService = docParserService;
             _storeRepository = storeRepository;
             _transactionTypeRepository = transactionTypeRepository;
+            _logger = logger;
         }
 
         public async Task<AddTransactionsFromFileResponse> AddTransactionsCNABFromFile(AddTransactionsFromFileRequest request)
@@ -162,6 +166,7 @@ namespace ByCodersTec.StoreDataImporter.Services.Implementation
 
         public GetTransactionsResponse GetTransactions(GetTransactionsRequest request)
         {
+            _logger.LogInformation("Logging transactions request");
             var response = new GetTransactionsResponse();
             var transactions = _transactionRepository.GetAllPaged(filter: null, request.Paging, includeProperties: "Store,Type", includeSecondProperties: null);
             var pagedResponse = new PagedList<TransactionViewModel>(transactions.Select(t => new TransactionViewModel
