@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Core", "0 - Core", "{DF8FD0A5-BB48-4044-A3D0-CDAEBD583348}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{AE8CB1F7-3F18-4138-BE42-2AA5A4ED3FFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - WebApi", "2 - WebApi", "{4A200ED8-E878-40A0-94F1-4A0DA17E9577}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB.Core", "src\CNAB.Core\CNAB.Core.csproj", "{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Docs", "3 - Docs", "{306ECCD8-D855-46CE-87A9-DF09807CE68A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA} = {DF8FD0A5-BB48-4044-A3D0-CDAEBD583348}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DE7AF48-7B8C-4370-8853-8A66762F7999}
+	EndGlobalSection
+EndGlobal
