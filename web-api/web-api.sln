@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB.Core", "src\CNAB.Core\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Docs", "3 - Docs", "{306ECCD8-D855-46CE-87A9-DF09807CE68A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Financeiro", "Financeiro", "{892F0FAF-07FA-4C65-9C1B-018B69F08EE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB.Financeiro.Domain", "src\CNAB.Financeiro.Domain\CNAB.Financeiro.Domain.csproj", "{43B35739-232A-45FA-89AF-6845E3E301EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,18 @@ Global
 		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43B35739-232A-45FA-89AF-6845E3E301EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43B35739-232A-45FA-89AF-6845E3E301EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43B35739-232A-45FA-89AF-6845E3E301EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43B35739-232A-45FA-89AF-6845E3E301EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0BBCF945-5E96-44E8-BCBE-5BF9484ADBFA} = {DF8FD0A5-BB48-4044-A3D0-CDAEBD583348}
+		{892F0FAF-07FA-4C65-9C1B-018B69F08EE4} = {AE8CB1F7-3F18-4138-BE42-2AA5A4ED3FFD}
+		{43B35739-232A-45FA-89AF-6845E3E301EF} = {892F0FAF-07FA-4C65-9C1B-018B69F08EE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4DE7AF48-7B8C-4370-8853-8A66762F7999}
