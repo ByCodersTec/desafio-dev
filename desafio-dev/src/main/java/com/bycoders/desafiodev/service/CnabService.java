@@ -11,11 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 @Service
 @AllArgsConstructor
 public class CnabService {
@@ -27,28 +22,23 @@ public class CnabService {
     @Autowired
     private TransactionTypeRepository transactionTypeRepository;
 
-    public String saveCnab(String filePath) {
-        try (InputStream inputStream = Transactions.class.getResourceAsStream(filePath);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+    public String saveCnab(String fileContent) {
+        String[] lines = fileContent.split("\r\n");
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                var transactions = CnabUtils.fillCnab(line);
+        for (String line : lines) {
+            var transactions = CnabUtils.fillCnab(line);
 
-                var result = transactionTypeRepository.findById(Long.valueOf(line.substring(0, 1)));
+            var result = transactionTypeRepository.findById(Long.valueOf(line.substring(0, 1)));
 
-                if (result.isEmpty())
-                    throw new NotFoundException("Invalid Transaction Type");
+            if (result.isEmpty())
+                throw new NotFoundException("Invalid Transaction Type");
 
-                transactions.setTransactionType(result.get());
+            transactions.setTransactionType(result.get());
 
-                transactionsRepository.save(transactions);
-            }
-            return "Cnab file processed successfully.";
-        } catch (IOException | NotFoundException e) {
-            e.printStackTrace();
-            return "Error processing Cnab file.";
+            transactionsRepository.save(transactions);
         }
+
+        return "Cnab file processed successfully.";
     }
 
     public StoreDTO findStoreName(String name) throws NotFoundException {

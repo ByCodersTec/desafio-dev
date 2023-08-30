@@ -4,10 +4,10 @@ package com.bycoders.desafiodev.controller;
 import com.bycoders.desafiodev.dto.StoreDTO;
 import com.bycoders.desafiodev.service.CnabService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
@@ -21,11 +21,17 @@ public class CnabController {
         this.service = service;
     }
 
-    @GetMapping("/saveCnab")
-    public ResponseEntity<String> saveCnab() {
-        String filePath = "/cnabFile.txt";
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
 
-        String resultMessage = service.saveCnab(filePath);
+    @PostMapping("/saveCnab")
+    @ResponseBody
+    public ResponseEntity<String> saveCnab(@RequestParam("file") MultipartFile file) throws IOException {
+
+        String fileContent = new String(file.getBytes(), "UTF-8");
+        String resultMessage = service.saveCnab(fileContent);
 
         if (resultMessage.equals("Cnab file processed successfully.")) {
             return ResponseEntity.ok(resultMessage);

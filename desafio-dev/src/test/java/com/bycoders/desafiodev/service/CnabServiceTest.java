@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import static org.mockito.Mockito.any;
@@ -38,19 +37,18 @@ public class CnabServiceTest {
         cnabService = new CnabService(transactionsRepository, transactionTypeRepository);
     }
 
-    @Test
-    public void testSaveCnab() throws IOException {
 
+    @Test
+    public void testSaveCnab() {
         var transactions = TransactionsFixture.withRandomData();
         var transactionsType = TransactionTypeFixture.withRandomData();
 
         when(transactionsRepository.save(any(Transactions.class))).thenReturn(transactions);
         when(transactionTypeRepository.findById(any(Long.class))).thenReturn(Optional.of(transactionsType));
 
-        var result = cnabService.saveCnab(FILE_PATH);
+        var result = cnabService.saveCnab("3201903010000019200845152540736777****1313172712MARCOS PEREIRAMERCADO DA AVENIDA");
 
         Assertions.assertEquals("Cnab file processed successfully.", result);
-
     }
 
 }

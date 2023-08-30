@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processamento de Arquivo CNAB</title>
+</head>
+<body>
+<h1>Processamento de Arquivo CNAB</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileInput" accept=".txt">
+    <button type="button" onclick="uploadFile()">Enviar</button>
+</form>
+<hr>
+<h2>Conteúdo do Arquivo:</h2>
+<pre id="fileContent"></pre>
+
+<script>
+    function uploadFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch('cnab/saveCnab', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById("fileContent").textContent = result;
+            });
+        }
+    }
+</script>
+</body>
+</html>

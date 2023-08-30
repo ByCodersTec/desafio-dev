@@ -5,6 +5,11 @@ spring:
     password:
     platform: h2
     initialization-mode: always
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
 
   h2:
     console:
