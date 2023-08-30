@@ -11,7 +11,7 @@ Iniciar a aplicação normalmente na porta 8080
  optei por usar o H2 que funcina bem e resolveu o problema.
 
 
- #Acessar o H2
+ # Acessar o H2
  link depois e rodar o projeto : 
  
  http://localhost:8080/h2-console
@@ -19,7 +19,7 @@ Iniciar a aplicação normalmente na porta 8080
  usuario : sa
  password : 
 
- #Executar o script
+ # Executar o script
 
  INSERT INTO tb_transaction_type (description, transaction_type, signal, dt_insert)
 VALUES
@@ -41,7 +41,7 @@ http://localhost:8080/
 
 Selecione o arquivo CNAB e clique em enviar, após isso o tratamento de dados é realizado e salvo na base
 
-# Buscar o total de movimentação por Proprietario
+# Buscar o total de movimentação por proprietário
 importar o curl url abaixo no postman e realizar a requisição passando o nome do proprietario 
 
 curl --location 'http://localhost:8080/cnab/store?name=MARIA'
