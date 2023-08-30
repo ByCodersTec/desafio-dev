@@ -7,6 +7,7 @@ import com.bycoders.desafiodev.mapper.StoreMapper;
 import com.bycoders.desafiodev.repository.TransactionTypeRepository;
 import com.bycoders.desafiodev.repository.TransactionsRepository;
 import com.bycoders.desafiodev.utils.CnabUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Service
+@AllArgsConstructor
 public class CnabService {
 
     @Autowired
