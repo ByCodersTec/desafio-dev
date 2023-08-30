@@ -7,9 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -22,10 +20,13 @@ import java.time.OffsetDateTime;
 public class Transactions {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type;
+    @ManyToOne
+    @JoinColumn(name = "idTransactionType")
+    private TransactionType transactionType;
+
     private LocalDate insertDate;
     private double movimentValue;
     private String cpf;

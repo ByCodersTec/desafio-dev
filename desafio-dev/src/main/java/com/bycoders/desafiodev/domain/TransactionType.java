@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,12 +21,14 @@ public class TransactionType {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
     private String transaction_type;
     private String signal;
     private OffsetDateTime dt_insert;
+
+    @OneToMany(mappedBy = "transactionType")
+    private List<Transactions> transactions;
 
 }

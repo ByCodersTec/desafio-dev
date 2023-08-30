@@ -3,6 +3,8 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password:
+    platform: h2
+    initialization-mode: always
 
   h2:
     console:

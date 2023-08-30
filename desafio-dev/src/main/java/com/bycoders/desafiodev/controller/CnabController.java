@@ -1,28 +1,45 @@
 package com.bycoders.desafiodev.controller;
 
 
-import com.bycoders.desafiodev.domain.Transactions;
+import com.bycoders.desafiodev.dto.StoreDTO;
 import com.bycoders.desafiodev.service.CnabService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+
 @RestController
 @RequestMapping(value = "/cnab")
 public class CnabController {
 
-    @Autowired
-    private CnabService service;
+    private final CnabService service;
 
-    @GetMapping
-    public String saveCnab() throws IOException {
+    public CnabController(CnabService service) {
+        this.service = service;
+    }
 
-        String filePath = "/cnabFile.txt"; // Caminho relativo à pasta "resources"
+    @GetMapping("/saveCnab")
+    public ResponseEntity<String> saveCnab() {
+        String filePath = "/cnabFile.txt";
 
-        service.saveCnab(filePath);
+        String resultMessage = service.saveCnab(filePath);
 
-        return "";
+        if (resultMessage.equals("Cnab file processed successfully.")) {
+            return ResponseEntity.ok(resultMessage);
+        } else {
+            return ResponseEntity.badRequest().body(resultMessage);
+        }
+    }
+
+
+    @GetMapping("/store")
+    public ResponseEntity<StoreDTO> getStore(@RequestParam String name) throws NotFoundException {
+
+        var result = service.findStoreName(name);
+
+        return ResponseEntity.ok(result);
     }
 }
