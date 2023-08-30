@@ -6,8 +6,9 @@ Iniciar a aplicação normalmente na porta 8080
 
 
 # Insert dos tipos de transações
- Executar o Insert abaixo no banco
- no desafio é informado para usarmos o banco de nossa preferencia e logo abaixo pede pra usar Postgre ou MYSQL
+ Executar o Insert abaixo no banco em memória.
+ 
+ No desafio é informado para usarmos o banco de nossa preferencia e logo abaixo pede pra usar Postgre ou MYSQL
  optei por usar o H2 que funcina bem e resolveu o problema.
 
 
