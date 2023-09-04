@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_USER: root
-      MYSQL_DATABASE: TransacionsDB
+      MYSQL_DATABASE: TransactionsDB
     ports:
       - "3306:3306"
 
