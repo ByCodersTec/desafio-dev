@@ -2,11 +2,21 @@
 <html>
 <head>
     <title>Processamento de Arquivo CNAB</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <h1>Processamento de Arquivo CNAB</h1>
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="file" id="fileInput" accept=".txt">
+    <br><br>
     <button type="button" onclick="uploadFile()">Enviar</button>
 </form>
 <hr>
