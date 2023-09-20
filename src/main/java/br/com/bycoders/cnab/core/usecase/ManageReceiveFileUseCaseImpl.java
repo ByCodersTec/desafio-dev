@@ -17,13 +17,11 @@ public class ManageReceiveFileUseCaseImpl implements ManageReceiveFileUseCase {
     }
 
     @Override
-    public String create(List<String> cnabList) {
+    public void create(List<String> cnabList) {
         for (String item: cnabList) {
             final var cnab = generateCnab(item);
             cnabGateway.save(cnab);
         }
-        return null;
-
     }
 
     private Cnab generateCnab(String item) {

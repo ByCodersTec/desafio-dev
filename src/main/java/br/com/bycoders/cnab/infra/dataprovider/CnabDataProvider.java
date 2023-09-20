@@ -6,6 +6,9 @@ import br.com.bycoders.cnab.infra.entity.CnabEntity;
 import br.com.bycoders.cnab.infra.repository.CnabRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class CnabDataProvider implements CnabGateway {
 
@@ -21,8 +24,14 @@ public class CnabDataProvider implements CnabGateway {
         cnabRepository.save(cnabEntity);
     }
 
+    @Override
+    public List<Cnab> findAll() {
+        return cnabRepository.findAll().stream().map(o -> convertToDomain(o)).collect(Collectors.toList());
+    }
+
     private CnabEntity convertToEntity(Cnab cnab) {
         CnabEntity cnabEntity = new CnabEntity();
+        cnabEntity.setId(cnab.getId());
         cnabEntity.setType(cnab.getType());
         cnabEntity.setDate(cnab.getDate());
         cnabEntity.setValue(cnab.getValue());
@@ -33,5 +42,20 @@ public class CnabDataProvider implements CnabGateway {
         cnabEntity.setName(cnab.getName());
 
         return cnabEntity;
+    }
+
+    private Cnab convertToDomain(CnabEntity cnabEntity) {
+        Cnab cnab = new Cnab();
+        cnab.setId(cnabEntity.getId());
+        cnab.setType(cnabEntity.getType());
+        cnab.setDate(cnabEntity.getDate());
+        cnab.setValue(cnabEntity.getValue());
+        cnab.setCpf(cnabEntity.getCpf());
+        cnab.setCard(cnabEntity.getCard());
+        cnab.setHour(cnabEntity.getHour());
+        cnab.setOwner(cnabEntity.getOwner());
+        cnab.setName(cnabEntity.getName());
+
+        return cnab;
     }
 }
