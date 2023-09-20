@@ -13,7 +13,7 @@ import java.util.List;
 public class CnabListController {
     private final ManageCnabUseCase manageCnabUseCase;
 
-    public CnabListController(ManageReceiveFileUseCase manageReceiveFileUseCase) {
+    public CnabListController(ManageCnabUseCase manageCnabUseCase) {
         this.manageCnabUseCase = manageCnabUseCase;
     }
 
