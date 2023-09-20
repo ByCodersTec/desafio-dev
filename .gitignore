@@ -1,0 +1,5 @@
+# Default ignored files
+.idea/
+target/
+.m2/
+data/

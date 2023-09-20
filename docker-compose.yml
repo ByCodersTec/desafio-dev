@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  api_service:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - bycoders
+    environment:
+      - DB_HOST=mysqldb
+      - DB_USER=bycoders
+      - DB_PASS=123456
+      - DB_DATABASE=bycoders
+    depends_on:
+      - mysqldb
+
+    volumes:
+      - .m2:/root/.m2
+
+  mysqldb:
+    image: "mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - bycoders
+    environment:
+      MYSQL_DATABASE: bycoders
+      MYSQL_USER: bycoders
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 23F@#FA#@ds
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      - mysqldb
+    networks:
+      - bycoders
+networks:
+  bycoders:
