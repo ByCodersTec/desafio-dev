@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  app:
+    image: openjdk:17-jdk
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: ./mvnw spring-boot:run
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_manager_file
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=db_file
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_password
