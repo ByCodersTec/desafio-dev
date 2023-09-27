@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store Operations</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Store Operations</h1>
+
+    <!-- Div para exibir os resultados via AJAX -->
+    <div id="storeOperationsResults">
+        <!-- Os resultados serão carregados aqui -->
+    </div>
+
+    <br>
+    <a th:href="@{/}" class="btn btn-secondary">Start</a>
+</div>
+
+<!-- Include Bootstrap JS (optional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Include jQuery (required for AJAX) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- JavaScript para carregar os resultados via AJAX -->
+<script th:inline="javascript">
+    $(document).ready(function () {
+        // Função para formatar o valor como moeda (R$)
+        function formatCurrency(value) {
+            return 'R$ ' + value.toFixed(2);
+        }
+
+        // Faça uma chamada AJAX para obter os dados das operações de loja
+        $.get("/api/store-operations/data", function (data) {
+            // Limpe a div de resultados
+            $("#storeOperationsResults").empty();
+
+            // Verifique se há dados de operações de loja
+            if (data.length === 0) {
+                $("#storeOperationsResults").append("<p>Nenhum dado disponível.</p>");
+            } else {
+                // Crie uma tabela para exibir os dados
+                var table = $("<table class='table table-striped'></table>");
+                var thead = $("<thead><tr><th>Store Name</th><th>Total Balance</th></tr></thead>");
+                var tbody = $("<tbody></tbody>");
+
+                // Preencha a tabela com os dados
+                $.each(data, function (index, item) {
+                    var row = $("<tr><td>" + item.storeName + "</td><td>" + formatCurrency(item.totalBalance) + "</td></tr>");
+                    tbody.append(row);
+                });
+
+                table.append(thead);
+                table.append(tbody);
+                $("#storeOperationsResults").append(table);
+            }
+        });
+    });
+</script>
+</body>
+</html>

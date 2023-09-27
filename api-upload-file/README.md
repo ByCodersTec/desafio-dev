@@ -1,4 +1,4 @@
-# CNAB File Upload
+﻿# CNAB File Upload
 
  Este é um projeto Java Spring Boot para fazer upload e análise de arquivos CNAB (Cadastro Nacional de Atividades Bancárias). Ele inclui uma API REST para fazer upload de arquivos CNAB e exibir operações de lojas com seus saldos totais.
 
